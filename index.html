@@ -11,7 +11,8 @@
 <!-- CSS & JS
   ================================================== -->
 		<link rel="stylesheet" type = "text/css" href="css/stylesheet.css">
-		<script type="text/javascript" src="d3/jquery-1.9.1.min.js"></script>
+<!-- 	<script type="text/javascript" src="d3/jquery-1.9.1.min.js"></script> -->
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>	
         <script type="text/javascript" src="d3/d3.v3.js"></script>	
 		<script type="text/javascript" src="js/colorbrewer.js"></script>
 		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
@@ -41,7 +42,7 @@
 		<script>
 		var data = {};
 	    $.getJSON("data/aaacfData.json", function(data){
-	        // document.write(data);
+	        data = data;
 	    });
 		console.log(data);
 		</script>
