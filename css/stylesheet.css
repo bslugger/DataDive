@@ -20,7 +20,9 @@ body{
 }
 #sliderDiv{
 	position:relative;
-	background: rgb(251,180,0	);
+	background:#506e20;
+	float:left;
+	width:1200px;
 }
 #chart{
 	background: white;
