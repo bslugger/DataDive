@@ -1,0 +1,48 @@
+body{
+	background: #f4f0eb;
+}
+.foi{
+	width:15%;
+	padding: 1em;
+}
+#buttonDiv{
+	float:right;
+	position:relative;
+	background: rgb(251,180,174	);
+	width: 50%;
+	padding: 1em;
+	text-align:center;
+}
+
+#slider{
+	background: white;
+
+	padding: 1em;
+}
+#sliderDiv{
+	position:relative;
+	background: rgb(251,180,0	);
+	width: 50%;
+}
+#chart{
+	background: white;
+	padding: 1em;
+}
+#chartDiv{
+	position:relative;
+	background: rgb(251,0,178);
+	width: 1400px;
+	height: 760px;
+}
+::-webkit-scrollbar {
+	width: 12px;
+}
+::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+	border-radius: 10px;
+}
+ 
+::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
