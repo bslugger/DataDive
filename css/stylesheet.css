@@ -48,7 +48,9 @@ body{
 	height:200px;
 	float:left;
 }
-
+#map { 
+	height: 180px;
+	}
 ::-webkit-scrollbar {
 	width: 12px;
 }

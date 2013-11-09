@@ -15,7 +15,8 @@
         <script type="text/javascript" src="d3/d3.v3.js"></script>	
 		<script type="text/javascript" src="js/colorbrewer.js"></script>
 		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
-    </head>
+		<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+   </head>
 
  <!--[if lt IE 7 ]><body class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><body class="ie ie7" lang="en"> <![endif]-->
@@ -29,18 +30,20 @@
 			<button class='foi' id="foi4">Youth + Education</button>
 			<button class='foi' id="foi5">Seniors</button>
 		</div>
-		<div id="chartdiv"><p>This is where the map goes</p></div>
+		<div id="chartdiv">
+			<div id="map"></div>
+		<p>This is where the map goes</p></div>
 		<div id="sideTooltipdiv"><p>This is the side tooltip</p></div>
 		<div id="sliderdiv"><p>This is for the slider</p></div>
 		<div id="bottomTooltipdiv"><p>This is the bottom tooltip</p></div>
 
 		<script>
-		var data = {}
+		var data = {};
 		$(document).ready(
-		    $.getJSON("http://localhost:8000/data/aaacf.json", function(data){
+		    $.getJSON("data/aaacfData.json", function(data){
 		        document.write(data);
-		    });
-		});
+		    })
+		);
 		console.log(data);
 		</script>
 	</body>
