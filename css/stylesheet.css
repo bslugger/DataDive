@@ -22,7 +22,7 @@ body{
 	position:relative;
 	background:#506e20;
 	float:left;
-	width:1200px;
+	width:900px;
 }
 #chart{
 	background: white;
@@ -30,21 +30,21 @@ body{
 #chartDiv{
 	position:relative;
 	background: #ac0e6d;
-	width: 1200px;
+	width: 900px;
 	height: 500px;
 	float:left;
 }
 #sideTooltipDiv{
 	position:relative;
 	background: rgb(251,180,0	);
-	width:400px;
+	width:300px;
 	height:700px;
 	float:right;
 }
 #bottomTooltipDiv{
 	position:relative;
 	background: rgb(251,180,0);
-	width:1200px;
+	width:900px;
 	height:200px;
 	float:left;
 }
