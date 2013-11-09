@@ -24,9 +24,6 @@ body{
 	float:left;
 	width:900px;
 }
-#chart{
-	background: white;
-}
 #chartDiv{
 	position:relative;
 	background: #ac0e6d;
@@ -49,7 +46,8 @@ body{
 	float:left;
 }
 #map { 
-	height: 180px;
+	width: 900px;
+	height: 500px;
 	}
 ::-webkit-scrollbar {
 	width: 12px;
