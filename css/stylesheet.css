@@ -6,34 +6,47 @@ body{
 	padding: 1em;
 }
 #buttonDiv{
-	float:right;
 	position:relative;
-	background: rgb(251,180,174	);
-	width: 50%;
+	background: #506e20;
+	width: 100%;
 	padding: 1em;
 	text-align:center;
 }
 
 #slider{
 	background: white;
-
-	padding: 1em;
+/* 
+	padding: 1em; */
 }
 #sliderDiv{
 	position:relative;
 	background: rgb(251,180,0	);
-	width: 50%;
 }
 #chart{
 	background: white;
-	padding: 1em;
 }
 #chartDiv{
 	position:relative;
-	background: rgb(251,0,178);
-	width: 1400px;
-	height: 760px;
+	background: #ac0e6d;
+	width: 1200px;
+	height: 500px;
+	float:left;
 }
+#sideTooltipDiv{
+	position:relative;
+	background: rgb(251,180,0	);
+	width:400px;
+	height:700px;
+	float:right;
+}
+#bottomTooltipDiv{
+	position:relative;
+	background: rgb(251,180,0);
+	width:1200px;
+	height:200px;
+	float:left;
+}
+
 ::-webkit-scrollbar {
 	width: 12px;
 }
