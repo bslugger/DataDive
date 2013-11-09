@@ -34,12 +34,12 @@
 		<div id="bottomTooltipdiv"><p>This is the bottom tooltip</p></div>
 
 		<script>
-		var data = {}
+		var data = {};
 		$(document).ready(
-		    $.getJSON("http://localhost:8000/data/aaacf.json", function(data){
-		        document.write(data);
+		    $.getJSON("data/aaacf.json", function(data){
+		        data = data;
 		    });
-		});
+		);
 		console.log(data);
 		</script>
 	</body>
