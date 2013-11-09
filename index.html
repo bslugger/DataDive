@@ -1,25 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+
+    		<!-- Basic Page Needs
+  ================================================== -->
         <meta charset="utf-8">
-        <title>A2DataDive Dashboard</title>
+        <title>A2Datadive Dashboard</title>
+        <meta name="author" content="AAACF Dashboard">
+
+<!-- CSS & JS
+  ================================================== -->
 		<link rel="stylesheet" type = "text/css" href="css/stylesheet.css">
 		<script type="text/javascript" src="d3/jquery-1.9.1.min.js"></script>
         <script type="text/javascript" src="d3/d3.v3.js"></script>	
 		<script type="text/javascript" src="js/colorbrewer.js"></script>
     </head>
-	<body>
-		<div id="buttonDiv">
+
+ <!--[if lt IE 7 ]><body class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><body class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><body class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><body lang="en"> <!--<![endif]-->
+
+		<div id="buttondiv">
 			<button class='foi' id="foi1">Arts + Culture</button>
 			<button class='foi' id="foi2">Environment</button>
 			<button class='foi' id="foi3">Health</button>
 			<button class='foi' id="foi4">Youth + Education</button>
 			<button class='foi' id="foi5">Seniors</button>
 		</div>
-		<div id="chartDiv"><p>This is where the map goes</p></div>
-		<div id="sideTooltipDiv"><p>This is the side tooltip</p></div>
-		<div id="sliderDiv"><p>This is for the slider</p></div>
-		<div id="bottomTooltipDiv"><p>This is the bottom tooltip</p></div>
+		<div id="chartdiv"><p>This is where the map goes</p></div>
+		<div id="sideTooltipdiv"><p>This is the side tooltip</p></div>
+		<div id="sliderdiv"><p>This is for the slider</p></div>
+		<div id="bottomTooltipdiv"><p>This is the bottom tooltip</p></div>
+
+		<script>
+		var data = {}
+		$(document).ready(
+		    $.getJSON("http://localhost:8000/data/aaacf.json", function(data){
+		        document.write(data);
+		    });
+		});
+		console.log(data);
+		</script>
 	</body>
 	
 </html>
