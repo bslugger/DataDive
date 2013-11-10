@@ -73,48 +73,14 @@ $(window).bind("load",function(){
 
 	
 	//the function to filter by zip code
-	function zip(){
+	function zipfilter(){
+		console.log(zip);
 
 	}
+	zipfilter();
 
 
-	$('.zip').on('hover', zip);
-
-	
-	// function sub(){
-	// 	console.log('hello');
-	// 	for (var i = 0; i < jdata.length; i++) {
-	// 		if (jdata[i].Field_aggregate === foiData) {
-	// 			subData = jdata[i];
-	// 			// s.add(jdata[i].Grantee_ID);
-	// 			// numOrgs = s.length;
-	// 			numGrants = subData.length;
-	// 			a.push(jdata[i].Amount);			
-	// 			}
-	// 	};
-	// 	console.log(numOrgs);
-	// 	console.log(numGrants);
-	// 	console.log(totalAmount);
-	// 	for (var x = 0; x < a.length; i++) {
-	// 		totalAmount += a[x];
-	// 	}
-	// 	console.log(totalAmount);
-	// }
-
-	// sub();
-
-	// $('.foi').on('click', sub);
-
-	
-
-	// var category = 'popular';
-	// $('.target').on('change', function(){
-	// 	p = 1;
-	// 	category = $(this).val();
-	// 	$('.results').remove();
-	// 	getShot();
-	// });
-
+	$('.zip').on('hover', zipfilter);
 
 });
 }
