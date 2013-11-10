@@ -30,7 +30,7 @@ body{
 	height: 500px;
 	float:left;
 }
-#sideTooltipdiv{
+#sideTooltipdivWrapper{
 	/* display:none; */
 	position:relative;
 	background: rgb(251,180,0	);

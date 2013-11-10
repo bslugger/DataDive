@@ -1,4 +1,6 @@
-$(window).bind("load",function(){
+function loaded() {
+
+// $(window).bind("load",function(){
 
 	var map = L.map('map').setView([42.281389, -83.748333], 11);
 	var zip = 0;
@@ -23,13 +25,17 @@ $(window).bind("load",function(){
 		
 	function popupContent(){
 		console.log("HELLO");
+		// console.log(layer.feature.properties.NAME);
+		// zipm = layer.feature.properties.NAME;
+		$('#bottomTooltipdiv').html('<span>you clicked the map</span>');
 	};
 
 	function highlightFeature(e) {
 		var layer = e.target;
 		zip = layer.feature.properties.NAME;
-		var div = document.getElementById( 'sideTooltipdiv' );
-		div.insertAdjacentHTML('beforeBegin',layer.feature.properties.NAME);
+		var div = document.getElementById( 'sideTooltipZip' );
+		$('#sideTooltipZip').empty();
+		div.insertAdjacentHTML('afterBegin',layer.feature.properties.NAME);
 		
 	    layer.setStyle({ // highlight the feature
 	        weight: 5,
@@ -90,6 +96,16 @@ $(window).bind("load",function(){
 		//update map
 	}
 
+	function inclusionTest(yourList,dataID){
+		//create the logic for inclusion in set to not count duplicates
+		if (yourList.indexOf(dataID) > -1) {
+			//do nothing
+		} else {
+			yourList.push(dataID);
+		}
+		return yourList;
+	}
+
 	//create a subset of data by FOI
 	var foiData = 'all';
 	var zipData;
@@ -97,9 +113,9 @@ $(window).bind("load",function(){
 	var subData = [];
 	var totalAmount = 0;
 	var numOrgs;
-	var s = [];
+	var s = []; // list that will be used to check for foi inclusion
 	var numGrants;
-	var a = [];
+	var a = []; // list that will be used to calculate total amount
 
 	function foi(){
 		foiData = $(this).data('foi');
@@ -124,17 +140,19 @@ $(window).bind("load",function(){
 				subData.push(jdata[i]);
 				ID = jdata[i].Grantee_ID;
 
+				inclusionTest(s,ID);
+
 				//create the logic for inclusion in set to not count duplicates
-				if (s.indexOf(ID) > -1) {
-					//do nothing
-				} else {
-					s.push(ID);
-				}
+				// if (s.indexOf(ID) > -1) {
+				// 	//do nothing
+				// } else {
+				// 	s.push(ID);
+				// }
 				var amt = jdata[i].Amount;
 				amt = parseInt(amt);
 				a.push(amt);			
-				}
-			};
+			}
+		};
 
 		// the logic to determine aggregated sums by FOI!
 		numGrants = subData.length;
@@ -152,12 +170,50 @@ $(window).bind("load",function(){
 
 	
 	//the function to filter by zip code
+	var zipp;
+	subDataByZip = [];
+	z = []; // list used to check for org ID inclusion by zip
+	totalAmountZip = 0;
+	y = []; // list used to hold total amount of grant money by zip
 	function zipfilter(){
-		console.log(zip);
+		zipp = $('#sideTooltipZip').text();
+		console.log(zipp);
+		subDataByZip = [];
+		z = [];
+		totalAmountZip = 0;
+		y = [];
 
+		//iterate through our full dataset to filter by Zip
+		for (var i = 0; i < jdata.length; i++) {
+			if (jdata[i].Zip === zipp) {
+				subDataByZip.push(jdata[i]);
+				ID = jdata[i].Grantee_ID;
+
+				inclusionTest(z, ID);
+				var amt = jdata[i].Amount;
+				amt = parseInt(amt);
+				y.push(amt);			
+			}
+		}
+
+		// the logic to determine aggregated sums by FOI!
+		numGrants = subDataByZip.length;
+		numOrgs = z.length;
+		for (var i = 0; i < y.length; i++) {
+			totalAmount = totalAmount + y[i];
+		}
+		console.log("number of orgs", numOrgs);
+		console.log("num of grants", numGrants);
+		console.log("total awarded", totalAmount);
 	}
-	zipfilter();
 
+	$('#sideTooltipZip').bind('contentchanged', function() {
+	  // do something after the div content has changed
+	  zipfilter();	
+	});
 
-	$('.zip').on('hover', zipfilter);
-});
+	$('#sideTooltipZip').trigger('contentchanged');
+	$('#map').on('mouseover', zipfilter);
+// });
+}
+$(document).ready(loaded);
