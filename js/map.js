@@ -186,15 +186,14 @@ $(window).bind("load",function(){
 		function resetHighlight(e) {
 		
 		var layer = e.target;
-		$("#blackbox").css('display','none');
-		layer.setStyle({ // highlight the feature
-			weight: 1,
-			dashArray: '',
-			color:"white",
-			fillColor:'rgb(45,42,43)',
-			fillOpacity: 1,
-			// border-color: "white";	
-		});
+		$("#blackbox").html('<h1>Over 60 years<br> \
+							the Ann Arbor Area received: </h1> \
+						<h3>Number of Recipients</h3> \
+						 2000 \
+						<h3>Total Number of Grants Awarded</h3> \
+						2752 \
+						<h3>Total Funds Awarded</h3> \
+						$60,000	');
 		
 		if (!L.Browser.ie && !L.Browser.opera) {
 			layer.bringToFront();

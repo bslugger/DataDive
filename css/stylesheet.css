@@ -42,13 +42,11 @@ body{
 }
 #sliderdiv{
 	position:relative;
-	background:#506e20;
 	float:left;
 	width:900px;
 }
 #chartdiv{
 	position:relative;
-	background: #ac0e6d;
 	width: 900px;
 	height: 471px;
 	float:left;
@@ -61,7 +59,7 @@ body{
 	float:right;
 }
 #blackbox{
-	display:none;
+	/* display:none; */
 	height: 471px;
 	width: 300px;
 	background:rgb(45,42,43);
@@ -80,7 +78,6 @@ body{
 }
 #bottomTooltipdiv{
 	position:relative;
-	background: rgb(251,180,0);
 	width:900px;
 	height:400px;
 	float:left;
@@ -114,7 +111,6 @@ tr:nth-child(even) {
 	color: rgb(230,229,81);
 }
 #foi6 {
-	background-color:red;
 	color: rgb(188,209,231);
 }
 ::-webkit-scrollbar {
