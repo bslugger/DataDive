@@ -24,49 +24,54 @@ $(window).bind("load",function(){
 		console.log("HELLO");
 	};
 	function highlightFeature(e) {
-	// var div = document.getElementById( 'sideTooltipdiv' );
-	// div.insertAdjacentHTML('beforeBegin',layer.feature.properties.NAME);
 	var layer = e.target;
+	var div = document.getElementById( 'sideTooltipdiv' );
+	div.insertAdjacentHTML('beforeBegin',layer.feature.properties.NAME);
+	
     layer.setStyle({ // highlight the feature
         weight: 5,
         color: '#666',
         dashArray: '',
-        fillOpacity: 0.6
+        fillOpacity: 1
     });
 	
     if (!L.Browser.ie && !L.Browser.opera) {
         layer.bringToFront();
     }
-    map.info.update(layer.feature.properties); // Update infobox
+    // map.info.update(layer.feature.properties); // Update infobox
 	};
 	function resetHighlight(e) {
 	
     var layer = e.target;
 	
     layer.setStyle({ // highlight the feature
-        weight: 5,
-        color: 'white',
+        weight: 1,
         dashArray: '',
-        fillOpacity: 0.6
+		color:"white",
+		fillColor:"black",
+        fillOpacity: 1,
+		// border-color: "white";	
     });
 	
     if (!L.Browser.ie && !L.Browser.opera) {
         layer.bringToFront();
     }
 	
-    map.info.update(layer.feature.properties); // Update infobox
+    // map.info.update(layer.feature.properties); // Update infobox
 	};
-	x = 0
+	x = 5
 	y = "red"
 	z = "yellow"
 	L.geoJson(data, {
 	onEachFeature:onEachFeature,
     style: function(feature) {
         switch (feature.properties.NAME) {
-            case '48105': return {color: y};
-            case '48108': return {color: "white", "weight": x};
-        }	
+            case '48105': return {color: y}
+            case '48108': return {color: "white", "weight": x}
+			default: return {color:"white",fillColor:"black",weight:1,fillOpacity:1}
+        }
     }
+	
 	}).addTo(map);
 	
 	
