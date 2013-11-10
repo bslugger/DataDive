@@ -74,7 +74,7 @@ $(window).bind("load",function(){
 	
 	//the function to filter by zip code
 	function zipfilter(){
-		console.log(zip);
+		// console.log(zip);
 
 	}
 	zipfilter();
