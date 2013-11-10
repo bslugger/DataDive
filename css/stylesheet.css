@@ -49,6 +49,10 @@ body{
 	width: 900px;
 	height: 500px;
 	}
+
+.hidden {
+	display: none;
+}
 ::-webkit-scrollbar {
 	width: 12px;
 }
