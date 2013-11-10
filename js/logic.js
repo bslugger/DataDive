@@ -1,3 +1,5 @@
+function loaded() {
+
 $(window).bind("load",function(){
 	var jdata;
     $.getJSON("data/aaacfData.json", function(data){
@@ -18,18 +20,21 @@ $(window).bind("load",function(){
 	var foiData = 'all';
 	var zipData;
 	var yearData = 'all';
-	for (var i = 0; i < jdata.length; i++) {
-		$('.foi').on('click', function(){
-			var foiData = 'all';
-			foiData = $(this).data('foi');
-			console.log(foiData);
-			if foiData != 'all' {
-				$('#foi6').removeAttr('hidden');
-			}
-			$('.map').remove();
-			generateMap();
-		});
-	};
+	$('.foi').on('click', function(){
+		console.log('button clicked');
+		foiData = $(this).data('foi');
+		console.log(foiData);
+		if (foiData != 'all') {
+			$('#foi6').removeClass('hidden');
+		} else {
+			$('#foi6').addClass('hidden');
+		}
+		$('.map').remove();
+		generateMap();
+	});
+	// for (var i = 0; i < jdata.length; i++) {
+
+	// };
 
 	// var category = 'popular';
 	// $('.target').on('change', function(){
@@ -41,3 +46,5 @@ $(window).bind("load",function(){
 
 
 });
+}
+$(document).ready(loaded);

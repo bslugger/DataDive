@@ -53,6 +53,10 @@ body{
 .hidden {
 	display: none;
 }
+
+#foi6 {
+	background-color: red;
+}
 ::-webkit-scrollbar {
 	width: 12px;
 }
