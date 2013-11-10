@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body{
 	background: #f4f0eb;
 	
@@ -89,4 +90,103 @@ tr:nth-child(even) {
 ::-webkit-scrollbar-thumb {
 	border-radius: 10px;
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+=======
+body{
+	background: #f4f0eb;
+	
+}
+.foi{
+	width:15%;
+	padding: 1em;
+}
+#buttondiv{
+	position:relative;
+	background: #506e20;
+	width: 100%;
+	padding: 1em;
+	text-align:center;
+}
+#slider{
+	background: white;
+/* 
+	padding: 1em; */
+}
+#sliderdiv{
+	position:relative;
+	background:#506e20;
+	float:left;
+	width:900px;
+}
+#chartdiv{
+	position:relative;
+	background: #ac0e6d;
+	width: 900px;
+	height: 471px;
+	float:left;
+}
+<<<<<<< HEAD
+#sideTooltipdivWrapper{
+	/* display:none; */
+=======
+#sideTooltipdiv{
+>>>>>>> a91c4fb3176114fcf0b00f657708a60672781d4c
+	position:relative;
+	/* background: rgb(251,180,0	); */
+	width:300px;
+	height:700px;
+	float:right;
+}
+#blackbox{
+	display:none;
+	height: 378px;
+	width: 224px;
+	background:rgb(45,42,43);
+	margin:0 auto;
+	color:white;
+	padding:18px 12px;
+}
+#orgList{
+	display:none;
+	height: 320px;
+	width: 700px;
+	background:rgb(45,42,43);
+	margin:0 auto;
+	color:white;
+	padding:18px 12px;
+}
+#bottomTooltipdiv{
+	position:relative;
+	background: rgb(251,180,0);
+	width:900px;
+	height:400px;
+	float:left;
+}
+#map { 
+	width: 700px;
+	height: 471px;
+	float:left;
+	}
+
+.hidden {
+	display: none;
+}
+tr:nth-child(even) {
+    background-color: #000000;
+}
+
+#foi6 {
+	background-color: red;
+}
+::-webkit-scrollbar {
+	width: 12px;
+}
+::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+	border-radius: 10px;
+}
+ 
+::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+>>>>>>> 6c69ebd531998c19f6d6ab614f6b101cf2520fd1
 }
