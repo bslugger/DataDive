@@ -121,6 +121,45 @@ $(window).bind("load",function(){
 
 		};
 
+		function yearFilter(){
+			// zipp = $('#blackbox').text();
+			year = 2013;
+			console.log(year);
+			subDataByYear = [];
+			z = [];
+			totalAmountYear = 0;
+			y = [];
+	
+			//iterate through our full dataset to filter by Zip
+			for (var i = 0; i < jdata.length; i++) {
+				if (jdata[i].Zip === year) {
+					subDataByZip.push(jdata[i]);
+					ID = jdata[i].Grantee_ID;
+	
+					inclusionTest(z, ID);
+
+					var amt = jdata[i].Amount;
+					amt = parseInt(amt);
+					y.push(amt);			
+				}
+			}
+
+			// the logic to determine aggregated sums by FOI!
+			numGrants = subDataByZip.length;
+			numOrgs = z.length;
+			for (var i = 0; i < y.length; i++) {
+				totalAmount = totalAmount + y[i];
+			}
+			console.log("number of orgs", numOrgs);
+			console.log("num of grants", numGrants);
+			console.log("total awarded", totalAmount);
+
+		};
+
+
+
+
+
 		// zipFilter();
 		//end Edgar's Code------------------------------------------------------------------
 
