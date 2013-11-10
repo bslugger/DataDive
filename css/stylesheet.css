@@ -5,40 +5,40 @@ body{
 	width:15%;
 	padding: 1em;
 }
-#buttonDiv{
+#buttondiv{
 	position:relative;
 	background: #506e20;
 	width: 100%;
 	padding: 1em;
 	text-align:center;
 }
-
 #slider{
 	background: white;
 /* 
 	padding: 1em; */
 }
-#sliderDiv{
+#sliderdiv{
 	position:relative;
 	background:#506e20;
 	float:left;
 	width:900px;
 }
-#chartDiv{
+#chartdiv{
 	position:relative;
 	background: #ac0e6d;
 	width: 900px;
 	height: 500px;
 	float:left;
 }
-#sideTooltipDiv{
+#sideTooltipdiv{
+	/* display:none; */
 	position:relative;
 	background: rgb(251,180,0	);
 	width:300px;
 	height:700px;
 	float:right;
 }
-#bottomTooltipDiv{
+#bottomTooltipdiv{
 	position:relative;
 	background: rgb(251,180,0);
 	width:900px;
@@ -48,6 +48,7 @@ body{
 #map { 
 	width: 900px;
 	height: 500px;
+	float:left;
 	}
 
 .hidden {
