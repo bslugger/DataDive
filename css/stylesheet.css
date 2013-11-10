@@ -28,7 +28,7 @@ body{
 	position:relative;
 	background: #ac0e6d;
 	width: 900px;
-	height: 500px;
+	height: 471px;
 	float:left;
 }
 <<<<<<< HEAD
@@ -52,21 +52,33 @@ body{
 	color:white;
 	padding:18px 12px;
 }
+#orgList{
+	display:none;
+	height: 320px;
+	width: 700px;
+	background:rgb(45,42,43);
+	margin:0 auto;
+	color:white;
+	padding:18px 12px;
+}
 #bottomTooltipdiv{
 	position:relative;
 	background: rgb(251,180,0);
 	width:900px;
-	height:200px;
+	height:400px;
 	float:left;
 }
 #map { 
-	width: 900px;
-	height: 500px;
+	width: 700px;
+	height: 471px;
 	float:left;
 	}
 
 .hidden {
 	display: none;
+}
+tr:nth-child(even) {
+    background-color: #000000;
 }
 
 #foi6 {

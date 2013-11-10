@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 function loaded() {
 
 // $(window).bind("load",function(){
@@ -5,12 +6,16 @@ function loaded() {
 	var map = L.map('map').setView([42.281389, -83.748333], 11);
 	var zip = 0;
 
+=======
+$(window).bind("load",function(){
+	//This centers the map on Ann Arbor, MI
+	var map = L.map('map').setView([42.281389, -83.748333], 11);
+	
+	//This loads in the geoJSON data
+>>>>>>> 075cf6cb79940c0491c41dd75476d3fc4ffc3646
 	geojsonFeature = d3.json('data/zip.json',function(data){
 		L.geoJson(data).addTo(map);
-
-		console.log(data);
 	
-<<<<<<< HEAD
 		//This draws the map itself at a specified position. 
 		L.tileLayer('http://{s}.tile.cloudmade.com/6a7ab36b926b4fc785f8a957814c8685/997/256/{z}/{x}/{y}.png', {
 			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
@@ -28,14 +33,27 @@ function loaded() {
 			}
 			
 		//This is what happens on click
-		function popupContent(){
-			console.log("HELLO");
+		function popupContent(e){
+			var layer = e.target;
+			function generateList(){
+				var list = "";
+				
+				for (var i = 0; i < 10; i++){
+					list += '<tr><td>Organization ' + i + '</td><td>Total Dollars Awarded: $' + i + '</td> </tr>';
+				}
+				return list;
+			}
+			$("#orgList").html(function(){
+							return '<h1>List of Awarded Organizations in ' + layer.feature.properties.NAME 
+								+  '</h1>' + '<table>' + generateList() + '</table>';
+						})
+					      .css('display','block');
 		};
 		
 		//This is what happens on mouseover
 		function highlightFeature(e){
 		var layer = e.target;
-		var year = 2013;
+		var year = $( "#slider" ).slider("option","value");
 		var numberOfRecipients = 0;
 		var totalNumberOfGrantsAwarded = 0;
 		var percentOfYearGrantMoney = 0;
@@ -57,21 +75,14 @@ function loaded() {
 		
 		if (!L.Browser.ie && !L.Browser.opera) {
 			layer.bringToFront();
-=======
-	L.tileLayer('http://{s}.tile.cloudmade.com/6a7ab36b926b4fc785f8a957814c8685/997/256/{z}/{x}/{y}.png', {
-	    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-	    maxZoom: 18,
-		}).addTo(map);
-	function onEachFeature(feature, layer) {
-			layer.on({
-            mouseover: highlightFeature,
-            mouseout: resetHighlight,
-            click: popupContent,
-            // pointToLayer: pointToLayer
-			});
->>>>>>> 6b2c70ed3c331a20ac0a1579fa8ad08adec62da5
 		}
+		// map.info.update(layer.feature.properties); // Update infobox
+		};
 		
+		//This is what happens after you mouseout
+		function resetHighlight(e) {
+		
+<<<<<<< HEAD
 	function popupContent(){
 		console.log("HELLO");
 		// console.log(layer.feature.properties.NAME);
@@ -80,8 +91,9 @@ function loaded() {
 	};
 
 	function highlightFeature(e) {
+=======
+>>>>>>> 075cf6cb79940c0491c41dd75476d3fc4ffc3646
 		var layer = e.target;
-<<<<<<< HEAD
 		$("#blackbox").css('display','none');
 		layer.setStyle({ // highlight the feature
 			weight: 1,
@@ -91,6 +103,7 @@ function loaded() {
 			fillOpacity: 1,
 			// border-color: "white";	
 		});
+<<<<<<< HEAD
 =======
 		zip = layer.feature.properties.NAME;
 		var div = document.getElementById( 'sideTooltipZip' );
@@ -185,8 +198,12 @@ function loaded() {
 			$('#foi6').removeClass('hidden');
 		} else {
 			$('#foi6').addClass('hidden');
+=======
+		
+		if (!L.Browser.ie && !L.Browser.opera) {
+			layer.bringToFront();
+>>>>>>> 075cf6cb79940c0491c41dd75476d3fc4ffc3646
 		}
-<<<<<<< HEAD
 		
 		// map.info.update(layer.feature.properties); // Update infobox
 		};
@@ -198,6 +215,7 @@ function loaded() {
 			switch (feature.properties.NAME) {
 				default: return {color:"white",fillColor:'rgb(45,42,43)',weight:1,fillOpacity:1}
 			}
+<<<<<<< HEAD
 =======
 		// $('.map').remove();
 		// generateMap();
@@ -292,3 +310,9 @@ function loaded() {
 // });
 }
 $(document).ready(loaded);
+=======
+		}
+		}).addTo(map);
+	});
+});
+>>>>>>> 075cf6cb79940c0491c41dd75476d3fc4ffc3646
