@@ -31,20 +31,14 @@ body{
 	height: 471px;
 	float:left;
 }
-<<<<<<< HEAD
-#sideTooltipdivWrapper{
-	/* display:none; */
-=======
 #sideTooltipdiv{
->>>>>>> a91c4fb3176114fcf0b00f657708a60672781d4c
 	position:relative;
-	background: rgb(251,180,0	);
+	/* background: rgb(251,180,0	); */
 	width:300px;
 	height:700px;
 	float:right;
 }
 #blackbox{
-	display:none;
 	height: 378px;
 	width: 224px;
 	background:rgb(45,42,43);
