@@ -31,7 +31,12 @@ body{
 	height: 471px;
 	float:left;
 }
+<<<<<<< HEAD
+#sideTooltipdivWrapper{
+	/* display:none; */
+=======
 #sideTooltipdiv{
+>>>>>>> a91c4fb3176114fcf0b00f657708a60672781d4c
 	position:relative;
 	/* background: rgb(251,180,0	); */
 	width:300px;
