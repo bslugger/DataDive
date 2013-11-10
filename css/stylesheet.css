@@ -47,23 +47,24 @@ body{
 }
 #chartdiv{
 	position:relative;
-	width: 900px;
+	width: 650px;
 	height: 471px;
 	float:left;
 }
-#sideTooltipdiv{
+#sideTooltipdivWrapper{
 	position:relative;
 	/* background: rgb(251,180,0	); */
 	width:400px;
-	height:700px;
+	height:471px;
 	float:right;
+	background-color: #a4045e;
 }
 #blackbox{
 	/* display:none; */
-	height: 471px;
+	height: 400px;
 	width: 300px;
 	background:rgb(45,42,43);
-	margin:0 auto;
+	margin:15px auto;
 	color:white;
 	padding:18px 12px;
 }
@@ -96,7 +97,7 @@ tr:nth-child(even) {
 }
 
 #foi1 {
-	color: rgb(164,4,94);
+	color: rgb(188,209,231);
 }
 #foi2 {
 	color: rgb(247,196,150);
@@ -111,7 +112,8 @@ tr:nth-child(even) {
 	color: rgb(230,229,81);
 }
 #foi6 {
-	color: rgb(188,209,231);
+	color: white;
+	background-color: rgb(219,43,2);
 }
 ::-webkit-scrollbar {
 	width: 12px;

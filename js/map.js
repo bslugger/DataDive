@@ -73,6 +73,33 @@ $(window).bind("load",function(){
 			console.log("number of orgs", numOrgs);
 			console.log("num of grants", numGrants);
 			console.log("total awarded", totalAmount);
+
+			$("#blackbox").empty().html(function(){
+						return '<h1>In the <span class="foiColor">' + foiData + '</span>, <br>' 
+						+ 'AAACF Impacted: </h1>'
+						+ '<h3>Number of Recipients</h3>' + numOrgs
+						+ '<h3>Total Number of Grants Awarded</h3>' + numGrants
+						+ '<h3>Total Funds Awared</h3>' + totalAmount;
+					});
+			var bgcolor = '#a4045e';
+			if (foiData === 'Arts and Culture') {
+				bgcolor = '#BCD1E7';
+			} else if (foiData === 'Environment') {
+				bgcolor = '#F7C496';		
+			} else if (foiData === 'Health and Human Services') {
+				bgcolor = '#97BE01';		
+			} else if (foiData === 'Youth and Education') {
+				bgcolor = '#E47668';		
+			} else if (foiData === 'Seniors') {
+				bgcolor = '#E6E551';		
+			} else {
+				bgcolor = '#a4045e';
+			}
+			$('#sideTooltipdivWrapper').css("background-color",bgcolor);
+			$('.foiColor').css('color', bgcolor);
+
+
+
 		}; //end foi function
 
 
@@ -121,40 +148,40 @@ $(window).bind("load",function(){
 
 		};
 
-		function yearFilter(){
-			// zipp = $('#blackbox').text();
-			year = 2013;
-			console.log(year);
-			subDataByYear = [];
-			z = [];
-			totalAmountYear = 0;
-			y = [];
+		// function yearFilter(){
+		// 	// zipp = $('#blackbox').text();
+		// 	year = 2013;
+		// 	console.log(year);
+		// 	subDataByYear = [];
+		// 	z = [];
+		// 	totalAmountYear = 0;
+		// 	y = [];
 	
-			//iterate through our full dataset to filter by Zip
-			for (var i = 0; i < jdata.length; i++) {
-				if (jdata[i].Zip === year) {
-					subDataByZip.push(jdata[i]);
-					ID = jdata[i].Grantee_ID;
+		// 	//iterate through our full dataset to filter by Zip
+		// 	for (var i = 0; i < jdata.length; i++) {
+		// 		if (jdata[i].Zip === year) {
+		// 			subDataByZip.push(jdata[i]);
+		// 			ID = jdata[i].Grantee_ID;
 	
-					inclusionTest(z, ID);
+		// 			inclusionTest(z, ID);
 
-					var amt = jdata[i].Amount;
-					amt = parseInt(amt);
-					y.push(amt);			
-				}
-			}
+		// 			var amt = jdata[i].Amount;
+		// 			amt = parseInt(amt);
+		// 			y.push(amt);			
+		// 		}
+		// 	}
 
-			// the logic to determine aggregated sums by FOI!
-			numGrants = subDataByZip.length;
-			numOrgs = z.length;
-			for (var i = 0; i < y.length; i++) {
-				totalAmount = totalAmount + y[i];
-			}
-			console.log("number of orgs", numOrgs);
-			console.log("num of grants", numGrants);
-			console.log("total awarded", totalAmount);
+		// 	// the logic to determine aggregated sums by FOI!
+		// 	numGrants = subDataByZip.length;
+		// 	numOrgs = z.length;
+		// 	for (var i = 0; i < y.length; i++) {
+		// 		totalAmount = totalAmount + y[i];
+		// 	}
+		// 	console.log("number of orgs", numOrgs);
+		// 	console.log("num of grants", numGrants);
+		// 	console.log("total awarded", totalAmount);
 
-		};
+		// };
 
 
 
@@ -206,8 +233,8 @@ $(window).bind("load",function(){
 							+ '<h3>Number of Recipients</h3>' + numberOfRecipients 
 							+ '<h3>Total Number of Grants Awarded</h3>' + totalNumberOfGrantsAwarded
 							+ "<h3>% of Year's Grant Money</h3>" + percentOfYearGrantMoney;
-						})
-					  .css('display','block');
+						});
+
 		layer.setStyle({ // highlight the feature
 			weight: 5,
 			color: '#666',
@@ -233,7 +260,7 @@ $(window).bind("load",function(){
 						2752 \
 						<h3>Total Funds Awarded</h3> \
 						$60,000	');
-		
+		$('#sideTooltipdivWrapper').css("background-color", '#a4045e');
 		if (!L.Browser.ie && !L.Browser.opera) {
 			layer.bringToFront();
 		}
