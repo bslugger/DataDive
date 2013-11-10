@@ -1,4 +1,4 @@
-function loaded() {
+$(window).bind("load",function(){
 	var jdata;
     $.getJSON("data/aaacfData.json", function(data){
         jdata = data;
@@ -38,6 +38,6 @@ function loaded() {
 	// 	$('.results').remove();
 	// 	getShot();
 	// });
-}
 
-$(document).ready(loaded);
+
+});
