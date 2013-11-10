@@ -2,14 +2,10 @@ function loaded() {
 
 $(window).bind("load",function(){
 	var jdata;
+	//getting our json data
     $.getJSON("data/aaacfData.json", function(data){
         jdata = data;
     });
-
-	// d3.json('data/aaacfData.json', function(data) {
-	// 	jdata = data;
-	// 	return jdata;
-	// });
 	
 	function generateMap() {
 		//update map
@@ -27,9 +23,8 @@ $(window).bind("load",function(){
 	var a = [];
 
 	function foi(){
-		console.log('button clicked');
 		foiData = $(this).data('foi');
-		console.log(foiData);
+		console.log('button clicked: ',foiData);
 		if (foiData != 'all') {
 			$('#foi6').removeClass('hidden');
 		} else {
@@ -38,10 +33,13 @@ $(window).bind("load",function(){
 		// $('.map').remove();
 		// generateMap();
 
+		//clear any previous data inside subData and a, which act as our filtered results
 		subData = [];
 		a = [];
 		totalAmount = 0;
 		s = [];
+
+		//iterate through our full dataset to filter by FOI
 		for (var i = 0; i < jdata.length; i++) {
 			if (jdata[i].Field_aggregate === foiData) {
 				subData.push(jdata[i]);
@@ -57,9 +55,9 @@ $(window).bind("load",function(){
 				amt = parseInt(amt);
 				a.push(amt);			
 				}
-		};
+			};
 
-		// the logic!
+		// the logic to determine aggregated sums by FOI!
 		numGrants = subData.length;
 		numOrgs = s.length;
 		for (var i = 0; i < a.length; i++) {
@@ -68,10 +66,19 @@ $(window).bind("load",function(){
 		console.log("number of orgs", numOrgs);
 		console.log("num of grants", numGrants);
 		console.log("total awarded", totalAmount);
-	}
+	} //end foi function
 
 
 	$('.foi').on('click', foi);
+
+	
+	//the function to filter by zip code
+	function zip(){
+
+	}
+
+
+	$('.zip').on('hover', zip);
 
 	
 	// function sub(){
