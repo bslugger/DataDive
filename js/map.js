@@ -1,7 +1,7 @@
 $(window).bind("load",function(){
 
 	var map = L.map('map').setView([42.281389, -83.748333], 11);
-	var zip;
+	var zip = 0;
 
 	geojsonFeature = d3.json('data/zip.json',function(data){
 		L.geoJson(data).addTo(map);
