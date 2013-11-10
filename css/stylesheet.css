@@ -33,7 +33,7 @@ body{
 }
 #sideTooltipdiv{
 	position:relative;
-	background: rgb(251,180,0	);
+	/* background: rgb(251,180,0	); */
 	width:300px;
 	height:700px;
 	float:right;
