@@ -31,20 +31,31 @@
 		</div>
 		<div id="chartdiv">
 			<div id="map"></div>
-			<p>This is where the map goes</p>
 		</div>
-		<div id="sideTooltipdiv"><p>This is the side tooltip</p></div>
-		<div id="sliderdiv"><p>This is for the slider</p></div>
+		<div id="sideTooltipdiv">
+			<div id="blackbox"></div>
+		</div>
+		<div id="sliderdiv">
+			<p>
+			  <label for="year">Year:</label>
+			  <input type="text" id="year" style="background: rgb(45,42,43) border: 0; color: #f6931f; font-weight: bold;" />
+			</p>
+			<div id="slider"></div>
+		</div>
 		<div id="bottomTooltipdiv"><p>This is the bottom tooltip</p></div>
 		
 <!-- End Document
 ================================================== -->
+
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>	
+		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
         <script type="text/javascript" src="d3/d3.v3.js"></script>	
 		<script type="text/javascript" src="js/colorbrewer.js"></script>
 		<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
 		<script type="text/javascript" src="js/map.js"></script>
 		<script type="text/javascript" src="js/logic.js"></script>
+		<script type="text/javascript" src="js/ui.js"></script>
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 	</body>
 	
 </html>

@@ -1,5 +1,6 @@
 body{
 	background: #f4f0eb;
+	
 }
 .foi{
 	width:15%;
@@ -31,12 +32,20 @@ body{
 	float:left;
 }
 #sideTooltipdiv{
-	/* display:none; */
 	position:relative;
 	background: rgb(251,180,0	);
 	width:300px;
 	height:700px;
 	float:right;
+}
+#blackbox{
+	display:none;
+	height: 378px;
+	width: 224px;
+	background:rgb(45,42,43);
+	margin:0 auto;
+	color:white;
+	padding:18px 12px;
 }
 #bottomTooltipdiv{
 	position:relative;

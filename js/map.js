@@ -30,9 +30,19 @@ $(window).bind("load",function(){
 		//This is what happens on mouseover
 		function highlightFeature(e){
 		var layer = e.target;
-		var div = document.getElementById( 'sideTooltipdiv' );
-		// div.insertAdjacentHTML('beforeBegin',layer.feature.properties.NAME);
-		
+		var year = 2013;
+		var numberOfRecipients = 0;
+		var totalNumberOfGrantsAwarded = 0;
+		var percentOfYearGrantMoney = 0;
+		//Here is where the tooltip message is generated. We need to put the aggregated information in here.
+		$("#blackbox").html(function(){
+							return '<h1>In ' + year + ', <br>' 
+							+ layer.feature.properties.NAME + ' received: </h1>'
+							+ '<h3>Number of Recipients</h3>' + numberOfRecipients 
+							+ '<h3>Total Number of Grants Awarded</h3>' + totalNumberOfGrantsAwarded
+							+ "<h3>% of Year's Grant Money</h3>" + percentOfYearGrantMoney;
+						})
+					  .css('display','block');
 		layer.setStyle({ // highlight the feature
 			weight: 5,
 			color: '#666',
@@ -50,12 +60,12 @@ $(window).bind("load",function(){
 		function resetHighlight(e) {
 		
 		var layer = e.target;
-		
+		$("#blackbox").css('display','none');
 		layer.setStyle({ // highlight the feature
 			weight: 1,
 			dashArray: '',
 			color:"white",
-			fillColor:"black",
+			fillColor:'rgb(45,42,43)',
 			fillOpacity: 1,
 			// border-color: "white";	
 		});
@@ -72,7 +82,7 @@ $(window).bind("load",function(){
 		onEachFeature:onEachFeature,
 		style: function(feature) {
 			switch (feature.properties.NAME) {
-				default: return {color:"white",fillColor:"black",weight:1,fillOpacity:1}
+				default: return {color:"white",fillColor:'rgb(45,42,43)',weight:1,fillOpacity:1}
 			}
 		}
 		}).addTo(map);
