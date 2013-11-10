@@ -5,15 +5,24 @@ $(window).bind("load",function(){
 	//This loads in the geoJSON data
 	geojsonFeature = d3.json('data/zip.json',function(data){
 		//Start Edgar's Code-----------------------------------------------------------------------------
-		var jdata;
+
+		
 		//getting our json data
-		$.getJSON("data/aaacfData.json", function(data){
-			jdata = data;
+		$.getJSON("data/aaacfData.json", function(grantData){
+			jdata = grantData;
+			return jdata;
 		});
 		
-		function generateMap() {
-			//update map
-		}
+
+		function inclusionTest(yourList,dataID){
+			//create the logic for inclusion in set to not count duplicates
+			if (yourList.indexOf(dataID) > -1) {
+				//do nothing
+			} else {
+				yourList.push(dataID);
+			}
+			return yourList;
+		};
 
 		//create a subset of data by FOI
 		var foiData = 'all';
@@ -22,11 +31,11 @@ $(window).bind("load",function(){
 		var subData = [];
 		var totalAmount = 0;
 		var numOrgs;
-		var s = [];
+		var s = []; // list that will be used to check for foi inclusion
 		var numGrants;
-		var a = [];
+		var a = []; // list that will be used to calculate total amount by FOI
 
-		function foi(){
+		function foiFilter(){
 			foiData = $(this).data('foi');
 			console.log('button clicked: ',foiData);
 			if (foiData != 'all') {
@@ -34,8 +43,6 @@ $(window).bind("load",function(){
 			} else {
 				$('#foi6').addClass('hidden');
 			}
-			// $('.map').remove();
-			// generateMap();
 
 			//clear any previous data inside subData and a, which act as our filtered results
 			subData = [];
@@ -49,12 +56,8 @@ $(window).bind("load",function(){
 					subData.push(jdata[i]);
 					ID = jdata[i].Grantee_ID;
 
-					//create the logic for inclusion in set to not count duplicates
-					if (s.indexOf(ID) > -1) {
-						//do nothing
-					} else {
-						s.push(ID);
-					}
+					inclusionTest(s,ID);
+
 					var amt = jdata[i].Amount;
 					amt = parseInt(amt);
 					a.push(amt);			
@@ -70,21 +73,58 @@ $(window).bind("load",function(){
 			console.log("number of orgs", numOrgs);
 			console.log("num of grants", numGrants);
 			console.log("total awarded", totalAmount);
-		} //end foi function
+		}; //end foi function
 
 
-		$('.foi').on('click', foi);
+		$('.foi').on('click', foiFilter);
 
-		
+		var zipp;
+		subDataByZip = [];
+		z = []; // list used to check for org ID inclusion by zip
+		totalAmountZip = 0;
+		y = []; // list used to hold total amount of grant money by zip
+
+
 		//the function to filter by zip code
-		function zipfilter(){
-			// console.log(zip);
+		function zipFilter(){
+			// zipp = $('#blackbox').text();
+			zipp = 48104;
+			console.log(zipp);
+			subDataByZip = [];
+			z = [];
+			totalAmountZip = 0;
+			y = [];
+	
+			//iterate through our full dataset to filter by Zip
+			for (var i = 0; i < jdata.length; i++) {
+				if (jdata[i].Zip === zipp) {
+					subDataByZip.push(jdata[i]);
+					ID = jdata[i].Grantee_ID;
+	
+					inclusionTest(z, ID);
 
-		}
-		zipfilter();
+					var amt = jdata[i].Amount;
+					amt = parseInt(amt);
+					y.push(amt);			
+				}
+			}
+
+			// the logic to determine aggregated sums by FOI!
+			numGrants = subDataByZip.length;
+			numOrgs = z.length;
+			for (var i = 0; i < y.length; i++) {
+				totalAmount = totalAmount + y[i];
+			}
+			console.log("number of orgs", numOrgs);
+			console.log("num of grants", numGrants);
+			console.log("total awarded", totalAmount);
+
+		};
+
+		// zipFilter();
 		//end Edgar's Code------------------------------------------------------------------
 
-		$('.zip').on('hover', zipfilter);		
+		// $('.zip').on('hover', zipfilter);		
 		L.geoJson(data).addTo(map);
 	
 		//This draws the map itself at a specified position. 
@@ -121,7 +161,7 @@ $(window).bind("load",function(){
 		var totalNumberOfGrantsAwarded = 0;
 		var percentOfYearGrantMoney = 0;
 		//Here is where the tooltip message is generated. We need to put the aggregated information in here.
-		$("#blackbox").html(function(){
+		$("#blackbox").empty().html(function(){
 							return '<h1>In ' + year + ', <br>' 
 							+ layer.feature.properties.NAME + ' received: </h1>'
 							+ '<h3>Number of Recipients</h3>' + numberOfRecipients 
