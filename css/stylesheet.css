@@ -13,6 +13,14 @@ body{
 	background: #f4f0eb;
 	font-family:"adelle_basic",sans-serif;
 }
+
+.topBar {
+	width: 100%;
+	border-bottom: 15px solid #a4045e;
+}
+.topBar h1 {
+	margin: 0px;
+}
 .foi{
 	width:15%;
 	padding: 1em;
@@ -109,9 +117,12 @@ tr:nth-child(even) {
 	color: rgb(228,118,104);
 }
 #foi5 {
-	color: rgb(230,229,81);
+	color: rgb(26,46,90);
 }
 #foi6 {
+	color: rgb(230,229,81);
+}
+#foi7 {
 	color: white;
 	background-color: rgb(219,43,2);
 }

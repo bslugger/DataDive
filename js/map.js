@@ -39,9 +39,9 @@ $(window).bind("load",function(){
 			foiData = $(this).data('foi');
 			console.log('button clicked: ',foiData);
 			if (foiData != 'all') {
-				$('#foi6').removeClass('hidden');
+				$('#foi7').removeClass('hidden');
 			} else {
-				$('#foi6').addClass('hidden');
+				$('#foi7').addClass('hidden');
 			}
 
 			//clear any previous data inside subData and a, which act as our filtered results
@@ -92,6 +92,8 @@ $(window).bind("load",function(){
 				bgcolor = '#E47668';		
 			} else if (foiData === 'Seniors') {
 				bgcolor = '#E6E551';		
+			} else if (foiData === 'Other') {
+				bgcolor = '#1A2E5A';
 			} else {
 				bgcolor = '#a4045e';
 			}
