@@ -5,13 +5,26 @@ $(window).bind("load",function(){
 	//This loads in the geoJSON data
 	geojsonFeature = d3.json('data/zip.json',function(data){
 		//Start Edgar's Code-----------------------------------------------------------------------------
-
-		
 		//getting our json data
 		$.getJSON("data/aaacfData.json", function(grantData){
 			jdata = grantData;
 			return jdata;
 		});
+		// function getColor(zip){
+		 // // console.log(jdata)	
+		 // // var d = getFilteredArrayByZip(jdata,foiData,zip);
+		 // // console.log(d);
+		 // var d = 1500;
+		 // return d > 1000 ? '#800026' :
+           // d > 500  ? '#BD0026' :
+           // d > 200  ? '#E31A1C' :
+           // d > 100  ? '#FC4E2A' :
+           // d > 50   ? '#FD8D3C' :
+           // d > 20   ? '#FEB24C' :
+           // d > 10   ? '#FED976' :
+                      // '#FFEDA0';
+		// }
+		
 		//create a subset of data by FOI
 		var foiData = 'all';
 		var zipData;
@@ -217,7 +230,8 @@ $(window).bind("load",function(){
 		function highlightFeature(e){
 		var layer = e.target;
 		var year = $('#slider').slider('option','value');
-		var zip = layer.feature.properties.NAME
+		var zip = layer.feature.properties.NAME;
+		var keyZipInfo = getFilteredArrayByZip(layer,jdata,foiData);
 		var numberOfRecipients = 0;
 		var totalNumberOfGrantsAwarded = 0;
 		var percentOfYearGrantMoney = 0;
@@ -225,11 +239,10 @@ $(window).bind("load",function(){
 		$("#blackbox").empty().html(function(){
 							return '<h1>In ' + year + ', <br>' 
 							+ zip + ' received: </h1>'
-							+ '<h3>Number of Recipients</h3>' + numberOfRecipients 
-							+ '<h3>Total Number of Grants Awarded</h3>' + totalNumberOfGrantsAwarded
-							+ "<h3>% of Year's Grant Money</h3>" + percentOfYearGrantMoney;
+							+ '<h3>Number of Recipients</h3>' + keyZipInfo[0]
+							+ '<h3>Total Number of Grants Awarded</h3>' + keyZipInfo[1]
+							+ "<h3>Total Funds Awarded</h3>" + Currency('$',keyZipInfo[2]);
 						});
-		getArrayOfKeyData(layer,jdata,foiData);
 		layer.setStyle({ // highlight the feature
 			weight: 5,
 			// fillColor: 'white',
@@ -270,6 +283,7 @@ $(window).bind("load",function(){
 		
 		//This is where the default colors and style of the map are defined. 
 		L.geoJson(data, {
+		// console.log('hello');
 		onEachFeature:onEachFeature,
 		style: function(feature) {
 			switch (feature.properties.NAME) {
@@ -277,6 +291,5 @@ $(window).bind("load",function(){
 			}
 		}
 		}).addTo(map);
-
 	});
 });

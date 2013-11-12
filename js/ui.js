@@ -43,7 +43,32 @@ function inclusionTest(yourList,dataID){
 };
 
 //by zip, by year, (by foi,depending) to obtain number of grants, dollar amount of grants, number of recipients
-function getArrayOfKeyData(layer,jdata,foiData){
+// function getFilteredArrayByZip(layer,jdata,foiData,zip){
+	// subDataByZip = [];
+	// z = [];
+	// totalAmountZip = 0;
+	// y = [];
+	// for (var i = 0; i < jdata.length; i++){
+		// if(jdata[i].Zip === zip && (jdata[i].Field_aggregate === foiData || foiData === 'all') && $('#slider').slider('option','value') == parseDate(jdata[i].Effective_Date)){
+			// subDataByZip.push(jdata[i]);
+			// ID = jdata[i].Grantee_ID;
+			
+			// inclusionTest(z, ID);
+			
+			// var amt = jdata[i].Amount;
+			// amt = parseInt(amt);
+			// y.push(amt);
+		// }
+		// }
+		// numGrants = subDataByZip.length;
+		// numOrgs = z.length;
+		// for (var i = 0; i < y.length; i++) {
+				// totalAmountZip += y[i];
+		// }
+	// return totalAmountZip;
+	// // console.log(subDataByZip);
+// }
+function getFilteredArrayByZip(layer,jdata,foiData){
 	subDataByZip = [];
 	z = [];
 	totalAmountZip = 0;
@@ -60,15 +85,14 @@ function getArrayOfKeyData(layer,jdata,foiData){
 			y.push(amt);
 		}
 		}
-		// numGrants = subDataByZip.length;
-		// numOrgs = z.length;
-		// for (var i = 0; i < y.length; i++) {
-				// totalAmountZip += y[i];
-		// }
-	// }
-	console.log(subDataByZip);
+		numGrants = subDataByZip.length;
+		numOrgs = z.length;
+		for (var i = 0; i < y.length; i++) {
+				totalAmountZip += y[i];
+		}
+	return [numOrgs,numGrants,totalAmountZip];
+	// console.log(subDataByZip);
 }
-
 //way of parsing year out of effective_date
 function parseDate(dateString){
 	dateStringLength = dateString.length;
@@ -76,3 +100,6 @@ function parseDate(dateString){
 }		
 //Needed functions
 //color map by above function aggregates for ZIPs
+
+
+
