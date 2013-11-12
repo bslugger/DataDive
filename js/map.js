@@ -218,6 +218,7 @@ $(window).bind("load",function(){
 		var layer = e.target;
 		var year = $('#slider').slider('option','value');
 		var zip = layer.feature.properties.NAME
+		var keyZipInfo = getFilteredArrayByZip(layer,jdata,foiData);
 		var numberOfRecipients = 0;
 		var totalNumberOfGrantsAwarded = 0;
 		var percentOfYearGrantMoney = 0;
@@ -225,11 +226,10 @@ $(window).bind("load",function(){
 		$("#blackbox").empty().html(function(){
 							return '<h1>In ' + year + ', <br>' 
 							+ zip + ' received: </h1>'
-							+ '<h3>Number of Recipients</h3>' + numberOfRecipients 
-							+ '<h3>Total Number of Grants Awarded</h3>' + totalNumberOfGrantsAwarded
-							+ "<h3>% of Year's Grant Money</h3>" + percentOfYearGrantMoney;
+							+ '<h3>Number of Recipients</h3>' + keyZipInfo[0]
+							+ '<h3>Total Number of Grants Awarded</h3>' + keyZipInfo[1]
+							+ "<h3>Total Funds Awarded</h3>" + Currency('$',keyZipInfo[2]);
 						});
-		getArrayOfKeyData(layer,jdata,foiData);
 		layer.setStyle({ // highlight the feature
 			weight: 5,
 			// fillColor: 'white',

@@ -43,7 +43,7 @@ function inclusionTest(yourList,dataID){
 };
 
 //by zip, by year, (by foi,depending) to obtain number of grants, dollar amount of grants, number of recipients
-function getArrayOfKeyData(layer,jdata,foiData){
+function getFilteredArrayByZip(layer,jdata,foiData){
 	subDataByZip = [];
 	z = [];
 	totalAmountZip = 0;
@@ -60,13 +60,13 @@ function getArrayOfKeyData(layer,jdata,foiData){
 			y.push(amt);
 		}
 		}
-		// numGrants = subDataByZip.length;
-		// numOrgs = z.length;
-		// for (var i = 0; i < y.length; i++) {
-				// totalAmountZip += y[i];
-		// }
-	// }
-	console.log(subDataByZip);
+		numGrants = subDataByZip.length;
+		numOrgs = z.length;
+		for (var i = 0; i < y.length; i++) {
+				totalAmountZip += y[i];
+		}
+	return[numOrgs,numGrants,totalAmountZip];
+	// console.log(subDataByZip);
 }
 
 //way of parsing year out of effective_date
