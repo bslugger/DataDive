@@ -8,11 +8,12 @@ $(function() {
 		  step: 1,
 		  slide: function( event, ui ) {
 			$( "#year" ).val( ui.value );
+			
 		  }
 		});
 		$( "#year" ).val( $( "#slider" ).slider( "value" ) );
 	  });
-	  
+
 //This is a function to make dollar amounts look nice.	  
 function Currency(sSymbol, vValue) {
   aDigits = vValue.toFixed().split(".");
@@ -66,6 +67,7 @@ function getDollarAmounts(jdata,zip,foiData){
 		for (var i = 0; i < y.length; i++) {
 				totalAmountZip += y[i];
 		}
+		// console.log(totalAmountZip);
 	return totalAmountZip;
 	// console.log(subDataByZip);
 }

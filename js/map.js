@@ -11,19 +11,22 @@ $(window).bind("load",function(){
 			jdata = grantData;
 			// return jdata;
 		});
+		//This is used to color the map in map.js. Seems to have to be called
+		//inside of this function, but it may not...weird.
+
 		function getColor(jdata,zip,foiData){
 		 // console.log(jdata)	
 		 var d = getDollarAmounts(jdata,zip,foiData);
-		 // console.log(d);
-		 return d > 1000 ? '#800026' :
-           d > 500  ? '#BD0026' :
-           d > 200  ? '#E31A1C' :
-           d > 100  ? '#FC4E2A' :
-           d > 50   ? '#FD8D3C' :
-           d > 20   ? '#FEB24C' :
-           d > 10   ? '#FED976' :
-                      '#FFEDA0';
-		}
+		 console.log(d);
+		 return d > 60000 ? 'rgb(3,78,123)' :
+           d > 50000   ? 'rgb(5,112,176)' :
+           d > 40000   ? 'rgb(54,144,192)' :
+           d > 30000   ? 'rgb(116,169,207)' :
+           d > 20000   ? 'rgb(166,189,219)' :
+           d > 10000   ? 'rgb(208,209,230)' :
+           d > 0       ? 'rgb(208,209,230)' :
+						'rgb(241,238,246)';
+		}	  
 		
 		//create a subset of data by FOI
 		var foiData = 'all';
@@ -115,7 +118,8 @@ $(window).bind("load",function(){
 
 //Defines what happens when an foi button is clicked.
 		$('.foi').on('click', foiFilter);
-
+		
+		
 		var zipp;
 		subDataByZip = [];
 		z = []; // list used to check for org ID inclusion by zip
@@ -241,9 +245,6 @@ $(window).bind("load",function(){
 		var year = $('#slider').slider('option','value');
 		var zip = layer.feature.properties.NAME;
 		var keyZipInfo = getFilteredArrayByZip(layer,jdata,foiData);
-		var numberOfRecipients = 0;
-		var totalNumberOfGrantsAwarded = 0;
-		var percentOfYearGrantMoney = 0;
 		//Here is where the tooltip message is generated. We need to put the aggregated information in here.
 		$("#blackbox").empty().html(function(){
 							return '<h1>In ' + year + ', <br>' 
@@ -283,7 +284,7 @@ $(window).bind("load",function(){
 		}
 		layer.setStyle({ // highlight the feature
 			weight: 1,
-			color: "white",
+			color: "black",
 			fillOpacity: 1,
 			fillColor:getColor(jdata,layer.feature.properties.NAME,foiData)
 		});
@@ -293,14 +294,14 @@ $(window).bind("load",function(){
 		//This is where the default colors and style of the map are defined. 
 		function callbackFunction(jdata){
 			var foiData = 'all';
-		L.geoJson(data, {
-		onEachFeature:onEachFeature,
-		style: function(feature) {
-			switch (feature.properties.NAME) {
-				default: return {color:"white",fillColor:getColor(jdata,feature.properties.NAME,foiData),weight:1,fillOpacity:1}
+			L.geoJson(data, {
+			onEachFeature:onEachFeature,
+			style: function(feature) {
+				switch (feature.properties.NAME) {
+					default: return {color:"black",fillColor:getColor(jdata,feature.properties.NAME,foiData),weight:1,fillOpacity:1}
+				}
 			}
-		}
-		}).addTo(map);
+			}).addTo(map);
 		}
 	});
 });
