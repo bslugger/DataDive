@@ -20,12 +20,13 @@ function Currency(sSymbol, vValue) {
   aDigits[0] = aDigits[0].split("").reverse().join("").replace(/(\d{3})(?=\d)/g,   "$1,").split("").reverse().join("");
   return sSymbol + aDigits.join(".");
 }
+//Generates a table for the bottom tooltip. Needs to be passed the layer, and a dataset of some kind.
 function printOrgs(layer,jdata){
-			listOfOrgs = "<table>"
+			var listOfOrgs = "<table id= 'orgTable'><tr><td>Grantee ID</td><td>Grant Amount</td><td>Date of Grant</td></tr>";
 			for (var i = 0; i < jdata.length; i++) {
 				if(jdata[i].Zip === layer.feature.properties.NAME){
 					listOfOrgs += "<tr><td>" + jdata[i].Grantee_ID + "</td><td>" + Currency('$',jdata[i].Amount) + "</td>";
-					listOfOrgs += "<td>" + jdata[i].Zip + "</td><tr>"
+					listOfOrgs += "<td>" + jdata[i].Effective_Date + "</td><tr>"
 				}
 			}
 			return listOfOrgs + "</table>";

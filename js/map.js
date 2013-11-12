@@ -220,19 +220,23 @@ $(window).bind("load",function(){
 						})
 					  .css('display','block')
 					  .css('height','auto');
+			
+			var newTableObject = document.getElementById('orgTable');
+			sorttable.makeSortable(newTableObject);
 		};
 		
 		//This is what happens on mouseover
 		function highlightFeature(e){
 		var layer = e.target;
 		var year = $('#slider').slider('option','value');
+		var zip = layer.feature.properties.NAME
 		var numberOfRecipients = 0;
 		var totalNumberOfGrantsAwarded = 0;
 		var percentOfYearGrantMoney = 0;
 		//Here is where the tooltip message is generated. We need to put the aggregated information in here.
 		$("#blackbox").empty().html(function(){
 							return '<h1>In ' + year + ', <br>' 
-							+ layer.feature.properties.NAME + ' received: </h1>'
+							+ zip + ' received: </h1>'
 							+ '<h3>Number of Recipients</h3>' + numberOfRecipients 
 							+ '<h3>Total Number of Grants Awarded</h3>' + totalNumberOfGrantsAwarded
 							+ "<h3>% of Year's Grant Money</h3>" + percentOfYearGrantMoney;
