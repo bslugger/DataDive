@@ -79,7 +79,7 @@ $(window).bind("load",function(){
 						+ 'AAACF Impacted: </h1>'
 						+ '<h3>Number of Recipients</h3>' + numOrgs
 						+ '<h3>Total Number of Grants Awarded</h3>' + numGrants
-						+ '<h3>Total Funds Awared</h3>' + totalAmount;
+						+ '<h3>Total Funds Awarded</h3>' + '$' + totalAmount;
 					});
 			var bgcolor = '#a4045e';
 			if (foiData === 'Arts and Culture') {
@@ -91,9 +91,9 @@ $(window).bind("load",function(){
 			} else if (foiData === 'Youth and Education') {
 				bgcolor = '#E47668';		
 			} else if (foiData === 'Seniors') {
-				bgcolor = '#E6E551';		
+				bgcolor = '#1A2E5A';		
 			} else if (foiData === 'Other') {
-				bgcolor = '#1A2E5A';
+				bgcolor = '#E6E551';
 			} else {
 				bgcolor = '#a4045e';
 			}

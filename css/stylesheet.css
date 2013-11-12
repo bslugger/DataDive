@@ -4,12 +4,10 @@
     font-weight: normal;
     font-style: normal;
 }
-
 body{
 	background: #f4f0eb;
 	font-family:"adelle_basic",sans-serif;
 }
-
 .topBar {
 	width: 100%;
 	border-bottom: 15px solid #a4045e;
