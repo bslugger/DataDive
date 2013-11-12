@@ -15,9 +15,7 @@ $(window).bind("load",function(){
 		//inside of this function, but it may not...weird.
 
 		function getColor(jdata,zip,foiData){
-		 // console.log(jdata)	
 		 var d = getDollarAmounts(jdata,zip,foiData);
-		 console.log(d);
 		 return d > 50000 ? 'rgb(2,56,88)' :
            d > 40000   ? 'rgb(4,90,141)' :
            d > 30000   ? 'rgb(5,112,176)' :
@@ -26,7 +24,16 @@ $(window).bind("load",function(){
            d > 0       ? 'rgb(166,189,219)' :
                          'rgb(208,209,230)';
 		}	  
-		
+		$( "#slider" ).on( "slidechange", function( event, ui ) {
+			L.geoJson(data, {
+			onEachFeature:onEachFeature,
+			style: function(feature) {
+				switch (feature.properties.NAME) {
+					default: return {color:"white",fillColor:getColor(jdata,feature.properties.NAME,foiData),weight:1,fillOpacity:1}
+				}
+			}
+			}).addTo(map);
+		});
 		//create a subset of data by FOI
 		var foiData = 'all';
 		var zipData;
@@ -301,6 +308,7 @@ $(window).bind("load",function(){
 				}
 			}
 			}).addTo(map);
+			
 		}
 	});
 });

@@ -8,7 +8,6 @@ $(function() {
 		  step: 1,
 		  slide: function( event, ui ) {
 			$( "#year" ).val( ui.value );
-			
 		  }
 		});
 		$( "#year" ).val( $( "#slider" ).slider( "value" ) );
