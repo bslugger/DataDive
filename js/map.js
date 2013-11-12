@@ -230,7 +230,11 @@ $(window).bind("load",function(){
 		function highlightFeature(e){
 		var layer = e.target;
 		var year = $('#slider').slider('option','value');
+<<<<<<< HEAD
 		var zip = layer.feature.properties.NAME;
+=======
+		var zip = layer.feature.properties.NAME
+>>>>>>> 148fd9a6151cf9414ebed0d2cab115b9e7678c68
 		var keyZipInfo = getFilteredArrayByZip(layer,jdata,foiData);
 		var numberOfRecipients = 0;
 		var totalNumberOfGrantsAwarded = 0;
