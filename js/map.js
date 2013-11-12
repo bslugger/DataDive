@@ -104,7 +104,7 @@ $(window).bind("load",function(){
 
 		}; //end foi function
 
-
+//Defines what happens when an foi button is clicked.
 		$('.foi').on('click', foiFilter);
 
 		var zipp;

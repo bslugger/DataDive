@@ -24,8 +24,7 @@ function Currency(sSymbol, vValue) {
 function printOrgs(layer,jdata,foiData){
 			var listOfOrgs = "<table id= 'orgTable'><tr><td>Grantee ID</td><td>Grant Amount</td><td>Field of Interest</td></tr>";
 			for (var i = 0; i < jdata.length; i++) {
-				
-				// console.log(jdata[i].Field_aggregate)
+				// filter out what is displayed in the bottom pop-up by FOI and Zip Code.
 				if(jdata[i].Zip === layer.feature.properties.NAME && jdata[i].Field_aggregate === foiData || foiData === 'all'){
 					listOfOrgs += "<tr><td>" + jdata[i].Grantee_ID + "</td><td>" + Currency('$',jdata[i].Amount) + "</td>";
 					listOfOrgs += "<td>" + jdata[i].Field_aggregate + "</td><tr>"
@@ -33,3 +32,5 @@ function printOrgs(layer,jdata,foiData){
 			}
 			return listOfOrgs + "</table>";
 		}
+		
+function 
