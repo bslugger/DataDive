@@ -1,29 +1,29 @@
 $(window).bind("load",function(){
 	//This centers the map on Ann Arbor, MI
-	var map = L.map('map').setView([42.281389, -83.748333], 11);
+	var map = L.map('map').setView([42.2, -83.748333], 10);
 	
 	//This loads in the geoJSON data
 	geojsonFeature = d3.json('data/zip.json',function(data){
 		//Start Edgar's Code-----------------------------------------------------------------------------
 		//getting our json data
+		var jdata;
 		$.getJSON("data/aaacfData.json", function(grantData){
 			jdata = grantData;
-			return jdata;
+			// return jdata;
 		});
-		// function getColor(zip){
-		 // // console.log(jdata)	
-		 // // var d = getFilteredArrayByZip(jdata,foiData,zip);
-		 // // console.log(d);
-		 // var d = 1500;
-		 // return d > 1000 ? '#800026' :
-           // d > 500  ? '#BD0026' :
-           // d > 200  ? '#E31A1C' :
-           // d > 100  ? '#FC4E2A' :
-           // d > 50   ? '#FD8D3C' :
-           // d > 20   ? '#FEB24C' :
-           // d > 10   ? '#FED976' :
-                      // '#FFEDA0';
-		// }
+		function getColor(jdata,zip,foiData){
+		 // console.log(jdata)	
+		 var d = getDollarAmounts(jdata,zip,foiData);
+		 // console.log(d);
+		 return d > 1000 ? '#800026' :
+           d > 500  ? '#BD0026' :
+           d > 200  ? '#E31A1C' :
+           d > 100  ? '#FC4E2A' :
+           d > 50   ? '#FD8D3C' :
+           d > 20   ? '#FEB24C' :
+           d > 10   ? '#FED976' :
+                      '#FFEDA0';
+		}
 		
 		//create a subset of data by FOI
 		var foiData = 'all';
@@ -100,7 +100,15 @@ $(window).bind("load",function(){
 			}
 			$('#sideTooltipdivWrapper').css("background-color",bgcolor);
 			$('.foiColor').css('color', bgcolor);
-
+			
+			L.geoJson(data, {
+				onEachFeature:onEachFeature,
+				style: function(feature) {
+					switch (feature.properties.NAME) {
+						default: return {color:"white",fillColor:getColor(jdata,feature.properties.NAME,foiData),weight:1,fillOpacity:1}
+					}
+				}
+			}).addTo(map);
 
 
 		}; //end foi function
@@ -198,7 +206,8 @@ $(window).bind("load",function(){
 	
 		//This draws the map itself at a specified position. 
 		L.tileLayer('http://{s}.tile.cloudmade.com/6a7ab36b926b4fc785f8a957814c8685/997/256/{z}/{x}/{y}.png', {
-			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+			//I don't really like the attribution in the corner, but I am not sure if its necessary. Let's leave it out for now...
+			// attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
 			maxZoom: 18,
 			}).addTo(map);
 			
@@ -276,20 +285,22 @@ $(window).bind("load",function(){
 			weight: 1,
 			color: "white",
 			fillOpacity: 1,
-			fillColor:'rgb(45,42,43)'
+			fillColor:getColor(jdata,layer.feature.properties.NAME,foiData)
 		});
 		// map.info.update(layer.feature.properties); // Update infobox
 		};
-		
+		$.getJSON("data/aaacfData.json", callbackFunction);
 		//This is where the default colors and style of the map are defined. 
+		function callbackFunction(jdata){
+			var foiData = 'all';
 		L.geoJson(data, {
-		// console.log('hello');
 		onEachFeature:onEachFeature,
 		style: function(feature) {
 			switch (feature.properties.NAME) {
-				default: return {color:"white",fillColor:'rgb(45,42,43)',weight:1,fillOpacity:1}
+				default: return {color:"white",fillColor:getColor(jdata,feature.properties.NAME,foiData),weight:1,fillOpacity:1}
 			}
 		}
 		}).addTo(map);
+		}
 	});
 });
