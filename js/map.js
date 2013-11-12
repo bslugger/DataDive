@@ -75,11 +75,11 @@ $(window).bind("load",function(){
 			console.log("total awarded", totalAmount);
 
 			$("#blackbox").empty().html(function(){
-						return '<h1>In the <span class="foiColor">' + foiData + '</span>, <br>' 
+						return '<h1>In <span class="foiColor">' + foiData + '</span>, <br>' 
 						+ 'AAACF Impacted: </h1>'
 						+ '<h3>Number of Recipients</h3>' + numOrgs
 						+ '<h3>Total Number of Grants Awarded</h3>' + numGrants
-						+ '<h3>Total Funds Awarded</h3>' + '$' + totalAmount;
+						+ '<h3>Total Funds Awarded</h3>' + Currency('$',totalAmount);
 					});
 			var bgcolor = '#a4045e';
 			if (foiData === 'Arts and Culture') {
@@ -239,9 +239,9 @@ $(window).bind("load",function(){
 
 		layer.setStyle({ // highlight the feature
 			weight: 5,
-			color: 'yellow',
+			// fillColor: 'white',
 			dashArray: '',
-			fillOpacity: 1
+			fillOpacity: .3
 		});
 		
 		if (!L.Browser.ie && !L.Browser.opera) {

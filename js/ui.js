@@ -13,3 +13,10 @@ $(function() {
 		});
 		$( "#year" ).val( $( "#slider" ).slider( "value" ) );
 	  });
+	  
+//This is a function to make dollar amounts look nice.	  
+function Currency(sSymbol, vValue) {
+  aDigits = vValue.toFixed().split(".");
+  aDigits[0] = aDigits[0].split("").reverse().join("").replace(/(\d{3})(?=\d)/g,   "$1,").split("").reverse().join("");
+  return sSymbol + aDigits.join(".");
+}
