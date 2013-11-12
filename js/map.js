@@ -12,18 +12,6 @@ $(window).bind("load",function(){
 			jdata = grantData;
 			return jdata;
 		});
-		
-
-		function inclusionTest(yourList,dataID){
-			//create the logic for inclusion in set to not count duplicates
-			if (yourList.indexOf(dataID) > -1) {
-				//do nothing
-			} else {
-				yourList.push(dataID);
-			}
-			return yourList;
-		};
-
 		//create a subset of data by FOI
 		var foiData = 'all';
 		var zipData;
@@ -241,7 +229,7 @@ $(window).bind("load",function(){
 							+ '<h3>Total Number of Grants Awarded</h3>' + totalNumberOfGrantsAwarded
 							+ "<h3>% of Year's Grant Money</h3>" + percentOfYearGrantMoney;
 						});
-
+		getArrayOfKeyData(layer,jdata,foiData);
 		layer.setStyle({ // highlight the feature
 			weight: 5,
 			// fillColor: 'white',
