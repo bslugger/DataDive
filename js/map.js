@@ -18,14 +18,13 @@ $(window).bind("load",function(){
 		 // console.log(jdata)	
 		 var d = getDollarAmounts(jdata,zip,foiData);
 		 console.log(d);
-		 return d > 60000 ? 'rgb(3,78,123)' :
-           d > 50000   ? 'rgb(5,112,176)' :
-           d > 40000   ? 'rgb(54,144,192)' :
-           d > 30000   ? 'rgb(116,169,207)' :
-           d > 20000   ? 'rgb(166,189,219)' :
-           d > 10000   ? 'rgb(208,209,230)' :
-           d > 0       ? 'rgb(208,209,230)' :
-						'rgb(241,238,246)';
+		 return d > 50000 ? 'rgb(2,56,88)' :
+           d > 40000   ? 'rgb(4,90,141)' :
+           d > 30000   ? 'rgb(5,112,176)' :
+           d > 20000   ? 'rgb(54,144,192)' :
+           d > 10000   ? 'rgb(116,169,207)' :
+           d > 0       ? 'rgb(166,189,219)' :
+                         'rgb(208,209,230)';
 		}	  
 		
 		//create a subset of data by FOI
@@ -284,7 +283,7 @@ $(window).bind("load",function(){
 		}
 		layer.setStyle({ // highlight the feature
 			weight: 1,
-			color: "black",
+			color: "white",
 			fillOpacity: 1,
 			fillColor:getColor(jdata,layer.feature.properties.NAME,foiData)
 		});
@@ -298,7 +297,7 @@ $(window).bind("load",function(){
 			onEachFeature:onEachFeature,
 			style: function(feature) {
 				switch (feature.properties.NAME) {
-					default: return {color:"black",fillColor:getColor(jdata,feature.properties.NAME,foiData),weight:1,fillOpacity:1}
+					default: return {color:"white",fillColor:getColor(jdata,feature.properties.NAME,foiData),weight:1,fillOpacity:1}
 				}
 			}
 			}).addTo(map);
