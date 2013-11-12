@@ -19,6 +19,9 @@ body{
 }
 .foi{
 	width:15%;
+	font-family:adelle-basic;
+	font-weight:bold;
+	font-size:18px;
 	padding: 1em;
 	background:transparent;
 	border-style: none solid;
