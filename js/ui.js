@@ -24,13 +24,23 @@ function Currency(sSymbol, vValue) {
 function printOrgs(layer,jdata,foiData){
 			var listOfOrgs = "<table id= 'orgTable'><tr><td>Grantee ID</td><td>Grant Amount</td><td>Field of Interest</td></tr>";
 			for (var i = 0; i < jdata.length; i++) {
-				// filter out what is displayed in the bottom pop-up by FOI and Zip Code.
-				if(jdata[i].Zip === layer.feature.properties.NAME && jdata[i].Field_aggregate === foiData || foiData === 'all'){
+				// filter out what is displayed in the bottom pop-up by FOI and Zip Code. Also, year right now, but that can be changed.
+				if(jdata[i].Zip === layer.feature.properties.NAME && (jdata[i].Field_aggregate === foiData || foiData === 'all') && $('#slider').slider('option','value') == parseDate(jdata[i].Effective_Date)){
 					listOfOrgs += "<tr><td>" + jdata[i].Grantee_ID + "</td><td>" + Currency('$',jdata[i].Amount) + "</td>";
 					listOfOrgs += "<td>" + jdata[i].Field_aggregate + "</td><tr>"
 				}
 			}
 			return listOfOrgs + "</table>";
 		}
-		
-function 
+//by zip, by year, (by foi,depending) to obtain number of grants, dollar amount of grants, number of recipients
+function numberOfGrants(layer,jdata,foiData){
+	
+
+}
+//way of parsing year out of effective_date
+function parseDate(dateString){
+	dateStringLength = dateString.length;
+	return dateString.slice(dateStringLength - 4, dateStringLength);
+}		
+//Needed functions
+//color map by above function aggregates for ZIPs
