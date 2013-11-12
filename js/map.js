@@ -216,7 +216,7 @@ $(window).bind("load",function(){
 			layer = e.target;
 			$("#orgList").html(function(){
 							return '<h1>Organizations Awarded Grants<h1>' +
-							printOrgs(layer,jdata);
+							printOrgs(layer,jdata,foiData);
 						})
 					  .css('display','block')
 					  .css('height','auto');
