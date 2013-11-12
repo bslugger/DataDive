@@ -239,7 +239,7 @@ $(window).bind("load",function(){
 
 		layer.setStyle({ // highlight the feature
 			weight: 5,
-			color: '#666',
+			color: 'yellow',
 			dashArray: '',
 			fillOpacity: 1
 		});
@@ -266,7 +266,12 @@ $(window).bind("load",function(){
 		if (!L.Browser.ie && !L.Browser.opera) {
 			layer.bringToFront();
 		}
-		
+		layer.setStyle({ // highlight the feature
+			weight: 1,
+			color: "white",
+			fillOpacity: 1,
+			fillColor:'rgb(45,42,43)'
+		});
 		// map.info.update(layer.feature.properties); // Update infobox
 		};
 		
