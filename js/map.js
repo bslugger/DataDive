@@ -210,15 +210,16 @@ $(window).bind("load",function(){
 				// pointToLayer: pointToLayer
 				});
 			}
-			
+		
 		//This is what happens on click
 		function popupContent(e){
 			layer = e.target;
 			$("#orgList").html(function(){
-							console.log(jdata);
-							return '<h1>Organizations Awarded Grants<h1>';
+							return '<h1>Organizations Awarded Grants<h1>' +
+							printOrgs(layer,jdata);
 						})
-					  .css('display','block');
+					  .css('display','block')
+					  .css('height','auto');
 		};
 		
 		//This is what happens on mouseover

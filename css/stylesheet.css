@@ -78,7 +78,7 @@ body{
 	height: 320px;
 	width: 700px;
 	background:rgb(45,42,43);
-	margin:0 auto;
+	margin:10px auto;
 	color:white;
 	padding:18px 12px;
 }
@@ -122,6 +122,9 @@ tr:nth-child(even) {
 #foi7 {
 	color: white;
 	background-color: rgb(219,43,2);
+}
+td{
+	padding:10px;
 }
 ::-webkit-scrollbar {
 	width: 12px;
