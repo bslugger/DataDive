@@ -33,6 +33,7 @@ body{
 	width:15%;
 	padding: 1em;
 	background:rgb(45,42,43);
+	cursor:pointer;
 }
 #buttondiv{
 	position:relative;
