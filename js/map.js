@@ -16,11 +16,11 @@ $(window).bind("load",function(){
 
 		function getColor(jdata,zip,foiData){
 		 var d = getDollarAmounts(jdata,zip,foiData);
-		 return d > 50000 ? 'rgb(2,56,88)' :
-           d > 40000   ? 'rgb(4,90,141)' :
-           d > 30000   ? 'rgb(5,112,176)' :
-           d > 20000   ? 'rgb(54,144,192)' :
-           d > 10000   ? 'rgb(116,169,207)' :
+		 return d > 100000 ? 'rgb(2,56,88)' :
+           d > 80000   ? 'rgb(4,90,141)' :
+           d > 60000   ? 'rgb(5,112,176)' :
+           d > 40000  ? 'rgb(54,144,192)' :
+           d > 20000   ? 'rgb(116,169,207)' :
            d > 0       ? 'rgb(166,189,219)' :
                          'rgb(208,209,230)';
 		}	  

@@ -100,8 +100,14 @@ function parseDate(dateString){
 	dateStringLength = dateString.length;
 	return dateString.slice(dateStringLength - 4, dateStringLength);
 }		
-//Needed functions
-//color map by above function aggregates for ZIPs
+//Things that ought to be done
+//Figure out exactly how the bottom tooltip should display
+//Roll up data in bottom tooltip??
+
+//things that might be nice to have
+//Way of hitting a play button to show change through the years, like in the Karnataka map.
+//Get the Grantee names
+//Do breakdown by percent of total for grants awarded
 
 
 
