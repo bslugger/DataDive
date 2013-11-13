@@ -159,12 +159,13 @@ $(window).bind("load",function(){
 
 			L.geoJson(data).addTo(map);
 		
-			//This draws the map itself at a specified position. 
+			//This draws the map itself at a specified position. Also that long alphanumeric string is the API key. This may need
+			//to be changed at some point
 			L.tileLayer('http://{s}.tile.cloudmade.com/6a7ab36b926b4fc785f8a957814c8685/997/256/{z}/{x}/{y}.png', {
 				//I don't really like the attribution in the corner, but I am not sure if its necessary. Let's leave it out for now...
 				// attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
 				maxZoom: 18,
-				}).addTo(map);
+			}).addTo(map);
 				
 			//This defines the functions for various interactions with the map
 			function onEachFeature(feature, layer) {

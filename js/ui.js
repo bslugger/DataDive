@@ -11,13 +11,17 @@ $(function() {
 		});
 		$( "#year" ).val( $( "#slider" ).slider( "value" ) );
 	  });
-
 //This is a function to make dollar amounts look nice.	  
 function Currency(sSymbol, vValue) {
   aDigits = vValue.toFixed().split(".");
   aDigits[0] = aDigits[0].split("").reverse().join("").replace(/(\d{3})(?=\d)/g,   "$1,").split("").reverse().join("");
   return sSymbol + aDigits.join(".");
 }
+//way of parsing year out of effective_date
+function parseDate(dateString){
+	dateStringLength = dateString.length;
+	return dateString.slice(dateStringLength - 4, dateStringLength);
+}		
 //Generates a table for the bottom tooltip. Needs to be passed the layer, and a dataset of some kind.
 function printOrgs(layer,jdata,foiData){
 			var listOfOrgs = "<table id= 'orgTable'><tr><td>Grantee ID</td><td>Grant Amount</td><td>Field of Interest</td></tr>";
@@ -40,14 +44,14 @@ function inclusionTest(yourList,dataID){
 	return yourList;
 };
 function getColor(jdata,zip,foiData){
-			 var d = getDollarAmounts(jdata,zip,foiData);
-			 return d > 100000 ? 'rgb(2,56,88)' :
-			   d > 80000   ? 'rgb(4,90,141)' :
-			   d > 60000   ? 'rgb(5,112,176)' :
-			   d > 40000  ? 'rgb(54,144,192)' :
-			   d > 20000   ? 'rgb(116,169,207)' :
-			   d > 0       ? 'rgb(166,189,219)' :
-							 'rgb(208,209,230)';
+	 var d = getDollarAmounts(jdata,zip,foiData);
+	 return d > 100000 ? 'rgb(2,56,88)' :
+	   d > 80000   ? 'rgb(4,90,141)' :
+	   d > 60000   ? 'rgb(5,112,176)' :
+	   d > 40000  ? 'rgb(54,144,192)' :
+	   d > 20000   ? 'rgb(116,169,207)' :
+	   d > 0       ? 'rgb(166,189,219)' :
+					 'rgb(208,209,230)';
 }	  
 //by zip, by year, (by foi,depending) to obtain number of grants, dollar amount of grants, number of recipients
 function getDollarAmounts(jdata,zip,foiData){
@@ -102,11 +106,8 @@ function getFilteredArrayByZip(layer,jdata,foiData){
 		}
 	return [numOrgs,numGrants,totalAmountZip];
 }
-//way of parsing year out of effective_date
-function parseDate(dateString){
-	dateStringLength = dateString.length;
-	return dateString.slice(dateStringLength - 4, dateStringLength);
-}		
+
+
 //Things that ought to be done
 //Figure out exactly how the bottom tooltip should display
 
