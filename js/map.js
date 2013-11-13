@@ -1,6 +1,6 @@
 $(window).bind("load",function(){
 	//This centers the map on Ann Arbor, MI
-	var map = L.map('map').setView([42.2, -83.748333], 10);
+	var map = L.map('map').setView([42.2, -83.748333], 9);
 	
 	//This loads in the geoJSON data
 	d3.json('data/zip.json',function(data){
@@ -155,50 +155,8 @@ $(window).bind("load",function(){
 				console.log("total awarded", totalAmount);
 
 			};
-
-			// function yearFilter(){
-			// 	// zipp = $('#blackbox').text();
-			// 	year = 2013;
-			// 	console.log(year);
-			// 	subDataByYear = [];
-			// 	z = [];
-			// 	totalAmountYear = 0;
-			// 	y = [];
-		
-			// 	//iterate through our full dataset to filter by Zip
-			// 	for (var i = 0; i < jdata.length; i++) {
-			// 		if (jdata[i].Zip === year) {
-			// 			subDataByZip.push(jdata[i]);
-			// 			ID = jdata[i].Grantee_ID;
-		
-			// 			inclusionTest(z, ID);
-
-			// 			var amt = jdata[i].Amount;
-			// 			amt = parseInt(amt);
-			// 			y.push(amt);			
-			// 		}
-			// 	}
-
-			// 	// the logic to determine aggregated sums by FOI!
-			// 	numGrants = subDataByZip.length;
-			// 	numOrgs = z.length;
-			// 	for (var i = 0; i < y.length; i++) {
-			// 		totalAmount = totalAmount + y[i];
-			// 	}
-			// 	console.log("number of orgs", numOrgs);
-			// 	console.log("num of grants", numGrants);
-			// 	console.log("total awarded", totalAmount);
-
-			// };
-
-
-
-
-
-			// zipFilter();
 			//end Edgar's Code------------------------------------------------------------------
 
-			// $('.zip').on('hover', zipfilter);		
 			L.geoJson(data).addTo(map);
 		
 			//This draws the map itself at a specified position. 
@@ -210,13 +168,12 @@ $(window).bind("load",function(){
 				
 			//This defines the functions for various interactions with the map
 			function onEachFeature(feature, layer) {
-					layer.on({
-					mouseover: highlightFeature,
-					mouseout: resetHighlight,
-					click: popupContent,
-					// pointToLayer: pointToLayer
-					});
-				}
+				layer.on({
+				mouseover: highlightFeature,
+				mouseout: resetHighlight,
+				click: popupContent
+				});
+			}
 			
 			//This is what happens on click
 			function popupContent(e){
@@ -237,65 +194,65 @@ $(window).bind("load",function(){
 			
 			//This is what happens on mouseover
 			function highlightFeature(e){
-			var layer = e.target;
-			var year = $('#slider').slider('option','value');
-			var zip = layer.feature.properties.NAME;
-			var keyZipInfo = getFilteredArrayByZip(layer,jdata,foiData);
-			//Here is where the tooltip message is generated. We need to put the aggregated information in here.
-			$("#blackbox").empty().html(function(){
-								return '<h1>In ' + year + ', <br>' 
-								+ zip + ' received: </h1>'
-								+ '<h3>Number of Recipients</h3>' + keyZipInfo[0]
-								+ '<h3>Total Number of Grants Awarded</h3>' + keyZipInfo[1]
-								+ "<h3>Total Funds Awarded</h3>" + Currency('$',keyZipInfo[2]);
-							});
-			layer.setStyle({ // highlight the feature
-				weight: 5,
-				// fillColor: 'white',
-				dashArray: '',
-				fillOpacity: .3
-			});
-			
-			if (!L.Browser.ie && !L.Browser.opera) {
-				layer.bringToFront();
-			}
-			// map.info.update(layer.feature.properties); // Update infobox
+				var layer = e.target;
+				var year = $('#slider').slider('option','value');
+				var zip = layer.feature.properties.NAME;
+				var keyZipInfo = getFilteredArrayByZip(layer,jdata,foiData);
+				//Here is where the tooltip message is generated. We need to put the aggregated information in here.
+				$("#blackbox").empty().html(function(){
+									return '<h1>In ' + year + ', <br>' 
+									+ zip + ' received: </h1>'
+									+ '<h3>Number of Recipients</h3>' + keyZipInfo[0]
+									+ '<h3>Total Number of Grants Awarded</h3>' + keyZipInfo[1]
+									+ "<h3>Total Funds Awarded</h3>" + Currency('$',keyZipInfo[2]);
+								});
+				layer.setStyle({ // highlight the feature
+					weight: 5,
+					// fillColor: 'white',
+					dashArray: '',
+					fillOpacity: .3
+				});
+				
+				if (!L.Browser.ie && !L.Browser.opera) {
+					layer.bringToFront();
+				}
+				// map.info.update(layer.feature.properties); // Update infobox
 			};
 			
 			//This is what happens after you mouseout
 			function resetHighlight(e) {
 			
-			var layer = e.target;
-			$("#blackbox").html('<h1>Over 60 years<br> \
-								the Ann Arbor Area received: </h1> \
-							<h3>Number of Recipients</h3> \
-							 450 \
-							<h3>Total Number of Grants Awarded</h3> \
-							2048 \
-							<h3>Total Funds Awarded</h3> \
-							$11,636,423	');
-			$('#sideTooltipdivWrapper').css("background-color", '#a4045e');
-			if (!L.Browser.ie && !L.Browser.opera) {
-				layer.bringToFront();
-			}
-			layer.setStyle({ // highlight the feature
-				weight: 1,
-				color: "white",
-				fillOpacity: 1,
-				fillColor:getColor(jdata,layer.feature.properties.NAME,foiData)
-			});
-			// map.info.update(layer.feature.properties); // Update infobox
+				var layer = e.target;
+				$("#blackbox").html('<h1>Over 60 years<br> \
+									the Ann Arbor Area received: </h1> \
+								<h3>Number of Recipients</h3> \
+								 450 \
+								<h3>Total Number of Grants Awarded</h3> \
+								2048 \
+								<h3>Total Funds Awarded</h3> \
+								$11,636,423	');
+				$('#sideTooltipdivWrapper').css("background-color", '#a4045e');
+				if (!L.Browser.ie && !L.Browser.opera) {
+					layer.bringToFront();
+				}
+				layer.setStyle({ // highlight the feature
+					weight: 1,
+					color: "white",
+					fillOpacity: 1,
+					fillColor:getColor(jdata,layer.feature.properties.NAME,foiData)
+				});
+				// map.info.update(layer.feature.properties); // Update infobox
 			};
 			
 			//This is where the default colors and style of the map are defined. Existing layer variable is generated
 			//so that it can be removed later to remove layers piling up, as it were.
 			existingLayer = L.geoJson(data, {
-			onEachFeature:onEachFeature,
-			style: function(feature) {
-				switch (feature.properties.NAME) {
-					default: return {color:"white",fillColor:getColor(jdata,feature.properties.NAME,foiData),weight:1,fillOpacity:1}
-				}
-			}
+					onEachFeature:onEachFeature,
+					style: function(feature) {
+						switch (feature.properties.NAME) {
+							default: return {color:"white",fillColor:getColor(jdata,feature.properties.NAME,foiData),weight:1,fillOpacity:1}
+						}
+					}
 			}).addTo(map);
 			
 		}
