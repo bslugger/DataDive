@@ -16,7 +16,7 @@ $(window).bind("load",function(){
 				onEachFeature:onEachFeature,
 				style: function(feature) {
 					switch (feature.properties.NAME) {
-						default: return {color:"white",fillColor:getColor(jdata,feature.properties.NAME,foiData),weight:1,fillOpacity:1}
+						default: return {color:"black",fillColor:getColor(jdata,feature.properties.NAME,foiData),weight:1,fillOpacity:1}
 					}
 				}
 				}).addTo(map);
@@ -46,7 +46,7 @@ $(window).bind("load",function(){
 				a = [];
 				totalAmount = 0;
 				s = [];
-
+				var hash = new Object();
 				//iterate through our full dataset to filter by FOI
 				for (var i = 0; i < jdata.length; i++) {
 					if (jdata[i].Field_aggregate === foiData) {
@@ -54,13 +54,13 @@ $(window).bind("load",function(){
 						ID = jdata[i].Grantee_ID;
 
 						inclusionTest(s,ID);
-
+						getDollarAmountLight(hash,jdata[i],foiData);
 						var amt = jdata[i].Amount;
 						amt = parseInt(amt);
 						a.push(amt);			
 						}
 					};
-
+					
 				// the logic to determine aggregated sums by FOI!
 				numGrants = subData.length;
 				numOrgs = s.length;
@@ -94,16 +94,18 @@ $(window).bind("load",function(){
 				} else {
 					bgcolor = '#a4045e';
 				}
+				
 				$('#sideTooltipdivWrapper').css("background-color",bgcolor);
 				$('.foiColor').css('color', bgcolor);
 				//This thing is slowing everything down a lot, and it's essentially doing what
-				//the above function already did...there must be some way to combine them.
+				//the above function already did...there must be some way to combine them. The problem is in getColor()
+				
 				map.removeLayer(existingLayer);
 				existingLayer = L.geoJson(data, {
 					onEachFeature:onEachFeature,
 					style: function(feature) {
 						switch (feature.properties.NAME) {
-							default: return {color:"black",fillColor:getColor(jdata,feature.properties.NAME,foiData),weight:1,fillOpacity:1}
+							default: return {color:"black",fillColor:getColorLight(hash,feature.properties.NAME),weight:1,fillOpacity:1}
 						}
 					}
 				}).addTo(map);

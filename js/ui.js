@@ -52,11 +52,24 @@ function getColor(jdata,zip,foiData){
 	   d > 20000   ? 'rgb(116,169,207)' :
 	   d > 0       ? 'rgb(166,189,219)' :
 					 'grey';
+}
+function getColorLight(hash,zip){
+	 if(hash[zip]){
+		d = hash[zip];
+	 }
+	 else{
+		return 'grey';
+	 }
+	 return d > 100000 ? 'rgb(2,56,88)' :
+	   d > 80000   ? 'rgb(4,90,141)' :
+	   d > 60000   ? 'rgb(5,112,176)' :
+	   d > 40000  ? 'rgb(54,144,192)' :
+	   d > 20000   ? 'rgb(116,169,207)' :
+	   d > 0       ? 'rgb(166,189,219)' :
+					 'grey';
 }	  
 //by zip, by year, (by foi,depending) to obtain number of grants, dollar amount of grants, number of recipients
 function getDollarAmounts(jdata,zip,foiData){
-	// console.log(jdata);
-	
 	subDataByZip = [];
 	z = [];
 	totalAmountZip = 0;
@@ -80,6 +93,20 @@ function getDollarAmounts(jdata,zip,foiData){
 		}
 	return totalAmountZip;
 }
+//slightly faster way of getting dollar amounts, need to fix ZIP code
+//discrepancy.
+function getDollarAmountLight(hash,datum,foiData){
+		if((datum.Field_aggregate === foiData || foiData === 'all') && $('#slider').slider('option','value') == parseDate(datum.Effective_Date)){
+			
+			if (hash[datum.Zip]){
+				hash[datum.Zip] += datum.Amount;
+			}
+			else{
+				hash[datum.Zip] = datum.Amount;
+			}
+		}
+}
+//end beta get dollars
 function getFilteredArrayByZip(layer,jdata,foiData){
 	subDataByZip = [];
 	z = [];
@@ -110,6 +137,8 @@ function getFilteredArrayByZip(layer,jdata,foiData){
 //Figure out exactly how the bottom tooltip should display
 
 //Roll up data in bottom tooltip??
+
+//Zip parser for the weird area codes with hyphens, right?
 
 //Also, there are some bugs related to the filters. I will go into detail later, 
 //but just play around and you should be able to replicate it.
