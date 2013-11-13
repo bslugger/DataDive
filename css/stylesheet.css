@@ -54,8 +54,8 @@ body{
 }
 #chartdiv{
 	position:relative;
-	width: 650px;
-	height: 471px;
+	width: 900px;
+	height: 400px;
 	float:left;
 }
 #sideTooltipdivWrapper{
@@ -78,7 +78,7 @@ body{
 #orgList{
 	display:none;
 	height: 320px;
-	width: 700px;
+	width: 800px;
 	background:rgb(45,42,43);
 	margin:10px auto;
 	color:white;
@@ -91,8 +91,8 @@ body{
 	float:left;
 }
 #map { 
-	width: 700px;
-	height: 471px;
+	width: 900px;
+	height: 400px;
 	float:left;
 	}
 

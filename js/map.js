@@ -9,16 +9,7 @@ $(window).bind("load",function(){
 		//This is used to color the map in map.js. Seems to have to be called
 		//inside of this function, but it may not...weird.
 		function callbackFunction(jdata){
-			function getColor(jdata,zip,foiData){
-			 var d = getDollarAmounts(jdata,zip,foiData);
-			 return d > 100000 ? 'rgb(2,56,88)' :
-			   d > 80000   ? 'rgb(4,90,141)' :
-			   d > 60000   ? 'rgb(5,112,176)' :
-			   d > 40000  ? 'rgb(54,144,192)' :
-			   d > 20000   ? 'rgb(116,169,207)' :
-			   d > 0       ? 'rgb(166,189,219)' :
-							 'rgb(208,209,230)';
-			}	  
+			
 			$( "#slider" ).on( "slidechange", function( event, ui ) {
 				map.removeLayer(existingLayer);
 				existingLayer = L.geoJson(data, {
@@ -229,9 +220,12 @@ $(window).bind("load",function(){
 			
 			//This is what happens on click
 			function popupContent(e){
-				layer = e.target;
+				var layer = e.target;
+				var year = $('#slider').slider('option','value');
+				var zip = layer.feature.properties.NAME;
 				$("#orgList").html(function(){
-								return '<h1>Organizations Awarded Grants<h1>' +
+								return '<h1>Organizations in ' + zip + ' Awarded Grants (' +
+								year + ')<h1>' + 
 								printOrgs(layer,jdata,foiData);
 							})
 						  .css('display','block')
