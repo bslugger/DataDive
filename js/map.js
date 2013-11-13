@@ -20,7 +20,8 @@ $(window).bind("load",function(){
 							 'rgb(208,209,230)';
 			}	  
 			$( "#slider" ).on( "slidechange", function( event, ui ) {
-				L.geoJson(data, {
+				map.removeLayer(existingLayer);
+				existingLayer = L.geoJson(data, {
 				onEachFeature:onEachFeature,
 				style: function(feature) {
 					switch (feature.properties.NAME) {
@@ -104,8 +105,8 @@ $(window).bind("load",function(){
 				}
 				$('#sideTooltipdivWrapper').css("background-color",bgcolor);
 				$('.foiColor').css('color', bgcolor);
-				
-				L.geoJson(data, {
+				map.removeLayer(existingLayer);
+				existingLayer = L.geoJson(data, {
 					onEachFeature:onEachFeature,
 					style: function(feature) {
 						switch (feature.properties.NAME) {
@@ -292,18 +293,17 @@ $(window).bind("load",function(){
 			// map.info.update(layer.feature.properties); // Update infobox
 			};
 			
-			//This is where the default colors and style of the map are defined. 
-			
-				var foiData = 'all';
-				L.geoJson(data, {
-				onEachFeature:onEachFeature,
-				style: function(feature) {
-					switch (feature.properties.NAME) {
-						default: return {color:"white",fillColor:getColor(jdata,feature.properties.NAME,foiData),weight:1,fillOpacity:1}
-					}
+			//This is where the default colors and style of the map are defined. Existing layer variable is generated
+			//so that it can be removed later to remove layers piling up, as it were.
+			existingLayer = L.geoJson(data, {
+			onEachFeature:onEachFeature,
+			style: function(feature) {
+				switch (feature.properties.NAME) {
+					default: return {color:"white",fillColor:getColor(jdata,feature.properties.NAME,foiData),weight:1,fillOpacity:1}
 				}
-				}).addTo(map);
-				
+			}
+			}).addTo(map);
+			
 		}
 	});
 });

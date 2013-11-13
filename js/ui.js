@@ -118,5 +118,7 @@ function parseDate(dateString){
 //Get the Grantee names
 //Do breakdown by percent of total for grants awarded
 
+//How hard would it be to run some kind of loading indicator?
+
 
 
