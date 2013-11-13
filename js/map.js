@@ -49,7 +49,7 @@ $(window).bind("load",function(){
 				var hash = new Object();
 				//iterate through our full dataset to filter by FOI
 				for (var i = 0; i < jdata.length; i++) {
-					if (jdata[i].Field_aggregate === foiData) {
+					if (jdata[i].Field_aggregate === foiData || foiData == 'all') {
 						subData.push(jdata[i]);
 						ID = jdata[i].Grantee_ID;
 
