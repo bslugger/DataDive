@@ -74,6 +74,7 @@ body{
 	margin:15px auto;
 	color:white;
 	padding:18px 12px;
+	opacity:1;
 }
 #orgList{
 	display:none;

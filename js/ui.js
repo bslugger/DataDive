@@ -51,7 +51,7 @@ function getColor(jdata,zip,foiData){
 	   d > 40000  ? 'rgb(54,144,192)' :
 	   d > 20000   ? 'rgb(116,169,207)' :
 	   d > 0       ? 'rgb(166,189,219)' :
-					 'rgb(208,209,230)';
+					 'grey';
 }	  
 //by zip, by year, (by foi,depending) to obtain number of grants, dollar amount of grants, number of recipients
 function getDollarAmounts(jdata,zip,foiData){
@@ -78,9 +78,7 @@ function getDollarAmounts(jdata,zip,foiData){
 		for (var i = 0; i < y.length; i++) {
 				totalAmountZip += y[i];
 		}
-		// console.log(totalAmountZip);
 	return totalAmountZip;
-	// console.log(subDataByZip);
 }
 function getFilteredArrayByZip(layer,jdata,foiData){
 	subDataByZip = [];
