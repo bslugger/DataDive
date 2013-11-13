@@ -3,312 +3,307 @@ $(window).bind("load",function(){
 	var map = L.map('map').setView([42.2, -83.748333], 10);
 	
 	//This loads in the geoJSON data
-	geojsonFeature = d3.json('data/zip.json',function(data){
+	d3.json('data/zip.json',function(data){
 		//Start Edgar's Code-----------------------------------------------------------------------------
-		//getting our json data
-		var jdata;
-		$.getJSON("data/aaacfData.json", function(grantData){
-			jdata = grantData;
-			// return jdata;
-		});
+		$.getJSON("data/aaacfData.json", callbackFunction);
 		//This is used to color the map in map.js. Seems to have to be called
 		//inside of this function, but it may not...weird.
-
-		function getColor(jdata,zip,foiData){
-		 var d = getDollarAmounts(jdata,zip,foiData);
-		 return d > 100000 ? 'rgb(2,56,88)' :
-           d > 80000   ? 'rgb(4,90,141)' :
-           d > 60000   ? 'rgb(5,112,176)' :
-           d > 40000  ? 'rgb(54,144,192)' :
-           d > 20000   ? 'rgb(116,169,207)' :
-           d > 0       ? 'rgb(166,189,219)' :
-                         'rgb(208,209,230)';
-		}	  
-		$( "#slider" ).on( "slidechange", function( event, ui ) {
-			L.geoJson(data, {
-			onEachFeature:onEachFeature,
-			style: function(feature) {
-				switch (feature.properties.NAME) {
-					default: return {color:"white",fillColor:getColor(jdata,feature.properties.NAME,foiData),weight:1,fillOpacity:1}
-				}
-			}
-			}).addTo(map);
-		});
-		//create a subset of data by FOI
-		var foiData = 'all';
-		var zipData;
-		var yearData = 'all';
-		var subData = [];
-		var totalAmount = 0;
-		var numOrgs;
-		var s = []; // list that will be used to check for foi inclusion
-		var numGrants;
-		var a = []; // list that will be used to calculate total amount by FOI
-
-		function foiFilter(){
-			foiData = $(this).data('foi');
-			console.log('button clicked: ',foiData);
-			if (foiData != 'all') {
-				$('#foi7').removeClass('hidden');
-			} else {
-				$('#foi7').addClass('hidden');
-			}
-
-			//clear any previous data inside subData and a, which act as our filtered results
-			subData = [];
-			a = [];
-			totalAmount = 0;
-			s = [];
-
-			//iterate through our full dataset to filter by FOI
-			for (var i = 0; i < jdata.length; i++) {
-				if (jdata[i].Field_aggregate === foiData) {
-					subData.push(jdata[i]);
-					ID = jdata[i].Grantee_ID;
-
-					inclusionTest(s,ID);
-
-					var amt = jdata[i].Amount;
-					amt = parseInt(amt);
-					a.push(amt);			
-					}
-				};
-
-			// the logic to determine aggregated sums by FOI!
-			numGrants = subData.length;
-			numOrgs = s.length;
-			for (var i = 0; i < a.length; i++) {
-				totalAmount = totalAmount + a[i];
-			}
-			console.log("number of orgs", numOrgs);
-			console.log("num of grants", numGrants);
-			console.log("total awarded", totalAmount);
-
-			$("#blackbox").empty().html(function(){
-						return '<h1>In <span class="foiColor">' + foiData + '</span>, <br>' 
-						+ 'AAACF Impacted: </h1>'
-						+ '<h3>Number of Recipients</h3>' + numOrgs
-						+ '<h3>Total Number of Grants Awarded</h3>' + numGrants
-						+ '<h3>Total Funds Awarded</h3>' + Currency('$',totalAmount);
-					});
-			var bgcolor = '#a4045e';
-			if (foiData === 'Arts and Culture') {
-				bgcolor = '#BCD1E7';
-			} else if (foiData === 'Environment') {
-				bgcolor = '#F7C496';		
-			} else if (foiData === 'Health and Human Services') {
-				bgcolor = '#97BE01';		
-			} else if (foiData === 'Youth and Education') {
-				bgcolor = '#E47668';		
-			} else if (foiData === 'Seniors') {
-				bgcolor = '#1A2E5A';		
-			} else if (foiData === 'Other') {
-				bgcolor = '#E6E551';
-			} else {
-				bgcolor = '#a4045e';
-			}
-			$('#sideTooltipdivWrapper').css("background-color",bgcolor);
-			$('.foiColor').css('color', bgcolor);
-			
-			L.geoJson(data, {
+		function callbackFunction(jdata){
+			function getColor(jdata,zip,foiData){
+			 var d = getDollarAmounts(jdata,zip,foiData);
+			 return d > 100000 ? 'rgb(2,56,88)' :
+			   d > 80000   ? 'rgb(4,90,141)' :
+			   d > 60000   ? 'rgb(5,112,176)' :
+			   d > 40000  ? 'rgb(54,144,192)' :
+			   d > 20000   ? 'rgb(116,169,207)' :
+			   d > 0       ? 'rgb(166,189,219)' :
+							 'rgb(208,209,230)';
+			}	  
+			$( "#slider" ).on( "slidechange", function( event, ui ) {
+				L.geoJson(data, {
 				onEachFeature:onEachFeature,
 				style: function(feature) {
 					switch (feature.properties.NAME) {
 						default: return {color:"white",fillColor:getColor(jdata,feature.properties.NAME,foiData),weight:1,fillOpacity:1}
 					}
 				}
-			}).addTo(map);
-
-
-		}; //end foi function
-
-//Defines what happens when an foi button is clicked.
-		$('.foi').on('click', foiFilter);
-		
-		
-		var zipp;
-		subDataByZip = [];
-		z = []; // list used to check for org ID inclusion by zip
-		totalAmountZip = 0;
-		y = []; // list used to hold total amount of grant money by zip
-
-
-		//the function to filter by zip code
-		function zipFilter(){
-			// zipp = $('#blackbox').text();
-			zipp = 48104;
-			console.log(zipp);
-			subDataByZip = [];
-			z = [];
-			totalAmountZip = 0;
-			y = [];
-	
-			//iterate through our full dataset to filter by Zip
-			for (var i = 0; i < jdata.length; i++) {
-				if (jdata[i].Zip === zipp) {
-					subDataByZip.push(jdata[i]);
-					ID = jdata[i].Grantee_ID;
-	
-					inclusionTest(z, ID);
-
-					var amt = jdata[i].Amount;
-					amt = parseInt(amt);
-					y.push(amt);			
-				}
-			}
-
-			// the logic to determine aggregated sums by FOI!
-			numGrants = subDataByZip.length;
-			numOrgs = z.length;
-			for (var i = 0; i < y.length; i++) {
-				totalAmount = totalAmount + y[i];
-			}
-			console.log("number of orgs", numOrgs);
-			console.log("num of grants", numGrants);
-			console.log("total awarded", totalAmount);
-
-		};
-
-		// function yearFilter(){
-		// 	// zipp = $('#blackbox').text();
-		// 	year = 2013;
-		// 	console.log(year);
-		// 	subDataByYear = [];
-		// 	z = [];
-		// 	totalAmountYear = 0;
-		// 	y = [];
-	
-		// 	//iterate through our full dataset to filter by Zip
-		// 	for (var i = 0; i < jdata.length; i++) {
-		// 		if (jdata[i].Zip === year) {
-		// 			subDataByZip.push(jdata[i]);
-		// 			ID = jdata[i].Grantee_ID;
-	
-		// 			inclusionTest(z, ID);
-
-		// 			var amt = jdata[i].Amount;
-		// 			amt = parseInt(amt);
-		// 			y.push(amt);			
-		// 		}
-		// 	}
-
-		// 	// the logic to determine aggregated sums by FOI!
-		// 	numGrants = subDataByZip.length;
-		// 	numOrgs = z.length;
-		// 	for (var i = 0; i < y.length; i++) {
-		// 		totalAmount = totalAmount + y[i];
-		// 	}
-		// 	console.log("number of orgs", numOrgs);
-		// 	console.log("num of grants", numGrants);
-		// 	console.log("total awarded", totalAmount);
-
-		// };
-
-
-
-
-
-		// zipFilter();
-		//end Edgar's Code------------------------------------------------------------------
-
-		// $('.zip').on('hover', zipfilter);		
-		L.geoJson(data).addTo(map);
-	
-		//This draws the map itself at a specified position. 
-		L.tileLayer('http://{s}.tile.cloudmade.com/6a7ab36b926b4fc785f8a957814c8685/997/256/{z}/{x}/{y}.png', {
-			//I don't really like the attribution in the corner, but I am not sure if its necessary. Let's leave it out for now...
-			// attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-			maxZoom: 18,
-			}).addTo(map);
-			
-		//This defines the functions for various interactions with the map
-		function onEachFeature(feature, layer) {
-				layer.on({
-				mouseover: highlightFeature,
-				mouseout: resetHighlight,
-				click: popupContent,
-				// pointToLayer: pointToLayer
-				});
-			}
-		
-		//This is what happens on click
-		function popupContent(e){
-			layer = e.target;
-			$("#orgList").html(function(){
-							return '<h1>Organizations Awarded Grants<h1>' +
-							printOrgs(layer,jdata,foiData);
-						})
-					  .css('display','block')
-					  .css('height','auto');
-			
-			var newTableObject = document.getElementById('orgTable');
-			sorttable.makeSortable(newTableObject);
-		};
-		
-		//This is what happens on mouseover
-		function highlightFeature(e){
-		var layer = e.target;
-		var year = $('#slider').slider('option','value');
-		var zip = layer.feature.properties.NAME;
-		var keyZipInfo = getFilteredArrayByZip(layer,jdata,foiData);
-		//Here is where the tooltip message is generated. We need to put the aggregated information in here.
-		$("#blackbox").empty().html(function(){
-							return '<h1>In ' + year + ', <br>' 
-							+ zip + ' received: </h1>'
-							+ '<h3>Number of Recipients</h3>' + keyZipInfo[0]
-							+ '<h3>Total Number of Grants Awarded</h3>' + keyZipInfo[1]
-							+ "<h3>Total Funds Awarded</h3>" + Currency('$',keyZipInfo[2]);
-						});
-		layer.setStyle({ // highlight the feature
-			weight: 5,
-			// fillColor: 'white',
-			dashArray: '',
-			fillOpacity: .3
-		});
-		
-		if (!L.Browser.ie && !L.Browser.opera) {
-			layer.bringToFront();
-		}
-		// map.info.update(layer.feature.properties); // Update infobox
-		};
-		
-		//This is what happens after you mouseout
-		function resetHighlight(e) {
-		
-		var layer = e.target;
-		$("#blackbox").html('<h1>Over 60 years<br> \
-							the Ann Arbor Area received: </h1> \
-						<h3>Number of Recipients</h3> \
-						 2000 \
-						<h3>Total Number of Grants Awarded</h3> \
-						2752 \
-						<h3>Total Funds Awarded</h3> \
-						$60,000	');
-		$('#sideTooltipdivWrapper').css("background-color", '#a4045e');
-		if (!L.Browser.ie && !L.Browser.opera) {
-			layer.bringToFront();
-		}
-		layer.setStyle({ // highlight the feature
-			weight: 1,
-			color: "white",
-			fillOpacity: 1,
-			fillColor:getColor(jdata,layer.feature.properties.NAME,foiData)
-		});
-		// map.info.update(layer.feature.properties); // Update infobox
-		};
-		$.getJSON("data/aaacfData.json", callbackFunction);
-		//This is where the default colors and style of the map are defined. 
-		function callbackFunction(jdata){
+				}).addTo(map);
+			});
+			//create a subset of data by FOI
 			var foiData = 'all';
-			L.geoJson(data, {
-			onEachFeature:onEachFeature,
-			style: function(feature) {
-				switch (feature.properties.NAME) {
-					default: return {color:"white",fillColor:getColor(jdata,feature.properties.NAME,foiData),weight:1,fillOpacity:1}
+			var zipData;
+			var yearData = 'all';
+			var subData = [];
+			var totalAmount = 0;
+			var numOrgs;
+			var s = []; // list that will be used to check for foi inclusion
+			var numGrants;
+			var a = []; // list that will be used to calculate total amount by FOI
+
+			function foiFilter(){
+				foiData = $(this).data('foi');
+				console.log('button clicked: ',foiData);
+				if (foiData != 'all') {
+					$('#foi7').removeClass('hidden');
+				} else {
+					$('#foi7').addClass('hidden');
 				}
-			}
-			}).addTo(map);
+
+				//clear any previous data inside subData and a, which act as our filtered results
+				subData = [];
+				a = [];
+				totalAmount = 0;
+				s = [];
+
+				//iterate through our full dataset to filter by FOI
+				for (var i = 0; i < jdata.length; i++) {
+					if (jdata[i].Field_aggregate === foiData) {
+						subData.push(jdata[i]);
+						ID = jdata[i].Grantee_ID;
+
+						inclusionTest(s,ID);
+
+						var amt = jdata[i].Amount;
+						amt = parseInt(amt);
+						a.push(amt);			
+						}
+					};
+
+				// the logic to determine aggregated sums by FOI!
+				numGrants = subData.length;
+				numOrgs = s.length;
+				for (var i = 0; i < a.length; i++) {
+					totalAmount = totalAmount + a[i];
+				}
+				console.log("number of orgs", numOrgs);
+				console.log("num of grants", numGrants);
+				console.log("total awarded", totalAmount);
+
+				$("#blackbox").empty().html(function(){
+							return '<h1>In <span class="foiColor">' + foiData + '</span>, <br>' 
+							+ 'AAACF Impacted: </h1>'
+							+ '<h3>Number of Recipients</h3>' + numOrgs
+							+ '<h3>Total Number of Grants Awarded</h3>' + numGrants
+							+ '<h3>Total Funds Awarded</h3>' + Currency('$',totalAmount);
+						});
+				var bgcolor = '#a4045e';
+				if (foiData === 'Arts and Culture') {
+					bgcolor = '#BCD1E7';
+				} else if (foiData === 'Environment') {
+					bgcolor = '#F7C496';		
+				} else if (foiData === 'Health and Human Services') {
+					bgcolor = '#97BE01';		
+				} else if (foiData === 'Youth and Education') {
+					bgcolor = '#E47668';		
+				} else if (foiData === 'Seniors') {
+					bgcolor = '#1A2E5A';		
+				} else if (foiData === 'Other') {
+					bgcolor = '#E6E551';
+				} else {
+					bgcolor = '#a4045e';
+				}
+				$('#sideTooltipdivWrapper').css("background-color",bgcolor);
+				$('.foiColor').css('color', bgcolor);
+				
+				L.geoJson(data, {
+					onEachFeature:onEachFeature,
+					style: function(feature) {
+						switch (feature.properties.NAME) {
+							default: return {color:"white",fillColor:getColor(jdata,feature.properties.NAME,foiData),weight:1,fillOpacity:1}
+						}
+					}
+				}).addTo(map);
+
+
+			}; //end foi function
+
+	//Defines what happens when an foi button is clicked.
+			$('.foi').on('click', foiFilter);
 			
+			
+			var zipp;
+			subDataByZip = [];
+			z = []; // list used to check for org ID inclusion by zip
+			totalAmountZip = 0;
+			y = []; // list used to hold total amount of grant money by zip
+
+
+			//the function to filter by zip code
+			function zipFilter(){
+				// zipp = $('#blackbox').text();
+				zipp = 48104;
+				console.log(zipp);
+				subDataByZip = [];
+				z = [];
+				totalAmountZip = 0;
+				y = [];
+		
+				//iterate through our full dataset to filter by Zip
+				for (var i = 0; i < jdata.length; i++) {
+					if (jdata[i].Zip === zipp) {
+						subDataByZip.push(jdata[i]);
+						ID = jdata[i].Grantee_ID;
+		
+						inclusionTest(z, ID);
+
+						var amt = jdata[i].Amount;
+						amt = parseInt(amt);
+						y.push(amt);			
+					}
+				}
+
+				// the logic to determine aggregated sums by FOI!
+				numGrants = subDataByZip.length;
+				numOrgs = z.length;
+				for (var i = 0; i < y.length; i++) {
+					totalAmount = totalAmount + y[i];
+				}
+				console.log("number of orgs", numOrgs);
+				console.log("num of grants", numGrants);
+				console.log("total awarded", totalAmount);
+
+			};
+
+			// function yearFilter(){
+			// 	// zipp = $('#blackbox').text();
+			// 	year = 2013;
+			// 	console.log(year);
+			// 	subDataByYear = [];
+			// 	z = [];
+			// 	totalAmountYear = 0;
+			// 	y = [];
+		
+			// 	//iterate through our full dataset to filter by Zip
+			// 	for (var i = 0; i < jdata.length; i++) {
+			// 		if (jdata[i].Zip === year) {
+			// 			subDataByZip.push(jdata[i]);
+			// 			ID = jdata[i].Grantee_ID;
+		
+			// 			inclusionTest(z, ID);
+
+			// 			var amt = jdata[i].Amount;
+			// 			amt = parseInt(amt);
+			// 			y.push(amt);			
+			// 		}
+			// 	}
+
+			// 	// the logic to determine aggregated sums by FOI!
+			// 	numGrants = subDataByZip.length;
+			// 	numOrgs = z.length;
+			// 	for (var i = 0; i < y.length; i++) {
+			// 		totalAmount = totalAmount + y[i];
+			// 	}
+			// 	console.log("number of orgs", numOrgs);
+			// 	console.log("num of grants", numGrants);
+			// 	console.log("total awarded", totalAmount);
+
+			// };
+
+
+
+
+
+			// zipFilter();
+			//end Edgar's Code------------------------------------------------------------------
+
+			// $('.zip').on('hover', zipfilter);		
+			L.geoJson(data).addTo(map);
+		
+			//This draws the map itself at a specified position. 
+			L.tileLayer('http://{s}.tile.cloudmade.com/6a7ab36b926b4fc785f8a957814c8685/997/256/{z}/{x}/{y}.png', {
+				//I don't really like the attribution in the corner, but I am not sure if its necessary. Let's leave it out for now...
+				// attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+				maxZoom: 18,
+				}).addTo(map);
+				
+			//This defines the functions for various interactions with the map
+			function onEachFeature(feature, layer) {
+					layer.on({
+					mouseover: highlightFeature,
+					mouseout: resetHighlight,
+					click: popupContent,
+					// pointToLayer: pointToLayer
+					});
+				}
+			
+			//This is what happens on click
+			function popupContent(e){
+				layer = e.target;
+				$("#orgList").html(function(){
+								return '<h1>Organizations Awarded Grants<h1>' +
+								printOrgs(layer,jdata,foiData);
+							})
+						  .css('display','block')
+						  .css('height','auto');
+				
+				var newTableObject = document.getElementById('orgTable');
+				sorttable.makeSortable(newTableObject);
+			};
+			
+			//This is what happens on mouseover
+			function highlightFeature(e){
+			var layer = e.target;
+			var year = $('#slider').slider('option','value');
+			var zip = layer.feature.properties.NAME;
+			var keyZipInfo = getFilteredArrayByZip(layer,jdata,foiData);
+			//Here is where the tooltip message is generated. We need to put the aggregated information in here.
+			$("#blackbox").empty().html(function(){
+								return '<h1>In ' + year + ', <br>' 
+								+ zip + ' received: </h1>'
+								+ '<h3>Number of Recipients</h3>' + keyZipInfo[0]
+								+ '<h3>Total Number of Grants Awarded</h3>' + keyZipInfo[1]
+								+ "<h3>Total Funds Awarded</h3>" + Currency('$',keyZipInfo[2]);
+							});
+			layer.setStyle({ // highlight the feature
+				weight: 5,
+				// fillColor: 'white',
+				dashArray: '',
+				fillOpacity: .3
+			});
+			
+			if (!L.Browser.ie && !L.Browser.opera) {
+				layer.bringToFront();
+			}
+			// map.info.update(layer.feature.properties); // Update infobox
+			};
+			
+			//This is what happens after you mouseout
+			function resetHighlight(e) {
+			
+			var layer = e.target;
+			$("#blackbox").html('<h1>Over 60 years<br> \
+								the Ann Arbor Area received: </h1> \
+							<h3>Number of Recipients</h3> \
+							 450 \
+							<h3>Total Number of Grants Awarded</h3> \
+							2048 \
+							<h3>Total Funds Awarded</h3> \
+							$11,636,423	');
+			$('#sideTooltipdivWrapper').css("background-color", '#a4045e');
+			if (!L.Browser.ie && !L.Browser.opera) {
+				layer.bringToFront();
+			}
+			layer.setStyle({ // highlight the feature
+				weight: 1,
+				color: "white",
+				fillOpacity: 1,
+				fillColor:getColor(jdata,layer.feature.properties.NAME,foiData)
+			});
+			// map.info.update(layer.feature.properties); // Update infobox
+			};
+			
+			//This is where the default colors and style of the map are defined. 
+			
+				var foiData = 'all';
+				L.geoJson(data, {
+				onEachFeature:onEachFeature,
+				style: function(feature) {
+					switch (feature.properties.NAME) {
+						default: return {color:"white",fillColor:getColor(jdata,feature.properties.NAME,foiData),weight:1,fillOpacity:1}
+					}
+				}
+				}).addTo(map);
+				
 		}
 	});
 });

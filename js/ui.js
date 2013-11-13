@@ -102,7 +102,16 @@ function parseDate(dateString){
 }		
 //Things that ought to be done
 //Figure out exactly how the bottom tooltip should display
+
 //Roll up data in bottom tooltip??
+
+//Also, there are some bugs related to the filters. I will go into detail later, 
+//but just play around and you should be able to replicate it.
+
+//Also, things move a little slow. There needs to be some way of speeding
+//up the load time following button pushes and what-not.
+
+//Add legend with color coding, maybe.
 
 //things that might be nice to have
 //Way of hitting a play button to show change through the years, like in the Karnataka map.
