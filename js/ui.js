@@ -21,7 +21,11 @@ function Currency(sSymbol, vValue) {
 function parseDate(dateString){
 	dateStringLength = dateString.length;
 	return dateString.slice(dateStringLength - 4, dateStringLength);
-}		
+}	
+//parse ZIPs
+function parseZIP(zip){
+	return zip.slice(0,5);
+}	
 //Generates a table for the bottom tooltip. Needs to be passed the layer, and a dataset of some kind.
 function printOrgs(layer,jdata,foiData){
 			var listOfOrgs = "<table id= 'orgTable'><tr><td>Grantee ID</td><td>Grant Amount</td><td>Field of Interest</td></tr>";
@@ -105,6 +109,7 @@ function getDollarAmountLight(hash,datum,foiData){
 				hash[datum.Zip] = datum.Amount;
 			}
 		}
+		parseZIP(datum.Zip);
 }
 //end beta get dollars
 function getFilteredArrayByZip(layer,jdata,foiData){
