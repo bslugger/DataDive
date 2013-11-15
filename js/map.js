@@ -72,11 +72,11 @@ $(window).bind("load",function(){
 				console.log("total awarded", totalAmount);
 
 				$("#blackbox").empty().html(function(){
-							return '<h1>In <span class="foiColor">' + foiData + '</span>, <br>' 
-							+ 'AAACF Impacted: </h1>'
-							+ '<h3>Number of Recipients</h3>' + numOrgs
-							+ '<h3>Total Number of Grants Awarded</h3>' + numGrants
-							+ '<h3>Total Funds Awarded</h3>' + Currency('$',totalAmount);
+							return '<h2>In <span class="foiColor">' + foiData + '</span>, <br>' 
+							+ 'AAACF Impacted: </h2>'
+							+ '<h5>Number of Recipients</h5><h1>' + numOrgs
+							+ '</h1><h5>Total Number of Grants Awarded</h5><h1>' + numGrants
+							+ '</h1><h5>Total Funds Awarded</h5><h1>' + Currency('$',totalAmount) + '</h1>';
 						});
 				var bgcolor = '#a4045e';
 				if (foiData === 'Arts and Culture') {
@@ -205,11 +205,11 @@ $(window).bind("load",function(){
 				var keyZipInfo = getFilteredArrayByZip(layer,jdata,foiData);
 				//Here is where the tooltip message is generated. We need to put the aggregated information in here.
 				$("#blackbox").empty().html(function(){
-									return '<h1>In ' + year + ', <br>' 
-									+ zip + ' received: </h1>'
-									+ '<h3>Number of Recipients</h3>' + keyZipInfo[0]
-									+ '<h3>Total Number of Grants Awarded</h3>' + keyZipInfo[1]
-									+ "<h3>Total Funds Awarded</h3>" + Currency('$',keyZipInfo[2]);
+									return '<h2>In ' + year + ', <br>' 
+									+ zip + ' received: </h2>'
+									+ '<h5>Number of Recipients</h5><h1>' + keyZipInfo[0]
+									+ '</h1><h5>Total Number of Grants Awarded</h5><h1>' + keyZipInfo[1]
+									+ "</h1><h5>Total Funds Awarded</h5><h1>" + Currency('$',keyZipInfo[2]) + '</h1>';
 								});
 				layer.setStyle({ // highlight the feature
 					weight: 5,
@@ -228,14 +228,14 @@ $(window).bind("load",function(){
 			function resetHighlight(e) {
 			
 				var layer = e.target;
-				$("#blackbox").html('<h1>Over 60 years<br> \
-									the Ann Arbor Area received: </h1> \
-								<h3>Number of Recipients</h3> \
-								 450 \
-								<h3>Total Number of Grants Awarded</h3> \
-								2048 \
-								<h3>Total Funds Awarded</h3> \
-								$11,636,423	');
+				$("#blackbox").html('<h2>Over 60 years<br> \
+									the Ann Arbor Area received: </h2> \
+								<h5>Number of Recipients</h5> \
+								<h1>450</h1> \
+								<h5>Total Number of Grants Awarded</h5> \
+								<h1>2048</h1> \
+								<h5>Total Funds Awarded</h5> \
+								<h1>$11,636,423</h1>	');
 				$('#sideTooltipdivWrapper').css("background-color", '#a4045e');
 				if (!L.Browser.ie && !L.Browser.opera) {
 					layer.bringToFront();

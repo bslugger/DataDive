@@ -143,7 +143,6 @@ function getFilteredArrayByZip(layer,jdata,foiData){
 
 //Roll up data in bottom tooltip??
 
-//Zip parser for the weird area codes with hyphens, right?
 
 //Also, there are some bugs related to the filters. I will go into detail later, 
 //but just play around and you should be able to replicate it.
