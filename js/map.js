@@ -109,8 +109,8 @@ $(window).bind("load",function(){
 						}
 					}
 				}).addTo(map);
-
-
+				
+				
 			}; //end foi function
 
 	//Defines what happens when an foi button is clicked.
