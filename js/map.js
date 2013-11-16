@@ -1,15 +1,30 @@
-$(window).bind("load",function(){
-	//This centers the map on Ann Arbor, MI
-	var map = L.map('map').setView([42.2, -83.748333], 9);
+
+	cloudmade = new L.tileLayer('http://{s}.tile.cloudmade.com/6a7ab36b926b4fc785f8a957814c8685/997/256/{z}/{x}/{y}.png', {
+				//I don't really like the attribution in the corner, but I am not sure if its necessary. Let's leave it out for now...
+				// attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+				maxZoom: 18
+			})
 	
-	//This loads in the geoJSON data
-	d3.json('data/zip.json',function(data){
+
+	//This centers the map on Ann Arbor, MI
+	var map = L.map('map',{
+                    layers: [cloudmade],
+                    center: new L.LatLng(42.2, -83.748333),
+                    zoom: 9,
+                    // Tell the map to use a loading control
+                    loadingControl: true
+                });
+	
+$(window).bind("load",function(){	
+	//This loads in the geoJSON data. map.spin adds a load indicator.
+	map.spin(true);
+	$.getJSON('data/zip.json',function(data){
 		//Start Edgar's Code-----------------------------------------------------------------------------
 		$.getJSON("data/aaacfData.json", callbackFunction);
+		map.spin(false);
 		//This is used to color the map in map.js. Seems to have to be called
 		//inside of this function, but it may not...weird.
 		function callbackFunction(jdata){
-			
 			$( "#slider" ).on( "slidechange", function( event, ui ) {
 				map.removeLayer(existingLayer);
 				existingLayer = L.geoJson(data, {
@@ -20,6 +35,7 @@ $(window).bind("load",function(){
 					}
 				}
 				}).addTo(map);
+				// map.spin(false);
 			});
 			//create a subset of data by FOI
 			var foiData = 'all';
@@ -99,8 +115,9 @@ $(window).bind("load",function(){
 				$('.foiColor').css('color', bgcolor);
 				//This thing is slowing everything down a lot, and it's essentially doing what
 				//the above function already did...there must be some way to combine them. The problem is in getColor()
-				
+				// var existingLayer = L.geoJson(null).addTo(map);
 				map.removeLayer(existingLayer);
+				
 				existingLayer = L.geoJson(data, {
 					onEachFeature:onEachFeature,
 					style: function(feature) {
@@ -108,12 +125,15 @@ $(window).bind("load",function(){
 							default: return {color:"black",fillColor:getColorLight(hash,feature.properties.NAME),weight:1,fillOpacity:1}
 						}
 					}
-				}).addTo(map);
 				
+				}).addTo(map);
 				
 			}; //end foi function
 
 	//Defines what happens when an foi button is clicked.
+			function spin(){
+				map.spin(true);
+			}
 			$('.foi').on('click', foiFilter);
 			
 			
@@ -126,6 +146,7 @@ $(window).bind("load",function(){
 
 			//the function to filter by zip code
 			function zipFilter(){
+				
 				// zipp = $('#blackbox').text();
 				zipp = 48104;
 				console.log(zipp);
@@ -160,16 +181,11 @@ $(window).bind("load",function(){
 
 			};
 			//end Edgar's Code------------------------------------------------------------------
-
+			
 			L.geoJson(data).addTo(map);
-		
 			//This draws the map itself at a specified position. Also that long alphanumeric string is the API key. This may need
 			//to be changed at some point
-			L.tileLayer('http://{s}.tile.cloudmade.com/6a7ab36b926b4fc785f8a957814c8685/997/256/{z}/{x}/{y}.png', {
-				//I don't really like the attribution in the corner, but I am not sure if its necessary. Let's leave it out for now...
-				// attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-				maxZoom: 18
-			}).addTo(map);
+			
 				
 			//This defines the functions for various interactions with the map
 			function onEachFeature(feature, layer) {
@@ -240,6 +256,7 @@ $(window).bind("load",function(){
 				if (!L.Browser.ie && !L.Browser.opera) {
 					layer.bringToFront();
 				}
+				
 				layer.setStyle({ // highlight the feature
 					weight: 1,
 					color: "black",
@@ -251,6 +268,7 @@ $(window).bind("load",function(){
 			
 			//This is where the default colors and style of the map are defined. Existing layer variable is generated
 			//so that it can be removed later to remove layers piling up, as it were.
+			
 			existingLayer = L.geoJson(data, {
 					onEachFeature:onEachFeature,
 					style: function(feature) {
@@ -259,7 +277,6 @@ $(window).bind("load",function(){
 						}
 					}
 			}).addTo(map);
-			
 		}
 	});
 });

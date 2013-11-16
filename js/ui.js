@@ -1,5 +1,6 @@
 //this is where the slider functionality is defined. here is some info for how it was created. http://jqueryui.com/slider/#steps
 $(function() {
+		
 		$( "#slider" ).slider({
 		  value:2013,
 		  min: 1990,
@@ -48,6 +49,7 @@ function inclusionTest(yourList,dataID){
 	return yourList;
 };
 function getColor(jdata,zip,foiData){
+	
 	 var d = getDollarAmounts(jdata,zip,foiData);
 	 return d > 100000 ? 'rgb(2,56,88)' :
 	   d > 80000   ? 'rgb(4,90,141)' :
@@ -56,6 +58,7 @@ function getColor(jdata,zip,foiData){
 	   d > 20000   ? 'rgb(116,169,207)' :
 	   d > 0       ? 'rgb(166,189,219)' :
 					 'grey';
+	  
 }
 function getColorLight(hash,zip){
 	 if(hash[zip]){
