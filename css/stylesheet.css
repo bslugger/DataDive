@@ -23,7 +23,7 @@ body{
 	font-size:18px;
 	padding: 1em;
 	background:transparent;
-	border-style: none solid;
+	border-style: none solid none none;
 	border-color: black;
 	-webkit-transition:background-color .5s ease;
 	-moz-transition: background-color .5s ease;
@@ -76,6 +76,15 @@ body{
 	padding:18px 12px;
 	opacity:1;
 }
+#blackbox h1{
+	margin:0px;
+}
+#blackbox h2{
+	margin:0em 0px 1em 0px;
+}
+#blackbox h5{
+	margin:2em 0px 0px 0px;
+}
 #orgList{
 	display:none;
 	height: 320px;
@@ -106,6 +115,7 @@ tr:nth-child(even) {
 
 #foi1 {
 	color: rgb(188,209,231);
+	border-left-style:solid;
 }
 #foi2 {
 	color: rgb(247,196,150);
