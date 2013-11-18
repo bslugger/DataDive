@@ -55,6 +55,7 @@ $(window).bind("load",function(){
 					$('#foi7').removeClass('hidden');
 				} else {
 					$('#foi7').addClass('hidden');
+					$('#foi6').removeClass('hidden');
 				}
 
 				//clear any previous data inside subData and a, which act as our filtered results
