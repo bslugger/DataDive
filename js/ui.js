@@ -141,7 +141,7 @@ function getFilteredArrayByZip(layer,jdata,foiData){
 }
 
 
-//Things that ought to be done
+//***Things that ought to be done***
 //Figure out exactly how the bottom tooltip should display
 
 //Roll up data in bottom tooltip??
@@ -155,12 +155,10 @@ function getFilteredArrayByZip(layer,jdata,foiData){
 
 //Add legend with color coding, maybe.
 
-//things that might be nice to have
+//***things that might be nice to have***
 //Way of hitting a play button to show change through the years, like in the Karnataka map.
 //Get the Grantee names
 //Do breakdown by percent of total for grants awarded
 
 //How hard would it be to run some kind of loading indicator?
-
-
-
+//either 2 sliders to set lower and upper year bounds (I.E. 1990-1995) or one slider with two bounds
