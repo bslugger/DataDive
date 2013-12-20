@@ -16,14 +16,15 @@
                     // Tell the map to use a loading control
                     loadingControl: true
                 });
-	
+
 $(window).bind("load",function(){	
 	//This loads in the geoJSON data. map.spin adds a load indicator.
+	
 	map.spin(true);
 	$.getJSON('data/zip.json',function(data){
 		//Start Edgar's Code-----------------------------------------------------------------------------
-		$.getJSON("data/aaacfData.json", callbackFunction);
-		map.spin(false);
+		$.when($.getJSON("data/aaacfData.json", callbackFunction))
+		.done(function(){return map.spin(false);})
 		//This is used to color the map in map.js. Seems to have to be called
 		//inside of this function, but it may not...weird.
 		function callbackFunction(jdata){
@@ -120,7 +121,7 @@ $(window).bind("load",function(){
 				//the above function already did...there must be some way to combine them. The problem is in getColor()
 				// var existingLayer = L.geoJson(null).addTo(map);
 				map.removeLayer(existingLayer);
-				
+	
 				existingLayer = L.geoJson(data, {
 					onEachFeature:onEachFeature,
 					style: function(feature) {
@@ -134,9 +135,7 @@ $(window).bind("load",function(){
 			}; //end foi function
 
 	//Defines what happens when an foi button is clicked.
-			function spin(){
-				map.spin(true);
-			}
+			
 			$('.foi').on('click', foiFilter);
 			
 			
