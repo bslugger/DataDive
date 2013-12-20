@@ -2,7 +2,7 @@
 	cloudmade = new L.tileLayer('http://{s}.tile.cloudmade.com/6a7ab36b926b4fc785f8a957814c8685/{styleID}/256/{z}/{x}/{y}.png', {
 				//I don't really like the attribution in the corner, but I am not sure if its necessary. Let's leave it out for now...
 				// attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-				maxZoom: 18,
+				maxZoom: 10,
 				//this defines the style of the underlying map. Different styles can be found here http://maps.cloudmade.com/editor#
 				styleID:59866
 			})
