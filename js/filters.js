@@ -120,21 +120,78 @@ function foiFilter(){
 	
 }; //end foi function
 		
-$( "#slider" ).on( "slidechange", function( event, ui ) {
-	map.removeLayer(existingLayer);
-	existingLayer = L.geoJson(data, {
-	onEachFeature:onEachFeature,
-	style: function(feature) {
-		switch (feature.properties.NAME) {
-			default: return {color:"black",fillColor:getColor(jdata,feature.properties.NAME,foiData),weight:1,fillOpacity:1}
-		}
-	}
-	}).addTo(map);
-	// map.spin(false);
-});
-
-//Defines what happens when an foi button is clicked.			
-$('.foi').on('click', foiFilter);
-			
 		
-	
+function inclusionTest(yourList,dataID){
+	//create the logic for inclusion in set to not count duplicates
+	if (yourList.indexOf(dataID) > -1) {
+		//do nothing
+	} else {
+		yourList.push(dataID);
+	}
+	return yourList;
+};
+
+//by zip, by year, (by foi,depending) to obtain number of grants, dollar amount of grants, number of recipients
+function getDollarAmounts(jdata,zip,foiData){
+	subDataByZip = [];
+	z = [];
+	totalAmountZip = 0;
+	y = [];
+	for (var i = 0; i < jdata.length; i++){
+		if(jdata[i].Zip === zip && (jdata[i].Field_aggregate === foiData || foiData === 'all') && $('#slider').slider('option','value') == parseDate(jdata[i].Effective_Date)){
+			subDataByZip.push(jdata[i]);
+			ID = jdata[i].Grantee_ID;
+			
+			inclusionTest(z, ID);
+			
+			var amt = jdata[i].Amount;
+			amt = parseInt(amt);
+			y.push(amt);
+		}
+		}
+		numGrants = subDataByZip.length;
+		numOrgs = z.length;
+		for (var i = 0; i < y.length; i++) {
+				totalAmountZip += y[i];
+		}
+	return totalAmountZip;
+}
+//slightly faster way of getting dollar amounts, need to fix ZIP code
+//discrepancy.
+function getDollarAmountLight(hash,datum,foiData){
+		if((datum.Field_aggregate === foiData || foiData === 'all') && $('#slider').slider('option','value') == parseDate(datum.Effective_Date)){
+			
+			if (hash[datum.Zip]){
+				hash[datum.Zip] += datum.Amount;
+			}
+			else{
+				hash[datum.Zip] = datum.Amount;
+			}
+		}
+		parseZIP(datum.Zip);
+}
+//end beta get dollars
+function getFilteredArrayByZip(layer,jdata,foiData){
+	subDataByZip = [];
+	z = [];
+	totalAmountZip = 0;
+	y = [];
+	for (var i = 0; i < jdata.length; i++){
+		if(parseZIP(jdata[i].Zip) === layer.feature.properties.NAME && (jdata[i].Field_aggregate === foiData || foiData === 'all') && $('#slider').slider('option','value') == parseDate(jdata[i].Effective_Date)){
+			subDataByZip.push(jdata[i]);
+			ID = jdata[i].Grantee_ID;
+			
+			inclusionTest(z, ID);
+			
+			var amt = jdata[i].Amount;
+			amt = parseInt(amt);
+			y.push(amt);
+		}
+		}
+		numGrants = subDataByZip.length;
+		numOrgs = z.length;
+		for (var i = 0; i < y.length; i++) {
+				totalAmountZip += y[i];
+		}
+	return [numOrgs,numGrants,totalAmountZip];
+}

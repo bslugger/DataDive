@@ -1,6 +1,5 @@
 //this is where the slider functionality is defined. here is some info for how it was created. http://jqueryui.com/slider/#steps
-$(function() {
-	
+$(function() {	
 	$( "#slider" ).slider({
 	  value:2013,
 	  min: 1990,
@@ -8,25 +7,34 @@ $(function() {
 	  step: 1,
 	  slide: function( event, ui ) {
 		$( "#year" ).html( ui.value );
-	  }
-	});
+	  },
+	 });
 	$( "#year" ).html( $( "#slider" ).slider( "value" ) );
-  });
-//This is a function to make dollar amounts look nice.	  
-function Currency(sSymbol, vValue) {
-  aDigits = vValue.toFixed().split(".");
-  aDigits[0] = aDigits[0].split("").reverse().join("").replace(/(\d{3})(?=\d)/g,   "$1,").split("").reverse().join("");
-  return sSymbol + aDigits.join(".");
-}
-//way of parsing year out of effective_date
-function parseDate(dateString){
-	dateStringLength = dateString.length;
-	return dateString.slice(dateStringLength - 4, dateStringLength);
-}	
-//parse ZIPs
-function parseZIP(zip){
-	return zip.slice(0,5);
-}	
+
+	$('#slider').slider().bind({
+		 
+		slidechange: function( event, ui ) {
+
+			if(typeof(existingLayer) != "undefined"){	
+				map.removeLayer(existingLayer);
+			}
+			if(!jQuery.isEmptyObject(data)){	
+				existingLayer = L.geoJson(data, {
+				onEachFeature:onEachFeature,
+				style: function(feature) {
+					switch (feature.properties.NAME) {
+						default: return {color:"black",fillColor:getColor(jdata,feature.properties.NAME,foiData),weight:1,fillOpacity:1}
+					}
+				}
+				}).addTo(map);
+				// map.spin(false);
+			}
+		}
+
+	}); //end slidechange definition
+
+});//end slider declaration
+
 //Generates a table for the bottom tooltip. Needs to be passed the layer, and a dataset of some kind.
 function printOrgs(layer,jdata,foiData){
 	var listOfOrgs = "<table id= 'orgTable'><tr><td>Grantee ID</td><td>Grant Amount</td><td>Field of Interest</td></tr>";
@@ -39,15 +47,7 @@ function printOrgs(layer,jdata,foiData){
 	}
 	return listOfOrgs + "</table>";
 }
-function inclusionTest(yourList,dataID){
-	//create the logic for inclusion in set to not count duplicates
-	if (yourList.indexOf(dataID) > -1) {
-		//do nothing
-	} else {
-		yourList.push(dataID);
-	}
-	return yourList;
-};
+
 function getColor(jdata,zip,foiData){
 	
 	 var d = getDollarAmounts(jdata,zip,foiData);
@@ -75,81 +75,18 @@ function getColorLight(hash,zip){
 	   d > 0       ? 'rgb(166,189,219)' :
 					 'grey';
 }	  
-//by zip, by year, (by foi,depending) to obtain number of grants, dollar amount of grants, number of recipients
-function getDollarAmounts(jdata,zip,foiData){
-	subDataByZip = [];
-	z = [];
-	totalAmountZip = 0;
-	y = [];
-	for (var i = 0; i < jdata.length; i++){
-		if(jdata[i].Zip === zip && (jdata[i].Field_aggregate === foiData || foiData === 'all') && $('#slider').slider('option','value') == parseDate(jdata[i].Effective_Date)){
-			subDataByZip.push(jdata[i]);
-			ID = jdata[i].Grantee_ID;
-			
-			inclusionTest(z, ID);
-			
-			var amt = jdata[i].Amount;
-			amt = parseInt(amt);
-			y.push(amt);
-		}
-		}
-		numGrants = subDataByZip.length;
-		numOrgs = z.length;
-		for (var i = 0; i < y.length; i++) {
-				totalAmountZip += y[i];
-		}
-	return totalAmountZip;
-}
-//slightly faster way of getting dollar amounts, need to fix ZIP code
-//discrepancy.
-function getDollarAmountLight(hash,datum,foiData){
-		if((datum.Field_aggregate === foiData || foiData === 'all') && $('#slider').slider('option','value') == parseDate(datum.Effective_Date)){
-			
-			if (hash[datum.Zip]){
-				hash[datum.Zip] += datum.Amount;
-			}
-			else{
-				hash[datum.Zip] = datum.Amount;
-			}
-		}
-		parseZIP(datum.Zip);
-}
-//end beta get dollars
-function getFilteredArrayByZip(layer,jdata,foiData){
-	subDataByZip = [];
-	z = [];
-	totalAmountZip = 0;
-	y = [];
-	for (var i = 0; i < jdata.length; i++){
-		if(parseZIP(jdata[i].Zip) === layer.feature.properties.NAME && (jdata[i].Field_aggregate === foiData || foiData === 'all') && $('#slider').slider('option','value') == parseDate(jdata[i].Effective_Date)){
-			subDataByZip.push(jdata[i]);
-			ID = jdata[i].Grantee_ID;
-			
-			inclusionTest(z, ID);
-			
-			var amt = jdata[i].Amount;
-			amt = parseInt(amt);
-			y.push(amt);
-		}
-		}
-		numGrants = subDataByZip.length;
-		numOrgs = z.length;
-		for (var i = 0; i < y.length; i++) {
-				totalAmountZip += y[i];
-		}
-	return [numOrgs,numGrants,totalAmountZip];
-}
+
 
 
 //***Things that ought to be done***
 //Figure out exactly how the bottom tooltip should display
 
-//Roll up data in bottom tooltip??
+//Roll up  bottom tooltip??
 
 //Add legend with color coding, maybe.
 
-//***things that might be nice to have***
+//***things that nice to have***
 //Way of hitting a play button to show change through the years, like in the Karnataka map.
 //Get the Grantee names
 //Do breakdown by percent of total for grants awarded
-//either 2 sliders to set lower and upper year bounds (I.E. 1990-1995) or one slider with two bounds
+//either 2 sliders to set  upper year bounds (I.E. 1990-1995) or one slider with two bounds

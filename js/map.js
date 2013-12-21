@@ -32,6 +32,7 @@ var map = L.map('map',{
     // Tell the map to use a loading control
     loadingControl: true
 });
+
 //This defines the functions for various interactions with the map
 function onEachFeature(feature, layer) {
 	layer.on({
@@ -90,13 +91,13 @@ function resetHighlight(e) {
 
 	var layer = e.target;
 	$("#blackbox").html('<h2>Over 60 years<br> \
-						the Ann Arbor Area received: </h2> \
-					<h5>Number of Recipients</h5> \
-					<h1>450</h1> \
-					<h5>Total Number of Grants Awarded</h5> \
-					<h1>2048</h1> \
-					<h5>Total Funds Awarded</h5> \
-					<h1>$11,636,423</h1>	');
+					the Ann Arbor Area received: </h2> \
+				<h5>Number of Recipients</h5> \
+				<h1>450</h1> \
+				<h5>Total Number of Grants Awarded</h5> \
+				<h1>2048</h1> \
+				<h5>Total Funds Awarded</h5> \
+				<h1>$11,636,423</h1>	');
 	$('#sideTooltipdivWrapper').css("background-color", '#a4045e');
 	if (!L.Browser.ie && !L.Browser.opera) {
 		layer.bringToFront();
@@ -132,5 +133,6 @@ $(document).ready(function(){
 	.done(
 		function(){console.log('all done')}
 	)
+	$('.foi').click(foiFilter);
 })	
 
