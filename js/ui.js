@@ -90,3 +90,7 @@ function getColorLight(hash,zip){
 //Get the Grantee names
 //Do breakdown by percent of total for grants awarded
 //either 2 sliders to set  upper year bounds (I.E. 1990-1995) or one slider with two bounds
+
+
+//maybe use a modal thing, like in Bootstrap to show grantee info, rather than that bottom tooltip...less scolling.
+

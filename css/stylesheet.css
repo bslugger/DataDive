@@ -151,9 +151,9 @@ tr:nth-child(even) {
 	background-color: rgb(219,43,2);
 	float:right;	
 	position:absolute;
-	top:.5em;
-	right:3em;
-	padding:0;
+	top:0;
+	right:3.25em;
+	padding:.25em 0;
 	border:none;
 	width:12%;
 }
