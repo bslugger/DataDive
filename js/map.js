@@ -90,7 +90,8 @@ function highlightFeature(e){
 function resetHighlight(e) {
 
 	var layer = e.target;
-	$("#blackbox").html('<h2>Over 60 years<br> \
+	if(foiData == "all"){
+		$("#blackbox").html('<h2>Over 60 years<br> \
 					the Ann Arbor Area received: </h2> \
 				<h5>Number of Recipients</h5> \
 				<h1>450</h1> \
@@ -98,8 +99,39 @@ function resetHighlight(e) {
 				<h1>2048</h1> \
 				<h5>Total Funds Awarded</h5> \
 				<h1>$11,636,423</h1>	');
-	$('#sideTooltipdivWrapper').css("background-color", '#a4045e');
-	if (!L.Browser.ie && !L.Browser.opera) {
+	}
+	else{
+		$("#blackbox").empty().html(function(){
+				return '<h2>In <span class="foiColor">' + foiData + '</span>, <br>' 
+				+ 'AAACF Impacted: </h2>'
+				+ '<h5>Number of Recipients</h5><h1>' + numOrgs
+				+ '</h1><h5>Total Number of Grants Awarded</h5><h1>' + numGrants
+				+ '</h1><h5>Total Funds Awarded</h5><h1>' + Currency('$',totalAmount) + '</h1>';
+			});
+		var bgcolor = '#a4045e';
+		if (foiData === 'Arts and Culture') {
+			bgcolor = '#BCD1E7';
+		} else if (foiData === 'Environment') {
+			bgcolor = '#F7C496';		
+		} else if (foiData === 'Health and Human Services') {
+			bgcolor = '#97BE01';		
+		} else if (foiData === 'Youth and Education') {
+			bgcolor = '#E47668';		
+		} else if (foiData === 'Seniors') {
+			bgcolor = '#1A2E5A';		
+		} else if (foiData === 'Other') {
+			bgcolor = '#E6E551';
+		} else {
+			bgcolor = '#a4045e';
+		}
+		
+		$('#sideTooltipdivWrapper').css("background-color",bgcolor);
+		$('.foiColor').css('color', bgcolor);
+
+
+	}	
+	
+		if (!L.Browser.ie && !L.Browser.opera) {
 		layer.bringToFront();
 	}
 	

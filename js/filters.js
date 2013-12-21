@@ -84,6 +84,7 @@ function foiFilter(){
 				+ '</h1><h5>Total Number of Grants Awarded</h5><h1>' + numGrants
 				+ '</h1><h5>Total Funds Awarded</h5><h1>' + Currency('$',totalAmount) + '</h1>';
 			});
+// this need to be made into a function ferreal.
 	var bgcolor = '#a4045e';
 	if (foiData === 'Arts and Culture') {
 		bgcolor = '#BCD1E7';
@@ -103,6 +104,9 @@ function foiFilter(){
 	
 	$('#sideTooltipdivWrapper').css("background-color",bgcolor);
 	$('.foiColor').css('color', bgcolor);
+
+//end the new function area
+
 	//This thing is slowing everything down a lot, and it's essentially doing what
 	//the above function already did...there must be some way to combine them. The problem is in getColor()
 	// var existingLayer = L.geoJson(null).addTo(map);
