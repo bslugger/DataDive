@@ -1,17 +1,17 @@
 //this is where the slider functionality is defined. here is some info for how it was created. http://jqueryui.com/slider/#steps
 $(function() {
-		
-		$( "#slider" ).slider({
-		  value:2013,
-		  min: 1990,
-		  max: 2013,
-		  step: 1,
-		  slide: function( event, ui ) {
-			$( "#year" ).html( ui.value );
-		  }
-		});
-		$( "#year" ).html( $( "#slider" ).slider( "value" ) );
-	  });
+	
+	$( "#slider" ).slider({
+	  value:2013,
+	  min: 1990,
+	  max: 2013,
+	  step: 1,
+	  slide: function( event, ui ) {
+		$( "#year" ).html( ui.value );
+	  }
+	});
+	$( "#year" ).html( $( "#slider" ).slider( "value" ) );
+  });
 //This is a function to make dollar amounts look nice.	  
 function Currency(sSymbol, vValue) {
   aDigits = vValue.toFixed().split(".");
@@ -29,16 +29,16 @@ function parseZIP(zip){
 }	
 //Generates a table for the bottom tooltip. Needs to be passed the layer, and a dataset of some kind.
 function printOrgs(layer,jdata,foiData){
-			var listOfOrgs = "<table id= 'orgTable'><tr><td>Grantee ID</td><td>Grant Amount</td><td>Field of Interest</td></tr>";
-			for (var i = 0; i < jdata.length; i++) {
-				// filter out what is displayed in the bottom pop-up by FOI and Zip Code. Also, year right now, but that can be changed.
-				if(parseZIP(jdata[i].Zip) === layer.feature.properties.NAME && (jdata[i].Field_aggregate === foiData || foiData === 'all') && $('#slider').slider('option','value') == parseDate(jdata[i].Effective_Date)){
-					listOfOrgs += "<tr><td>" + jdata[i].Grantee_ID + "</td><td>" + Currency('$',jdata[i].Amount) + "</td>";
-					listOfOrgs += "<td>" + jdata[i].Field_aggregate + "</td><tr>"
-				}
-			}
-			return listOfOrgs + "</table>";
+	var listOfOrgs = "<table id= 'orgTable'><tr><td>Grantee ID</td><td>Grant Amount</td><td>Field of Interest</td></tr>";
+	for (var i = 0; i < jdata.length; i++) {
+		// filter out what is displayed in the bottom pop-up by FOI and Zip Code. Also, year right now, but that can be changed.
+		if(parseZIP(jdata[i].Zip) === layer.feature.properties.NAME && (jdata[i].Field_aggregate === foiData || foiData === 'all') && $('#slider').slider('option','value') == parseDate(jdata[i].Effective_Date)){
+			listOfOrgs += "<tr><td>" + jdata[i].Grantee_ID + "</td><td>" + Currency('$',jdata[i].Amount) + "</td>";
+			listOfOrgs += "<td>" + jdata[i].Field_aggregate + "</td><tr>"
 		}
+	}
+	return listOfOrgs + "</table>";
+}
 function inclusionTest(yourList,dataID){
 	//create the logic for inclusion in set to not count duplicates
 	if (yourList.indexOf(dataID) > -1) {
@@ -146,19 +146,10 @@ function getFilteredArrayByZip(layer,jdata,foiData){
 
 //Roll up data in bottom tooltip??
 
-
-//Also, there are some bugs related to the filters. I will go into detail later, 
-//but just play around and you should be able to replicate it.
-
-//Also, things move a little slow. There needs to be some way of speeding
-//up the load time following button pushes and what-not.
-
 //Add legend with color coding, maybe.
 
 //***things that might be nice to have***
 //Way of hitting a play button to show change through the years, like in the Karnataka map.
 //Get the Grantee names
 //Do breakdown by percent of total for grants awarded
-
-//How hard would it be to run some kind of loading indicator?
 //either 2 sliders to set lower and upper year bounds (I.E. 1990-1995) or one slider with two bounds
