@@ -20,7 +20,9 @@
 <!--[if (gte IE 9)|!(IE)]><!--><body lang="en"> <!--<![endif]-->
 <div id="wrapper">
 <div class="topBar">
-	<h1>Ann Arbor Area Community Foundation Grants</h1></div>
+	<h1>Ann Arbor Area Community Foundation Grants</h1>
+	<button class='foi hidden' data-foi='all' id='foi7'>Clear</button>
+</div>
 		<div id="buttondiv">
 			<button class='foi' data-foi="Arts and Culture" id="foi1">Arts + Culture</button>
 			<button class='foi' data-foi="Environment" id="foi2">Environment</button>
@@ -28,7 +30,6 @@
 			<button class='foi' data-foi="Youth and Education" id="foi4">Youth + Education</button>
 			<button class='foi' data-foi="Seniors" id="foi5">Seniors</button>
 			<button class='foi' data-foi="Other" id="foi6">Other</button>
-			<button class='foi hidden' data-foi='all' id='foi7'>Clear</button>
 		</div>
 		<div id="chartdiv">
 			<div id="map"></div>
@@ -47,10 +48,10 @@
 			</div>
 		</div>
 		<div id="sliderdiv">
-			<p>
-			  <label for="year">Year:</label>
-			  <input type="text" id="year" style="background: rgb(45,42,43) border: 0; color: #f6931f; font-weight: bold;" />
-			</p>
+			<div id='year-label'>
+			  <div id="year" style="background: rgb(45,42,43) border: 0; color: #f6931f; font-weight: bold;" >	
+			  </div>
+			</div>
 			<div id="slider"></div>
 		</div>
 		<div id="bottomTooltipdiv">
@@ -61,17 +62,15 @@
 ================================================== -->
 
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>	
-		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-        <script type="text/javascript" src="d3/d3.v3.js"></script>	
-		<script type="text/javascript" src="js/colorbrewer.js"></script>
-		<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
-		<script type="text/javascript" src="js/map.js"></script>
-		<script type="text/javascript" src="js/logic.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>	
+		<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>	
 		<script type="text/javascript" src="js/ui.js"></script>
+		<script type="text/javascript" src="js/foo.js"></script>
 		<script type="text/javascript" src="js/sorttable.js"></script>
 		<script type='text/javascript' src="js/leaflet.spin.js"></script>
 		<script type='text/javascript' src="js/spin.min.js"></script>
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+		<script type="text/javascript" src="js/map.js"></script>
 
 <!-- 		// <script type="text/javascript" src="js/logic.js"></script> -->
 	

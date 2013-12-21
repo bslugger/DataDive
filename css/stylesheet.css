@@ -15,6 +15,7 @@ body{
 .topBar {
 	width: 100%;
 	border-bottom: 15px solid #a4045e;
+	position:relative;
 }
 .topBar h1 {
 	margin: 0px;
@@ -46,14 +47,23 @@ body{
 	text-align:center;
 }
 #slider{
-	background: white;
+	background: rgb(45,42,43);
+
 /* 
 	padding: 1em; */
+}
+#year-label{
+	text-align:right;
+	padding-bottom: 1em;	
+}
+#year{
+	font-size:40px;
 }
 #sliderdiv{
 	position:relative;
 	float:left;
 	width:65%;
+	padding-top:1em;
 }
 #chartdiv{
 	position:relative;
@@ -138,6 +148,13 @@ tr:nth-child(even) {
 #foi7 {
 	color: white;
 	background-color: rgb(219,43,2);
+	float:right;	
+	position:absolute;
+	top:.5em;
+	right:3em;
+	padding:0;
+	border:none;
+	width:12%;
 }
 td{
 	padding:10px;

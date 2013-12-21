@@ -7,10 +7,10 @@ $(function() {
 		  max: 2013,
 		  step: 1,
 		  slide: function( event, ui ) {
-			$( "#year" ).val( ui.value );
+			$( "#year" ).html( ui.value );
 		  }
 		});
-		$( "#year" ).val( $( "#slider" ).slider( "value" ) );
+		$( "#year" ).html( $( "#slider" ).slider( "value" ) );
 	  });
 //This is a function to make dollar amounts look nice.	  
 function Currency(sSymbol, vValue) {
