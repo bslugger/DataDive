@@ -47,17 +47,18 @@ body{
 	text-align:center;
 }
 #slider{
-	background: rgb(45,42,43);
+	background: rgb(219,43,2);
 
 /* 
 	padding: 1em; */
 }
 #year-label{
 	text-align:right;
-	padding-bottom: 1em;	
+	padding-top: .5em;	
 }
 #year{
 	font-size:40px;
+	color:rgb(219,43,2);
 }
 #sliderdiv{
 	position:relative;
