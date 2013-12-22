@@ -1,0 +1,157 @@
+@font-face {
+    font-family: "adelle_basic";
+    src: url("TypeTogether_AdelleBasic/adellebasicbold.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+body{
+	background: #f4f0eb;
+	font-family:"adelle_basic",sans-serif;
+	text-rendering:optimizeLegibility;
+}
+#wrapper{
+	position:relative;
+}
+.topBar {
+	width: 100%;
+	border-bottom: 15px solid #a4045e;
+}
+.topBar h1 {
+	margin: 0px;
+}
+.foi{
+	width:15%;
+	font-family:adelle-basic;
+	font-weight:bold;
+	font-size:18px;
+	padding: 1em;
+	background:transparent;
+	border-style: none solid none none;
+	border-color: black;
+	-webkit-transition:background-color .5s ease;
+	-moz-transition: background-color .5s ease;
+	-o-transition: background-color .5s ease;
+	transition: background-color.5s ease;
+}
+.foi:hover{
+	width:15%;
+	padding: 1em;
+	background:rgb(45,42,43);
+	cursor:pointer;
+}
+#buttondiv{
+	position:relative;
+	width: 100%;
+	padding: 1em;
+	text-align:center;
+}
+#slider{
+	background: white;
+/* 
+	padding: 1em; */
+}
+#sliderdiv{
+	position:relative;
+	float:left;
+	width:65%;
+}
+#chartdiv{
+	position:relative;
+	width: 65%;
+	height: 400px;
+	float:left;
+}
+#sideTooltipdivWrapper{
+	position:relative;
+	/* background: rgb(251,180,0	); */
+	width:25%;
+	height:471px;
+	float:right;
+	background-color: #a4045e;
+}
+#blackbox{
+	/* display:none; */
+	height: 85%;
+	width: 85%;
+	background:rgb(45,42,43);
+	margin:15px auto;
+	color:white;
+	padding:18px 12px;
+	opacity:1;
+}
+#blackbox h1{
+	margin:0px;
+}
+#blackbox h2{
+	margin:0em 0px 1em 0px;
+}
+#blackbox h5{
+	margin:2em 0px 0px 0px;
+}
+#orgList{
+	display:none;
+	height: 320px;
+	width:  90%;
+	background:rgb(45,42,43);
+	margin:10px auto;
+	color:white;
+	padding:18px 12px;
+}
+#bottomTooltipdiv{
+	position:relative;
+	width:65%;
+	height:400px;
+	float:left;
+}
+#map { 
+	width: 100%;
+	height: 400px;
+	float:left;
+	}
+
+.hidden {
+	display: none;
+}
+tr:nth-child(even) {
+    background-color: #000000;
+}
+
+#foi1 {
+	color: rgb(188,209,231);
+	border-left-style:solid;
+}
+#foi2 {
+	color: rgb(247,196,150);
+}
+#foi3 {
+	color: rgb(151,190,1);
+}
+#foi4 {
+	color: rgb(228,118,104);
+}
+#foi5 {
+	color: rgb(26,46,90);
+}
+#foi6 {
+	color: rgb(230,229,81);
+}
+#foi7 {
+	color: white;
+	background-color: rgb(219,43,2);
+}
+td{
+	padding:10px;
+}
+
+::-webkit-scrollbar {
+	width: 12px;
+}
+::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+	border-radius: 10px;
+}
+ 
+::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
