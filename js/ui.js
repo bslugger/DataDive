@@ -42,8 +42,8 @@ function printOrgs(layer,jdata,foiData){
 }
 
 function getColor(jdata,zip,foiData){
-//	console.log('normalc');	
 	 var d = getDollarAmounts(jdata,zip,foiData);
+	// console.log(zip);
 	 return d > 100000 ? 'rgb(2,56,88)' :
 	   d > 80000   ? 'rgb(4,90,141)' :
 	   d > 60000   ? 'rgb(5,112,176)' :
@@ -53,6 +53,7 @@ function getColor(jdata,zip,foiData){
 					 'grey';
 	  
 }
+
 function getColorLight(hash,zip){
 	console.log('lightc');
 	 if(hash[zip]){
@@ -142,7 +143,3 @@ toggleFilter = function() {
 //Get the Grantee names
 //Do breakdown by percent of total for grants awarded
 //either 2 sliders to set  upper year bounds (I.E. 1990-1995) or one slider with two bounds
-
-
-//maybe use a modal thing, like in Bootstrap to show grantee info, rather than that bottom tooltip...less scolling.
-
