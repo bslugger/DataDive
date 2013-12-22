@@ -1,13 +1,8 @@
 //create a subset of data by FOI
 function foiFilter(){
+	
 	foiData = $(this).data('foi');
-	console.log('button clicked: ',foiData);
-	if (foiData != 'all') {
-		$('#foi7').removeClass('hidden');
-	} else {
-		$('#foi7').addClass('hidden');
-		$('#foi6').removeClass('hidden');
-	}
+	toggleFilter();	
 
 	//clear any previous data inside subData and a, which act as our filtered results
 	subData = [];
@@ -43,54 +38,9 @@ function foiFilter(){
 
 	createLayer();
 
-}; //end foi function
+}; //end foi filter function
 		
-blackboxSetter = function() { 
-	if(foiData == "all"){
-		$("#blackbox").html('<h2>Since 1990<br> \
-					the Ann Arbor Area received: </h2> \
-				<h5>Number of Recipients</h5> \
-				<h1>450</h1> \
-				<h5>Total Number of Grants Awarded</h5> \
-				<h1>2048</h1> \
-				<h5>Total Funds Awarded</h5> \
-				<h1>$11,636,423</h1>	');
-	}
-	else{
-		$("#blackbox").empty().html(function(){
-			return '<h2>In <span class="foiColor">' + foiData + '</span>, <br>' 
-			+ 'AAACF Impacted: </h2>'
-			+ '<h5>Number of Recipients</h5><h1>' + numOrgs
-			+ '</h1><h5>Total Number of Grants Awarded</h5><h1>' + numGrants
-			+ '</h1><h5>Total Funds Awarded</h5><h1>' + Currency('$',totalAmount) + '</h1>';
-		});
-			
-	}	
-	setFoiColor();
 
-} //end blackbox setter
-
-setFoiColor = function() {
-	var bgcolor = '#a4045e';
-		if (foiData === 'Arts and Culture') {
-			bgcolor = '#BCD1E7';
-		} else if (foiData === 'Environment') {
-			bgcolor = '#F7C496';		
-		} else if (foiData === 'Health and Human Services') {
-			bgcolor = '#97BE01';		
-		} else if (foiData === 'Youth and Education') {
-			bgcolor = '#E47668';		
-		} else if (foiData === 'Seniors') {
-			bgcolor = '#1A2E5A';		
-		} else if (foiData === 'Other') {
-			bgcolor = '#E6E551';
-		} else {
-			bgcolor = '#a4045e';
-		}
-		
-		$('#sideTooltipdivWrapper').css("background-color",bgcolor);
-		$('.foiColor').css('color', bgcolor);
-}
 		
 function inclusionTest(yourList,dataID){
 	//create the logic for inclusion in set to not count duplicates
@@ -158,11 +108,12 @@ function getFilteredArrayByZip(layer,jdata,foiData){
 			amt = parseInt(amt);
 			y.push(amt);
 		}
-		}
-		numZipGrants = subDataByZip.length;
-		numZipOrgs = z.length;
-		for (var i = 0; i < y.length; i++) {
-				totalAmountZip += y[i];
-		}
+	}
+	numZipGrants = subDataByZip.length;
+	numZipOrgs = z.length;
+	for (var i = 0; i < y.length; i++) {
+			totalAmountZip += y[i];
+	}
+
 	return [numZipOrgs,numZipGrants,totalAmountZip];
 }

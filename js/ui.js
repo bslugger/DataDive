@@ -70,7 +70,65 @@ function getColorLight(hash,zip){
 					 'grey';
 }	  
 
+blackboxSetter = function() { 
+	if(foiData == "all"){
+		$("#blackbox").html('<h2>Since 1990<br> \
+					the Ann Arbor Area received: </h2> \
+				<h5>Number of Recipients</h5> \
+				<h1>450</h1> \
+				<h5>Total Number of Grants Awarded</h5> \
+				<h1>2048</h1> \
+				<h5>Total Funds Awarded</h5> \
+				<h1>$11,636,423</h1>	');
+	} else{
+		//this message could be fixed to something like "Key Statistics on <insert grant foi here>" or something liek that. To dry?
+		$("#blackbox").empty().html(function(){
+			return '<h2>Since 1990, with <span class="foiColor">' + foiData + '</span> grants' 
+			+ ' the AAACF Impacted: </h2>'
+			+ '<h5>Number of Recipients</h5><h1>' + numOrgs
+			+ '</h1><h5>Total Number of Grants Awarded</h5><h1>' + numGrants
+			+ '</h1><h5>Total Funds Awarded</h5><h1>' + Currency('$',totalAmount) + '</h1>';
+		});
+			
+	}	
+	setFoiColor();
 
+} //end blackbox setter
+
+setFoiColor = function() {
+	var bgcolor = '#a4045e';
+		if (foiData === 'Arts and Culture') {
+			bgcolor = '#BCD1E7';
+		} else if (foiData === 'Environment') {
+			bgcolor = '#F7C496';		
+		} else if (foiData === 'Health and Human Services') {
+			bgcolor = '#97BE01';		
+		} else if (foiData === 'Youth and Education') {
+			bgcolor = '#E47668';		
+		} else if (foiData === 'Seniors') {
+			bgcolor = '#1A2E5A';		
+		} else if (foiData === 'Other') {
+			bgcolor = '#E6E551';
+		} else {
+			bgcolor = '#a4045e';
+		}
+		
+		$('#sideTooltipdivWrapper').css("background-color",bgcolor);
+		$('.foiColor').css('color', bgcolor);
+}
+
+toggleFilter = function() {
+
+	console.log('button clicked: ',foiData);
+
+	if (foiData != 'all') {
+		$('#foi7').removeClass('hidden');
+	} else {
+		$('#foi7').addClass('hidden');
+		$('#foi6').removeClass('hidden');
+	}
+
+}
 
 //***Things that ought to be done***
 //Figure out exactly how the bottom tooltip should display
