@@ -54,7 +54,7 @@ function popupContent(e){
 				})
 			  .css('display','block')
 			  .css('height','auto');
-	
+//this allows the table in the bottom tooltip to be sortable..	
 	var newTableObject = document.getElementById('orgTable');
 	sorttable.makeSortable(newTableObject);
 };
@@ -67,12 +67,12 @@ function highlightFeature(e){
 	var keyZipInfo = getFilteredArrayByZip(layer,jdata,foiData);
 	//Here is where the tooltip message is generated. We need to put the aggregated information in here.
 	$("#blackbox").empty().html(function(){
-						return '<h2>In ' + year + ', <br>' 
-						+ zip + ' received: </h2>'
-						+ '<h5>Number of Recipients</h5><h1>' + keyZipInfo[0]
-						+ '</h1><h5>Total Number of Grants Awarded</h5><h1>' + keyZipInfo[1]
-						+ "</h1><h5>Total Funds Awarded</h5><h1>" + Currency('$',keyZipInfo[2]) + '</h1>';
-					});
+		return '<h2>In ' + year + ', <br>' 
+		+ zip + ' received: </h2>'
+		+ '<h5>Number of Recipients</h5><h1>' + keyZipInfo[0]
+		+ '</h1><h5>Total Number of Grants Awarded</h5><h1>' + keyZipInfo[1]
+		+ "</h1><h5>Total Funds Awarded</h5><h1>" + Currency('$',keyZipInfo[2]) + '</h1>';
+	});
 	layer.setStyle({ // highlight the feature
 		weight: 5,
 		// fillColor: 'white',
@@ -83,55 +83,16 @@ function highlightFeature(e){
 	if (!L.Browser.ie && !L.Browser.opera) {
 		layer.bringToFront();
 	}
-	// map.info.update(layer.feature.properties); // Update infobox
-};
+}
 
 //This is what happens after you mouseout
 function resetHighlight(e) {
 
 	var layer = e.target;
-	if(foiData == "all"){
-		$("#blackbox").html('<h2>Over 60 years<br> \
-					the Ann Arbor Area received: </h2> \
-				<h5>Number of Recipients</h5> \
-				<h1>450</h1> \
-				<h5>Total Number of Grants Awarded</h5> \
-				<h1>2048</h1> \
-				<h5>Total Funds Awarded</h5> \
-				<h1>$11,636,423</h1>	');
-	}
-	else{
-		$("#blackbox").empty().html(function(){
-				return '<h2>In <span class="foiColor">' + foiData + '</span>, <br>' 
-				+ 'AAACF Impacted: </h2>'
-				+ '<h5>Number of Recipients</h5><h1>' + numOrgs
-				+ '</h1><h5>Total Number of Grants Awarded</h5><h1>' + numGrants
-				+ '</h1><h5>Total Funds Awarded</h5><h1>' + Currency('$',totalAmount) + '</h1>';
-			});
-		var bgcolor = '#a4045e';
-		if (foiData === 'Arts and Culture') {
-			bgcolor = '#BCD1E7';
-		} else if (foiData === 'Environment') {
-			bgcolor = '#F7C496';		
-		} else if (foiData === 'Health and Human Services') {
-			bgcolor = '#97BE01';		
-		} else if (foiData === 'Youth and Education') {
-			bgcolor = '#E47668';		
-		} else if (foiData === 'Seniors') {
-			bgcolor = '#1A2E5A';		
-		} else if (foiData === 'Other') {
-			bgcolor = '#E6E551';
-		} else {
-			bgcolor = '#a4045e';
-		}
-		
-		$('#sideTooltipdivWrapper').css("background-color",bgcolor);
-		$('.foiColor').css('color', bgcolor);
 
+	blackboxSetter();	
 
-	}	
-	
-		if (!L.Browser.ie && !L.Browser.opera) {
+	if (!L.Browser.ie && !L.Browser.opera) {
 		layer.bringToFront();
 	}
 	
@@ -145,9 +106,15 @@ function resetHighlight(e) {
 };
 
 //this is used to initialize the first layer	
-createLayer = function(){	
-	console.log(jdata);
-	foiData = 'all'
+createLayer = function(){
+//this is important, because the first layer won't be created otherwise.
+	if (typeof(foiData) == "undefined"){
+		foiData = 'all'
+	}
+	if (typeof(existingLayer) != "undefined"){
+		console.log('removing layer');
+		map.removeLayer(existingLayer);
+	}	
 	existingLayer = L.geoJson(data, {
 		onEachFeature:onEachFeature,
 		style: function(feature) {

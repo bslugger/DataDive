@@ -19,16 +19,9 @@ $(function() {
 				map.removeLayer(existingLayer);
 			}
 			if(!jQuery.isEmptyObject(data)){	
-				existingLayer = L.geoJson(data, {
-				onEachFeature:onEachFeature,
-				style: function(feature) {
-					switch (feature.properties.NAME) {
-						default: return {color:"black",fillColor:getColor(jdata,feature.properties.NAME,foiData),weight:1,fillOpacity:1}
-					}
-				}
-				}).addTo(map);
-				// map.spin(false);
+				createLayer();
 			}
+
 		}
 
 	}); //end slidechange definition
@@ -49,7 +42,7 @@ function printOrgs(layer,jdata,foiData){
 }
 
 function getColor(jdata,zip,foiData){
-	
+//	console.log('normalc');	
 	 var d = getDollarAmounts(jdata,zip,foiData);
 	 return d > 100000 ? 'rgb(2,56,88)' :
 	   d > 80000   ? 'rgb(4,90,141)' :
@@ -61,6 +54,7 @@ function getColor(jdata,zip,foiData){
 	  
 }
 function getColorLight(hash,zip){
+	console.log('lightc');
 	 if(hash[zip]){
 		d = hash[zip];
 	 }
