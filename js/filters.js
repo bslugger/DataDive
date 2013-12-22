@@ -76,6 +76,22 @@ function getDollarAmounts(jdata,zip,foiData){
 	return totalAmountZip;
 }
 
+
+function getDollarAmountLight(hash,datum,foiData){
+                console.log('lightd');
+                if((datum.Field_aggregate === foiData || foiData === 'all') && $('#slider').slider('option','value') == parseDate(datum.Effective_Date)){
+                        
+                        if (hash[datum.Zip]){
+                                hash[datum.Zip] += datum.Amount;
+                        }
+                        else{
+                                hash[datum.Zip] = datum.Amount;
+                        }
+                }
+                parseZIP(datum.Zip);
+}
+//end beta get dollars
+
 function getFilteredArrayByZip(layer,jdata,foiData){
 	subDataByZip = [];
 	z = [];
