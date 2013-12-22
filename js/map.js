@@ -44,14 +44,18 @@ function onEachFeature(feature, layer) {
 
 //This is what happens on click
 function popupContent(e){
+
+	$('#myModal').modal('toggle');
+
 	var layer = e.target;
 	var year = $('#slider').slider('option','value');
 	var zip = layer.feature.properties.NAME;
-	$("#orgList").html(function(){
-					return '<h1>Organizations in ' + zip + ' Awarded Grants (' +
-					year + ')<h1>' + 
-					printOrgs(layer,jdata,foiData);
-				})
+	$("#myModalLabel").html(function(){
+			return '<h1>Organizations in ' + zip + ' Awarded Grants (' + year + ')<h1>'
+		})
+	$(".modal-body").html(function(){
+			return printOrgs(layer,jdata,foiData);
+		})
 			  .css('display','block')
 			  .css('height','auto');
 //this allows the table in the bottom tooltip to be sortable..	
@@ -133,5 +137,6 @@ $(document).ready(function(){
 		function(){console.log('all done')}
 	)
 	$('.foi').click(foiFilter);
+	
 })	
 

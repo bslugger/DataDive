@@ -4,13 +4,13 @@ function foiFilter(){
 	foiData = $(this).data('foi');
 	toggleFilter();	
 
-	//clear any previous data inside subData and a, which act as our filtered results
+//clear any previous data inside subData and a, which act as our filtered results
 	subData = [];
 	a = [];
 	totalAmount = 0;
 	s = [];
 	var hash = new Object();
-	//iterate through our full dataset to filter by FOI
+//iterate through our full dataset to filter by FOI
 	for (var i = 0; i < jdata.length; i++) {
 		if (jdata[i].Field_aggregate === foiData || foiData == 'all') {
 			subData.push(jdata[i]);
@@ -33,9 +33,9 @@ function foiFilter(){
 	console.log("number of orgs", numOrgs);
 	console.log("num of grants", numGrants);
 	console.log("total awarded", totalAmount);
-
+// set the text inside the sidetooltip
 	blackboxSetter();
-
+// create the layer based on the current data
 	createLayer();
 
 }; //end foi filter function
@@ -58,10 +58,9 @@ function getDollarAmounts(jdata,zip,foiData){
 	totalAmountZip = 0;
 	y = [];
 	for (var i = 0; i < jdata.length; i++){
-		if(jdata[i].Zip === zip && (jdata[i].Field_aggregate === foiData || foiData === 'all') && $('#slider').slider('option','value') == parseDate(jdata[i].Effective_Date)){
+		if(parseZIP(jdata[i].Zip) === zip && (jdata[i].Field_aggregate === foiData || foiData === 'all') && $('#slider').slider('option','value') == parseDate(jdata[i].Effective_Date)){
 			subDataByZip.push(jdata[i]);
 			ID = jdata[i].Grantee_ID;
-			
 			inclusionTest(z, ID);
 			
 			var amt = jdata[i].Amount;
@@ -76,22 +75,7 @@ function getDollarAmounts(jdata,zip,foiData){
 		}
 	return totalAmountZip;
 }
-//slightly faster way of getting dollar amounts, need to fix ZIP code
-//discrepancy.
-function getDollarAmountLight(hash,datum,foiData){
-		console.log('lightd');
-		if((datum.Field_aggregate === foiData || foiData === 'all') && $('#slider').slider('option','value') == parseDate(datum.Effective_Date)){
-			
-			if (hash[datum.Zip]){
-				hash[datum.Zip] += datum.Amount;
-			}
-			else{
-				hash[datum.Zip] = datum.Amount;
-			}
-		}
-		parseZIP(datum.Zip);
-}
-//end beta get dollars
+
 function getFilteredArrayByZip(layer,jdata,foiData){
 	subDataByZip = [];
 	z = [];
@@ -100,8 +84,7 @@ function getFilteredArrayByZip(layer,jdata,foiData){
 	for (var i = 0; i < jdata.length; i++){
 		if(parseZIP(jdata[i].Zip) === layer.feature.properties.NAME && (jdata[i].Field_aggregate === foiData || foiData === 'all') && $('#slider').slider('option','value') == parseDate(jdata[i].Effective_Date)){
 			subDataByZip.push(jdata[i]);
-			ID = jdata[i].Grantee_ID;
-			
+			ID = jdata[i].Grantee_ID;	
 			inclusionTest(z, ID);
 			
 			var amt = jdata[i].Amount;
@@ -109,11 +92,12 @@ function getFilteredArrayByZip(layer,jdata,foiData){
 			y.push(amt);
 		}
 	}
+	console.log(z,y);
 	numZipGrants = subDataByZip.length;
 	numZipOrgs = z.length;
 	for (var i = 0; i < y.length; i++) {
 			totalAmountZip += y[i];
 	}
-
+	console.log(totalAmountZip);
 	return [numZipOrgs,numZipGrants,totalAmountZip];
 }

@@ -8,14 +8,12 @@
 <title>A2Datadive Dashboard</title>
 <meta name="author" content="AAACF Dashboard">
 
-!-- CSS & JS
- ================================================== -->
-<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
-<link rel="stylesheet" type = "text/css" href="css/stylesheet.css">
-  
-
-</head>
-
+		<!-- CSS & JS
+ 		 ================================================== -->
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" type = "text/css" href="css/stylesheet.css">
+   </head>
  <!--[if lt IE 7 ]><body class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><body class="ie ie7" lang="en"> <![endif]-->
 <!--[if IE 8 ]><body class="ie ie8" lang="en"> <![endif]-->
@@ -59,10 +57,28 @@
 			<div id='orgList'></div>
 		</div>
 		</div>
-<!-- End Document
+			
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+		      </div>
+		      <div class="modal-body"></div>
+		      <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+
+		
+		<!-- End Document
 ================================================== -->
 
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>	
+		<script src="js/bootstrap.min.js"></script>	
 		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>	
 		<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>	
 		<script type="text/javascript" src="js/ui.js"></script>
