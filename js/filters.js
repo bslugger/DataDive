@@ -4,13 +4,13 @@ function foiFilter(){
 	foiData = $(this).data('foi');
 	toggleFilter();	
 
-	//clear any previous data inside subData and a, which act as our filtered results
+//clear any previous data inside subData and a, which act as our filtered results
 	subData = [];
 	a = [];
 	totalAmount = 0;
 	s = [];
 	var hash = new Object();
-	//iterate through our full dataset to filter by FOI
+//iterate through our full dataset to filter by FOI
 	for (var i = 0; i < jdata.length; i++) {
 		if (jdata[i].Field_aggregate === foiData || foiData == 'all') {
 			subData.push(jdata[i]);
@@ -33,9 +33,9 @@ function foiFilter(){
 	console.log("number of orgs", numOrgs);
 	console.log("num of grants", numGrants);
 	console.log("total awarded", totalAmount);
-
+// set the text inside the sidetooltip
 	blackboxSetter();
-
+// create the layer based on the current data
 	createLayer();
 
 }; //end foi filter function
