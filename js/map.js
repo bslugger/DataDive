@@ -34,7 +34,7 @@ var map = L.map('map',{
 });
 
 //This defines the functions for various interactions with the map
-function onEachFeature(feature, layer) {
+onEachFeature = function(feature, layer) {
 	layer.on({
 	mouseover: highlightFeature,
 	mouseout: resetHighlight,
@@ -43,13 +43,14 @@ function onEachFeature(feature, layer) {
 }
 
 //This is what happens on click
-function popupContent(e){
+popupContent = function(e) {
 
 	$('#myModal').modal('toggle');
 
 	var layer = e.target;
 	var year = $('#slider').slider('option','value');
 	var zip = layer.feature.properties.NAME;
+	
 	$("#myModalLabel").html(function(){
 			return '<h1>Organizations in ' + zip + ' Awarded Grants (' + year + ')<h1>'
 		})
@@ -64,7 +65,7 @@ function popupContent(e){
 };
 
 //This is what happens on mouseover
-function highlightFeature(e){
+highlightFeature = function(e) {
 	var layer = e.target;
 	var year = $('#slider').slider('option','value');
 	var zip = layer.feature.properties.NAME;
@@ -90,7 +91,7 @@ function highlightFeature(e){
 }
 
 //This is what happens after you mouseout
-function resetHighlight(e) {
+resetHighlight = function(e) {
 
 	var layer = e.target;
 

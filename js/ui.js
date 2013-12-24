@@ -41,7 +41,7 @@ function printOrgs(layer,jdata,foiData){
 	return listOfOrgs + "</table>";
 }
 
-function getColor(jdata,zip,foiData){
+getColor = function(jdata,zip,foiData) {
 	 var d = getDollarAmounts(jdata,zip,foiData);
 	// console.log(zip);
 	 return d > 100000 ? 'rgb(2,56,88)' :
@@ -54,7 +54,7 @@ function getColor(jdata,zip,foiData){
 	  
 }
 
-function getColorLight(hash,zip){
+getColorLight = function(hash,zip) {
 	console.log('lightc');
 	 if(hash[zip]){
 		d = hash[zip];
