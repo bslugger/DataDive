@@ -52,7 +52,6 @@ function inclusionTest(yourList,dataID){
 
 //by zip, by year, (by foi,depending) to obtain number of grants, dollar amount of grants, number of recipients
 function getDollarAmounts(jdata,zip,foiData){
-	console.log('normald');
 	subDataByZip = [];
 	z = [];
 	totalAmountZip = 0;
@@ -78,7 +77,6 @@ function getDollarAmounts(jdata,zip,foiData){
 
 
 function getDollarAmountLight(hash,datum,foiData){
-                console.log('lightd');
                 if((datum.Field_aggregate === foiData || foiData === 'all') && $('#slider').slider('option','value') == parseDate(datum.Effective_Date)){
                         
                         if (hash[datum.Zip]){
@@ -108,12 +106,12 @@ function getFilteredArrayByZip(layer,jdata,foiData){
 			y.push(amt);
 		}
 	}
-	console.log(z,y);
+	
 	numZipGrants = subDataByZip.length;
 	numZipOrgs = z.length;
 	for (var i = 0; i < y.length; i++) {
 			totalAmountZip += y[i];
 	}
-	console.log(totalAmountZip);
+	
 	return [numZipOrgs,numZipGrants,totalAmountZip];
 }
