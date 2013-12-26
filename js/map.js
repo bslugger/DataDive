@@ -138,6 +138,5 @@ $(document).ready(function(){
 		function(){console.log('all done')}
 	)
 	$('.foi').click(foiFilter);
-	
 })	
 
