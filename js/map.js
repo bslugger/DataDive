@@ -19,16 +19,18 @@ loadData = function(){
 			//need the dates to be rolled up into something specific, like years, for example
 			almost = _.map(groupedSorted,function(value,key){ return {'key':key,'values':value}})
 			for (obj in almost){
-				var temp=[];
+				temp=[];
 				for(val in almost[obj]['values']){
-						
-
+				//transform ms here. makes years uniform	
+					rawMs = roundYear(almost[obj]['values'][val]['values'][0])
+					almost[obj]['values'][val]['values'][0] = rawMs;
 					temp.push(almost[obj]['values'][val]['values']);
 				}
 				almost[obj]['values'] = temp;
 
 			}
 		})
+			
 	)
 	.done(
 		function(){createLayer();map.spin(false);}
