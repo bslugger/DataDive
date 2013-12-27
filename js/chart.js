@@ -1,3 +1,36 @@
+//this function maps data into a key/value structure
+sorted = function() {
+	format = d3.time.format('%m/%d/%Y');
+
+	sData = _.map(jdata,function(value,key){ 
+		return {"key":value['Field_aggregate'],
+			"values":[
+				format.parse(value['Effective_Date']).getTime(),value['Amount']
+			]} 
+			}).sort(function(a,b){ 
+				return a['values'][0] - b['values'][0] 
+			});
+}
+//group the sorted data, this could be removed or something...
+groupedSorted = function(){
+	sData = _.groupBy(sData,'key');
+}
+//need the dates to be rolled up into something specific, like years, for example
+uniformizeYears = function(){
+	 sData = _.map(sData,function(value,key){ return {'key':key,'values':value}})
+
+	for (obj in sData){
+		temp=[];
+		for(val in sData[obj]['values']){
+		//transform ms here. makes years uniform	
+			rawMs = roundYear(sData[obj]['values'][val]['values'][0])
+			sData[obj]['values'][val]['values'][0] = rawMs;
+			temp.push(sData[obj]['values'][val]['values']);
+		}
+		sData[obj]['values'] = temp;
+
+	}
+}
 //This will be used to aggregate year giving data together.
 //TODO: Nothing essential, but one annoying issue with the x-axis. Something is weird here with rounding and leap years and what not.
 // could just reduce the number of ticks for the x-axis, potentially. 
@@ -16,10 +49,10 @@ roundYear = function(ms) {
 	}		
 	return ms;
 }
-
+// return a list of unique years throughout the dataset.
 getYears = function(){
 	var allYears = [];
-	_.each(almost, function(value,key){ 
+	_.each(sData, function(value,key){ 
 		temp = []; 
 		_.each(value.values, function(value2,key2){ 
 			temp.push(value2[0]) 
@@ -32,7 +65,7 @@ getYears = function(){
 
 clusterYears = function(){
 	y = getYears();
-	_.each(almost, function(value,key){
+	_.each(sData, function(value,key){
 		temp = [];
 		cluster = _.groupBy(value.values, function(value2,key2){return value2[0];})
 		_.each(cluster, function(value3,yearMs){
@@ -46,12 +79,12 @@ clusterYears = function(){
 		//fill in blanks here
 		addBlankYears(temp);
 		//update array values with aggregated values
-		almost[key].values = temp;
+		sData[key].values = temp;
 	});
 }
 
 addBlankYears = function(array){
-//cycle through years serially, finding missing years, and adding them.	
+//cycle through years serially, finding missing years, and adding them
 	if(array.length < y.length){
 		for (year in y){
 			if (typeof(array[year]) == 'undefined' || array[year][0] !=  y[year] ){
@@ -79,10 +112,16 @@ setChartColor = function(d){
 	}
 }
 
-addChart = function(){
+slice = function() { 	
+	sorted();
+	groupedSorted();
+	uniformizeYears();
 	clusterYears();
+}
+
+addChart = function(){
 	format = d3.time.format('%m/%d/%Y');
-	
+	slice();	
 	nv.addGraph(function() {
 		var chart = nv.models.stackedAreaChart()
 				.x(function(d){ return d[0] })
@@ -105,7 +144,7 @@ addChart = function(){
 		
 		d3.select('#chart1')
 			.append('svg')
-			.datum(almost)
+			.datum(sData)
 			.transition().duration(500).call(chart);
 
 		nv.utils.windowResize(chart.update);
@@ -113,5 +152,3 @@ addChart = function(){
 		return chart;
 	});
 }
-console.log('here');
-
