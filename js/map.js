@@ -1,19 +1,19 @@
 var data = {};
 var jdata = {};
+var sData = [];
 loadData = function(){
 	map.spin(true);
 	$.when(	
 		$.getJSON("data/zip.json",function(json){
 			data = json;
-			console.log(data);
 		}),
 		$.getJSON("data/aaacfData.json",function(json){
 			jdata = json;
-			console.log(jdata);
-		})
+		})					
 	)
 	.done(
-		function(){createLayer();map.spin(false);}
+		function(){ createLayer();map.spin(false); },
+		function(){ addChart(); }
 	)
 } //end of data loading function
 
@@ -132,7 +132,9 @@ createLayer = function(){
 				
 $(document).ready(function(){	
 	$.when(
-		loadData()
+		loadData(),
+
+		function(){console.log(' done')}
 	)
 	.done(
 		function(){console.log('all done')}
