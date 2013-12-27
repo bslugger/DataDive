@@ -10,6 +10,24 @@ loadData = function(){
 		$.getJSON("data/aaacfData.json",function(json){
 			jdata = json;
 			console.log(jdata);
+
+			format = d3.time.format('%m/%d/%Y');
+			
+//this will probably need to be in a function, and place elsewhere, but for now, here it is.
+			x = _.map(json,function(value,key){ return {"key":value['Field_aggregate'],"values":[format.parse(value['Effective_Date']).getTime(),value['Amount']]} }).sort(function(a,b){ return a['values'][0] - b['values'][0] });
+			groupedSorted = _.groupBy(x,'key');
+			//need the dates to be rolled up into something specific, like years, for example
+			almost = _.map(groupedSorted,function(value,key){ return {'key':key,'values':value}})
+			for (obj in almost){
+				var temp=[];
+				for(val in almost[obj]['values']){
+						
+
+					temp.push(almost[obj]['values'][val]['values']);
+				}
+				almost[obj]['values'] = temp;
+
+			}
 		})
 	)
 	.done(
@@ -138,5 +156,6 @@ $(document).ready(function(){
 		function(){console.log('all done')}
 	)
 	$('.foi').click(foiFilter);
+	
 })	
 
