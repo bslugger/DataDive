@@ -33,7 +33,8 @@ loadData = function(){
 			
 	)
 	.done(
-		function(){createLayer();map.spin(false);}
+		function(){createLayer();map.spin(false);},
+		function(){addChart()}
 	)
 } //end of data loading function
 
