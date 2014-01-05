@@ -3,7 +3,8 @@ function foiFilter(){
 	
 	foiData = $(this).data('foi');
 	toggleFilter();	
-
+	
+	
 //clear any previous data inside subData and a, which act as our filtered results
 	subData = [];
 	a = [];
@@ -21,9 +22,9 @@ function foiFilter(){
 			var amt = jdata[i].Amount;
 			amt = parseInt(amt);
 			a.push(amt);			
-			}
-		};
-		
+		}
+	};
+			
 	// the logic to determine aggregated sums by FOI!
 	numGrants = subData.length;
 	numOrgs = s.length;
@@ -50,12 +51,34 @@ function inclusionTest(yourList,dataID){
 	return yourList;
 };
 
+mapper = function(){
+	m = _.map(jdata, function(value,key){
+		return { 
+			'foi': value['Field_aggregate'] , 
+			'year': parseDate(value['Effective_Date']),
+			'amount': value['Amount']
+			}
+	});
+	
+	if (typeof(foiData) == 'undefined' || foiData == 'all'){
+		return _.reduce(m, function(total,value){
+			return total + value['amount'];
+		}, 0);
+	}
+	
+	return _.reduce(_.where(m, {'foi': foiData} ), function(total, value){ 
+		return total + value['amount'];
+	}, 0);
+}
+
 //by zip, by year, (by foi,depending) to obtain number of grants, dollar amount of grants, number of recipients
-function getDollarAmounts(jdata,zip,foiData){
+
+function getDollarAmounts(jdata,zip,foiData) {
 	subDataByZip = [];
 	z = [];
 	totalAmountZip = 0;
-	y = [];
+	y = [];		
+
 	for (var i = 0; i < jdata.length; i++){
 		if(parseZIP(jdata[i].Zip) === zip && (jdata[i].Field_aggregate === foiData || foiData === 'all') && $('#slider').slider('option','value') == parseDate(jdata[i].Effective_Date)){
 			subDataByZip.push(jdata[i]);
@@ -66,7 +89,7 @@ function getDollarAmounts(jdata,zip,foiData){
 			amt = parseInt(amt);
 			y.push(amt);
 		}
-		}
+	}
 	//	numGrants = subDataByZip.length;
 	//	numOrgs = z.length;
 		for (var i = 0; i < y.length; i++) {
@@ -75,14 +98,12 @@ function getDollarAmounts(jdata,zip,foiData){
 	return totalAmountZip;
 }
 
-
 function getDollarAmountLight(hash,datum,foiData){
                 if((datum.Field_aggregate === foiData || foiData === 'all') && $('#slider').slider('option','value') == parseDate(datum.Effective_Date)){
                         
                         if (hash[datum.Zip]){
                                 hash[datum.Zip] += datum.Amount;
-                        }
-                        else{
+                        } else{
                                 hash[datum.Zip] = datum.Amount;
                         }
                 }

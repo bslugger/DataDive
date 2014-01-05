@@ -14,7 +14,7 @@ $(function() {
 	$('#slider').slider().bind({
 		 
 		slidechange: function( event, ui ) {
-
+			//clean up before making new layer, if it exists.
 			if(typeof(existingLayer) != "undefined"){	
 				map.removeLayer(existingLayer);
 			}
@@ -55,7 +55,6 @@ getColor = function(jdata,zip,foiData) {
 }
 
 getColorLight = function(hash,zip) {
-	console.log('lightc');
 	 if(hash[zip]){
 		d = hash[zip];
 	 }

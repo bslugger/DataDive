@@ -5,7 +5,7 @@ sorted = function() {
 	sData = _.map(jdata,function(value,key){ 
 		return {"key":value['Field_aggregate'],
 			"values":[
-				format.parse(value['Effective_Date']).getTime(),value['Amount']
+				format.parse(value['Effective_Date']).getFullYear(),value['Amount']
 			]} 
 			}).sort(function(a,b){ 
 				return a['values'][0] - b['values'][0] 
@@ -23,8 +23,9 @@ uniformizeYears = function(){
 		temp=[];
 		for(val in sData[obj]['values']){
 		//transform ms here. makes years uniform	
-			rawMs = roundYear(sData[obj]['values'][val]['values'][0])
-			sData[obj]['values'][val]['values'][0] = rawMs;
+			
+			yearMs = getYearMs(sData[obj]['values'][val]['values'][0])
+			sData[obj]['values'][val]['values'][0] = yearMs;
 			temp.push(sData[obj]['values'][val]['values']);
 		}
 		sData[obj]['values'] = temp;
@@ -34,20 +35,8 @@ uniformizeYears = function(){
 //This will be used to aggregate year giving data together.
 //TODO: Nothing essential, but one annoying issue with the x-axis. Something is weird here with rounding and leap years and what not.
 // could just reduce the number of ticks for the x-axis, potentially. 
-roundYear = function(ms) {
-	beginYearMs = 0;
-	step = 31556900000;
-	endYearMs = step;
-	//want to take milliseconds and find what year those milliseconds are a part of, then return those seconds
-	
-	while(ms > beginYearMs){
-		if(ms < endYearMs && ms > beginYearMs){
-			ms = endYearMs;
-		}
-		endYearMs += step;
-		beginYearMs += step;	
-	}		
-	return ms;
+getYearMs = function(year) {
+	return new Date(year,0,1).getTime();
 }
 // return a list of unique years throughout the dataset.
 getYears = function(){
@@ -111,7 +100,7 @@ setChartColor = function(d){
 		return '#a4045e';
 	}
 }
-
+//Group all of the data transformers into one function
 slice = function() { 	
 	sorted();
 	groupedSorted();
@@ -121,6 +110,7 @@ slice = function() {
 
 addChart = function(){
 	format = d3.time.format('%m/%d/%Y');
+	//call the data slicing functions. This admittedly, is weird...I think if I had more time I would do it differently, but yea...
 	slice();	
 	nv.addGraph(function() {
 		var chart = nv.models.stackedAreaChart()

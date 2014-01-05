@@ -132,14 +132,11 @@ createLayer = function(){
 				
 $(document).ready(function(){	
 	$.when(
-		loadData(),
-
-		function(){console.log(' done')}
+		loadData()
 	)
 	.done(
 		function(){console.log('all done')}
 	)
-	$('.foi').click(foiFilter);
-	
+	$('.foi').click(foiFilter);	
 })	
 
