@@ -1,8 +1,23 @@
 var data = {};
 var jdata = {};
 var sData = [];
+
+//This draws the map itself at a specified position. Also that long alphanumeric string is the API key. This may need
+//to be changed at some point
+var mapbox = new L.tileLayer('https://{s}.tiles.mapbox.com/v3/akosel.i5522e6e/{z}/{x}/{y}.png', {
+    maxZoom: 10,
+});
+//This centers the map on Ann Arbor, MI
+var map = L.map('map',{
+    layers: [mapbox],
+    center: new L.LatLng(42.2, -83.748333),
+    zoom: 9
+});
+
+// load the data
 loadData = function(){
-	map.spin(true);
+    d = $.Deferred();
+    map.spin(true);
 	$.when(	
 		$.getJSON("data/zip.json",function(json){
 			data = json;
@@ -12,26 +27,11 @@ loadData = function(){
 		})					
 	)
 	.done(
-		function(){ createLayer();map.spin(false); },
-		function(){ addChart(); }
+		function(){ createLayer();},
+		function(){ addChart(); map.spin(false); d.resolve(); }
 	)
+    return d.promise();
 } //end of data loading function
-
-//This draws the map itself at a specified position. Also that long alphanumeric string is the API key. This may need
-	//to be changed at some point
-cloudmade = new L.tileLayer('http://{s}.tile.cloudmade.com/6a7ab36b926b4fc785f8a957814c8685/{styleID}/256/{z}/{x}/{y}.png', {
-	maxZoom: 10,
-	//this defines the style of the underlying map. Different styles can be found here http://maps.cloudmade.com/editor#
-	styleID:59866
-})
-//This centers the map on Ann Arbor, MI
-var map = L.map('map',{
-    layers: [cloudmade],
-    center: new L.LatLng(42.2, -83.748333),
-    zoom: 9,
-    // Tell the map to use a loading control
-    loadingControl: true
-});
 
 //This defines the functions for various interactions with the map
 onEachFeature = function(feature, layer) {
