@@ -1,4 +1,4 @@
-DataDive
+# DataDive
 ========
 This repository is the code for the interactive visualization created for the AAACF the Fall 2013 A2DataDive.
 
@@ -7,9 +7,9 @@ or create a new account for them. Probably that would be ideal.
 
 ============================================================
 
-ADDITIONAL INFORMATION ABOUT HOW THIS WAS CREATED AND HOW IT WORKS
+## ADDITIONAL INFORMATION ABOUT HOW THIS WAS CREATED AND HOW IT WORKS
 
-Interactive Dashboard
+### Interactive Dashboard
 
 We created a visualization of the AAACF’s data aggregated into key key categories over time. The code we used to create the visualization is all in the following Github repository: https://github.com/akosel/DataDive
 
@@ -21,32 +21,33 @@ Just go to the folder with the index.html file using your command line
 At your command line type, python -m SimpleHTTPServer 8000 (at least for Windows this works). 
 Then open up your web browser, and type localhost:8000. Everything should load up quite nicely, and you can play around with stuff. 
 
-Data Preparation
+## Data Preparation
 
-AAACF Data
-Aggregate master_data by important field of interests 
-Take raw data file in Excel
-Using the field_aggregation_key.xlsx, use Excel VLOOKUP function to change ________________
-YOU MIGHT NEED TO ADD STEPS HERE
-Convert aggregated csv to json using http://www.convertcsv.com/csv-to-json.htm (either copy and paste or Choose File from your computer)
-Saved this file as aaacfData.json
-ZIP Data
-Get ZIP code shape file from census website: ftp://ftp2.census.gov/geo/tiger/TIGER2013/ZCTA5/. (it’s a big file, 500 mb, so don’t worry about it, unless you really want to.)
-Filtered out all non-Michigan ZIP codes using R (Mike Shvartsman did this)
-Convert shapefile to geoJSON
-Went to http://shpescape.com/, click geoJSON/topoJSON option. 
-Click choose file
-Attach ZIP folder with Michigan Zip code shapes
+### AAACF Data
+1. Aggregate master_data by important field of interests 
+2. Take raw data file in Excel
+3. Using the field_aggregation_key.xlsx, use Excel VLOOKUP function to change ________________
+4. Convert aggregated csv to json using http://www.convertcsv.com/csv-to-json.htm (either copy and paste or Choose File from your computer)
+5. Saved this file as aaacfData.json
+
+### ZIP Data
+1. Get ZIP code shape file from census website: ftp://ftp2.census.gov/geo/tiger/TIGER2013/ZCTA5/. (it’s a big file, 500 mb, so don’t worry about it, unless you really want to.)
+2. Filtered out all non-Michigan ZIP codes using R (Mike Shvartsman did this)
+3. Convert shapefile to geoJSON
+4. Went to http://shpescape.com/, click geoJSON/topoJSON option. 
+5. Click choose file
+6. Attach ZIP folder with Michigan Zip code shapes
+
 That’s it. You have it.
 Saved geoJSON as zip.json
 
-Connecting the data with the front-end
+## Connecting the data with the front-end
 
 Each of the data files is loaded in turn in the map.js file
 The zip.json data is used in conjunction with the map to draw shapes correctly, it is called ‘data’
 The aaacfData.json data is used to assign values to the different zip code shapes within the map. It is called jdata. We used leaflet.js, there site has some pretty good documentation about how to do this: http://leafletjs.com.
 
-Transforming the data in the UI (this just a list, the order is not important)
+Transforming the data in the UI (this is just a list, the order is not important)
 
 foiFilter() in map.js rolls up data based on what field of interest button was clicked. This is actived on the click of any foi classed element
 getDollarAmounts(jdata,zip,foiData) in ui.js rolls data up by field of interest and ZIP code. foiData stores the value of what foi is currently selected, if any, and zip stores a particular zip code. Should be noted that ZIP code is parsed so that any -XXXX stuff at the end is not considered on the aggregate.
